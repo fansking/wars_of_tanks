@@ -1,6 +1,8 @@
 #include "SettingScene.h"
 #include "SimpleAudioEngine.h"
+
 USING_NS_CC;
+
 Scene *Setting::createScene()
 {
 	auto scene = Scene::create();

@@ -97,8 +97,33 @@ bool Game::init()
 	_collidable = _tileMap->getLayer("collidable");
 
 
-	setTouchEnabled(true);
+	/*setTouchEnabled(true);
 	setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
-	setKeypadEnabled(true);
+	setKeypadEnabled(true);*/
+
+	setKeyboardEnabled(true);
+	
 	return true;
+}
+
+void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
+{
+	log("%d has been pressed", keyCode);
+	Vec2 playerPos = _player->getPosition();
+	switch ((int)keyCode)
+	{
+	case 146:
+		playerPos.y += _tileMap->getTileSize().height;
+		break;
+	case 142:
+		playerPos.y -= _tileMap->getTileSize().height;
+		break;
+	case 124:
+		playerPos.x -= _tileMap->getTileSize().width;
+		break;
+	case 127:
+		playerPos.x += _tileMap->getTileSize().width;
+		break;
+	}
+	this->setPlayerPosition(playerPos);
 }

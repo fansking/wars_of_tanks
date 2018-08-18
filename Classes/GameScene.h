@@ -4,6 +4,8 @@
 #ifndef _GAME_SCENE_H_
 #define _GAME_SCENE_H_
 
+using namespace cocos2d;
+
 class Game :public cocos2d::Layer
 {
 	cocos2d::TMXTiledMap *_tileMap;
@@ -17,6 +19,10 @@ public:
 	void setPlayerPosition(cocos2d::Vec2 position);
 	cocos2d::Vec2 tileCoordFromPosition(cocos2d::Vec2 position);
 	virtual bool init();
+
+	//void onEnter();
+	//void moveAct(EventKeyboard::KeyCode keyCode, Event * event);
+	virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event);
 	
 	CREATE_FUNC(Game);
 
