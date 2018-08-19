@@ -126,4 +126,35 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 		break;
 	}
 	this->setPlayerPosition(playerPos);
+
+	mark = (int)keyCode;	//一个很丑陋的处理方式
+
+	this->schedule(schedule_selector(Game::keepMoving), 0.2f);
+}
+
+void Game::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
+{
+	this->unscheduleAllSelectors();
+}
+
+void Game::keepMoving(float dt)
+{
+	Vec2 playerPos = _player->getPosition();
+	switch (mark)
+	{
+	case 146:
+		playerPos.y += _tileMap->getTileSize().height;
+		break;
+	case 142:
+		playerPos.y -= _tileMap->getTileSize().height;
+		break;
+	case 124:
+		playerPos.x -= _tileMap->getTileSize().width;
+		break;
+	case 127:
+		playerPos.x += _tileMap->getTileSize().width;
+		break;
+	}
+	this->setPlayerPosition(playerPos);
+
 }
