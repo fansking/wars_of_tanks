@@ -134,6 +134,7 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 			break;
 		}
 		mark = (int)keyCode;	//???????¨®???????¨ª¡¤???
+		this->schedule(schedule_selector(Game::keepMoving), 0.1f);
 		return;
 	}
 	switch ((int)keyCode)
