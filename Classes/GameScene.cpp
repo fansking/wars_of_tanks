@@ -78,10 +78,15 @@ bool Game::init()
 	{
 		return false;
 	}
+
+	mark = 146;
+
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	_tileMap = TMXTiledMap::create("map/map2.tmx");
+	_tileMap->setScale(Director::getInstance()->getVisibleSize().width / (_tileMap->getMapSize().width * _tileMap->getTileSize().width));
+	log("size is ****************: %d", _tileMap->getMapSize().height);
 	this->addChild(_tileMap);
 	
 
@@ -92,6 +97,7 @@ bool Game::init()
 	float y = spawnPoint["y"].asFloat();
 
 	_player = Sprite::create("map/ninja.png");
+	_player->setAnchorPoint(Vec2(0.5, 0.5));
 	_player->setPosition(Vec2(x, y));
 	addChild(_player,2,200); 
 	_collidable = _tileMap->getLayer("collidable");
@@ -110,7 +116,27 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 {
 	log("%d has been pressed", keyCode);
 	Vec2 playerPos = _player->getPosition();
-	switch (keyCode)
+	if ((int)keyCode != mark)
+	{
+		switch ((int)keyCode)
+		{
+		case 146:
+			_player->runAction(RotateTo::create(0, 0));
+			break;
+		case 142:
+			_player->runAction(RotateTo::create(0, 180));
+			break;
+		case 124:
+			_player->runAction(RotateTo::create(0, 270));
+			break;
+		case 127:
+			_player->runAction(RotateTo::create(0, 90));
+			break;
+		}
+		mark = (int)keyCode;	//一个很丑陋的处理方式
+		return;
+	}
+	switch ((int)keyCode)
 	{
 	case 146:
 		playerPos.y += _tileMap->getTileSize().height;
@@ -127,8 +153,6 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 	}
 	this->setPlayerPosition(playerPos);
 	
-	mark = (int)keyCode;	//一个很丑陋的处理方式
-
 	this->schedule(schedule_selector(Game::keepMoving), 0.1f);
 }
 
