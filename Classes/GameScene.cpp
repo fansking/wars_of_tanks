@@ -30,12 +30,10 @@ void Game::onTouchEnded(Touch* touch, Event * event)
 		if (diff.x>0)
 		{
 			playerPos.x += _tileMap->getTileSize().width;
-			_player->runAction(FlipX::create(false));
 		}
 		else
 		{
 			playerPos.x -= _tileMap->getTileSize().width;
-			_player->runAction(FlipX::create(true));
 		}
 	}
 	else {
@@ -48,7 +46,7 @@ void Game::onTouchEnded(Touch* touch, Event * event)
 			playerPos.y -= _tileMap->getTileSize().height;
 		}
 	}
-	this->setPlayerPosition(playerPos);
+	this->runAction(MoveTo::create(5, playerPos));
 }
 void Game::setPlayerPosition(Vec2 position)
 {
@@ -64,7 +62,12 @@ void Game::setPlayerPosition(Vec2 position)
 			return;
 		}
 	}
-	_player->setPosition(position);
+	Size screenSize = Director::getInstance()->getVisibleSize();
+	if (position.y >= screenSize.height || position.y <= 0 || position.x >= screenSize.width || position.x <= 0)
+	{
+		return;
+	}
+	_player->runAction(MoveTo::create(0.1, position));
 }
 Vec2 Game::tileCoordFromPosition(Vec2 pos) {
 	int x = pos.x / _tileMap->getTileSize().width;
@@ -79,16 +82,12 @@ bool Game::init()
 		return false;
 	}
 
-	mark = 146;
-
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	_tileMap = TMXTiledMap::create("map/map2.tmx");
 	_tileMap->setScale(Director::getInstance()->getVisibleSize().width / (_tileMap->getMapSize().width * _tileMap->getTileSize().width));
-	log("size is ****************: %d", _tileMap->getMapSize().height);
 	this->addChild(_tileMap);
-
 
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint = group->getObject("ninja");
@@ -96,12 +95,13 @@ bool Game::init()
 	float x = spawnPoint["x"].asFloat();
 	float y = spawnPoint["y"].asFloat();
 
-	_player = Sprite::create("map/ninja.png");
+	_player = OurTank::createWithImage(5);
 	_player->setAnchorPoint(Vec2(0.5, 0.5));
 	_player->setPosition(Vec2(x, y));
 	addChild(_player, 2, 200);
 	_collidable = _tileMap->getLayer("collidable");
 
+	_player->setDirection(146);
 
 	/*setTouchEnabled(true);
 	setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
@@ -116,24 +116,29 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 {
 	log("%d has been pressed", keyCode);
 	Vec2 playerPos = _player->getPosition();
-	if ((int)keyCode != mark)
+	if ((int)keyCode == 59)
+	{
+		_player->openFire();
+		return;
+	}
+	if ((int)keyCode != _player->getDirection())
 	{
 		switch ((int)keyCode)
 		{
 		case 146:
-			_player->runAction(RotateTo::create(0, 0));
+			_player->runAction(RotateTo::create(0.2, 0));
 			break;
 		case 142:
-			_player->runAction(RotateTo::create(0, 180));
+			_player->runAction(RotateTo::create(0.2, 180));
 			break;
 		case 124:
-			_player->runAction(RotateTo::create(0, 270));
+			_player->runAction(RotateTo::create(0.2, 270));
 			break;
 		case 127:
-			_player->runAction(RotateTo::create(0, 90));
+			_player->runAction(RotateTo::create(0.2, 90));
 			break;
 		}
-		mark = (int)keyCode;
+		_player->setDirection((int)keyCode);
 		this->schedule(schedule_selector(Game::keepMoving), 0.1f);
 		return;
 	}
@@ -165,7 +170,7 @@ void Game::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
 void Game::keepMoving(float dt)
 {
 	Vec2 playerPos = _player->getPosition();
-	switch (mark)
+	switch (_player->getDirection())
 	{
 	case 146:
 		playerPos.y += _tileMap->getTileSize().height;

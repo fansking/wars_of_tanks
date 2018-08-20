@@ -80,6 +80,11 @@ static int register_all_packages()
 
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
+
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("sound/background.mp3");
+	SimpleAudioEngine::getInstance()->preloadEffect("sound/empty.mp3");
+	SimpleAudioEngine::getInstance()->preloadEffect("sound/sfx_fire1.mp3");
+
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
