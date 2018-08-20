@@ -24,9 +24,10 @@
 
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+#include <SimpleAudioEngine.h>
 
 // #define USE_AUDIO_ENGINE 1
-// #define USE_SIMPLE_AUDIO_ENGINE 1
+ #define USE_SIMPLE_AUDIO_ENGINE 1
 
 #if USE_AUDIO_ENGINE && USE_SIMPLE_AUDIO_ENGINE
 #error "Don't use AudioEngine and SimpleAudioEngine at the same time. Please just select one in your game!"
@@ -43,7 +44,7 @@ using namespace CocosDenshion;
 USING_NS_CC;
 
 static cocos2d::Size designResolutionSize = cocos2d::Size(640, 640);
-static cocos2d::Size smallResolutionSize = cocos2d::Size(800, 600);
+static cocos2d::Size smallResolutionSize = cocos2d::Size(640, 640);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 
@@ -122,6 +123,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // run
     director->runWithScene(scene);
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("sound/background.mp3");
+	SimpleAudioEngine::getInstance()->preloadEffect("sound/empty.mp3");
 
     return true;
 }

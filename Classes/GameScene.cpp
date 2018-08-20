@@ -23,16 +23,16 @@ void Game::onTouchEnded(Touch* touch, Event * event)
 	log("onTouchEnded");
 	Vec2 touchLocation = touch->getLocation();
 	Vec2 playerPos = _player->getPosition();
-	Vec2 diff = touchLocation-playerPos;
+	Vec2 diff = touchLocation - playerPos;
 
 	if (abs(diff.x) > abs(diff.y))
 	{
-		if(diff.x>0)
+		if (diff.x>0)
 		{
-		playerPos.x += _tileMap->getTileSize().width;
-		_player->runAction(FlipX::create(false));
+			playerPos.x += _tileMap->getTileSize().width;
+			_player->runAction(FlipX::create(false));
 		}
-		else 
+		else
 		{
 			playerPos.x -= _tileMap->getTileSize().width;
 			_player->runAction(FlipX::create(true));
@@ -43,7 +43,7 @@ void Game::onTouchEnded(Touch* touch, Event * event)
 		{
 			playerPos.y += _tileMap->getTileSize().height;
 		}
-		else 
+		else
 		{
 			playerPos.y -= _tileMap->getTileSize().height;
 		}
@@ -88,9 +88,9 @@ bool Game::init()
 	_tileMap->setScale(Director::getInstance()->getVisibleSize().width / (_tileMap->getMapSize().width * _tileMap->getTileSize().width));
 	log("size is ****************: %d", _tileMap->getMapSize().height);
 	this->addChild(_tileMap);
-	
 
-	 TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
+
+	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint = group->getObject("ninja");
 
 	float x = spawnPoint["x"].asFloat();
@@ -99,7 +99,7 @@ bool Game::init()
 	_player = Sprite::create("map/ninja.png");
 	_player->setAnchorPoint(Vec2(0.5, 0.5));
 	_player->setPosition(Vec2(x, y));
-	addChild(_player,2,200); 
+	addChild(_player, 2, 200);
 	_collidable = _tileMap->getLayer("collidable");
 
 
@@ -108,7 +108,7 @@ bool Game::init()
 	setKeypadEnabled(true);*/
 
 	setKeyboardEnabled(true);
-	
+
 	return true;
 }
 
@@ -133,7 +133,7 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 			_player->runAction(RotateTo::create(0, 90));
 			break;
 		}
-		mark = (int)keyCode;	//一个很丑陋的处理方式
+		mark = (int)keyCode;	//???????ó???????í·???
 		return;
 	}
 	switch ((int)keyCode)
@@ -152,7 +152,7 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 		break;
 	}
 	this->setPlayerPosition(playerPos);
-	
+
 	this->schedule(schedule_selector(Game::keepMoving), 0.1f);
 }
 

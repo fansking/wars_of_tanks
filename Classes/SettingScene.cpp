@@ -1,8 +1,7 @@
 #include "SettingScene.h"
 #include "SimpleAudioEngine.h"
-
+using namespace CocosDenshion;
 USING_NS_CC;
-
 Scene *Setting::createScene()
 {
 	auto scene = Scene::create();
@@ -56,6 +55,20 @@ void Setting::menuOkCallback(Ref *pSender)
 	Director::getInstance()->popScene();
 }
 void Setting::menuSoundToggleCallback(Ref *pSender)
-{}
+{
+
+}
 void Setting::menuMusicToggleCallback(Ref *pSender)
-{}
+{
+	static bool flag = true;
+	if (flag) {
+		SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+		flag = false;
+	}
+	else {
+		SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+		flag = true;
+	}
+	
+
+}

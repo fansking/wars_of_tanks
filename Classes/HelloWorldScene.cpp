@@ -22,11 +22,23 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "HelloWorldScene.h"
-#include "SimpleAudioEngine.h"
+#include <SimpleAudioEngine.h>
 #include "SettingScene.h"
 #include "GameScene.h"
-USING_NS_CC;
+#define USE_SIMPLE_AUDIO_ENGINE 1
 
+#if USE_AUDIO_ENGINE && USE_SIMPLE_AUDIO_ENGINE
+#error "Don't use AudioEngine and SimpleAudioEngine at the same time. Please just select one in your game!"
+#endif
+
+#if USE_AUDIO_ENGINE
+#include "audio/include/AudioEngine.h"
+using namespace cocos2d::experimental;
+#elif USE_SIMPLE_AUDIO_ENGINE
+#include "audio/include/SimpleAudioEngine.h"
+using namespace CocosDenshion;
+#endif
+USING_NS_CC;
 Scene* HelloWorld::createScene()
 {
     return HelloWorld::create();
@@ -64,10 +76,11 @@ bool HelloWorld::init()
     {
         return false;
     }
-
+	SimpleAudioEngine::getInstance()->playBackgroundMusic("sound/background.mp3");
+	
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	
+
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
