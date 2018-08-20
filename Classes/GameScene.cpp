@@ -133,7 +133,7 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 			_player->runAction(RotateTo::create(0, 90));
 			break;
 		}
-		mark = (int)keyCode;	//???????¨®???????¨ª¡¤???
+		mark = (int)keyCode;
 		this->schedule(schedule_selector(Game::keepMoving), 0.1f);
 		return;
 	}
