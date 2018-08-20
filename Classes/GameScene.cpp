@@ -90,14 +90,29 @@ bool Game::init()
 	this->addChild(_tileMap);
 
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
-	ValueMap spawnPoint = group->getObject("ninja");
+	ValueMap spawnPoint_0 = group->getObject("ninja");
 
-	float x = spawnPoint["x"].asFloat();
-	float y = spawnPoint["y"].asFloat();
+	float x0 = spawnPoint_0["x"].asFloat();
+	float y0 = spawnPoint_0["y"].asFloat();
+	ValueMap spawnPoint_1 = group->getObject("enemy_1");
+
+	float x1 = spawnPoint_1["x"].asFloat();
+	float y1 = spawnPoint_1["y"].asFloat();
+	ValueMap spawnPoint_2 = group->getObject("enemy_2");
+
+	float x2 = spawnPoint_2["x"].asFloat();
+	float y2 = spawnPoint_2["y"].asFloat();
+
+	auto _enemy_1 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
+	auto _enemy_2 = Enemy::createWithEnemyTypes(EnemyTypeEnemy2);
+	_enemy_1->setPosition(Vec2(x1,y1));
+	_enemy_2->setPosition(Vec2(x2,y2));
+	addChild(_enemy_1, 2, 200);
+	addChild(_enemy_2, 2, 200);
 
 	_player = OurTank::createWithImage(5);
 	_player->setAnchorPoint(Vec2(0.5, 0.5));
-	_player->setPosition(Vec2(x, y));
+	_player->setPosition(Vec2(x0, y0));
 	addChild(_player, 2, 200);
 	_collidable = _tileMap->getLayer("collidable");
 

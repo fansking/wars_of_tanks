@@ -2,10 +2,8 @@
 
 
 
-Enemy::Enemy(EnemyTypes enemyType) {
+Enemy::Enemy(EnemyTypes enemyType) : OurTank(2){
 	this->enemyType = enemyType;
-	this->initialHitPoints = 1;
-	this->velocity = Vec2::ZERO;
 }
 
 Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
@@ -14,21 +12,23 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 	switch (enemyType) {
 	case EnemyTypeEnemy1:
 		enemyFrameName = Enemy_1;
-		enemy->initialHitPoints = 3;
+		enemy->nHP = 3;
 		break;
 	case EnemyTypeEnemy2:
 		enemyFrameName = Enemy_2;
-		enemy->initialHitPoints = 5;
+		enemy->nHP = 5;
 		break;
 	}
-	if (enemy && enemy->initWithSpriteFrameName(enemyFrameName)) {  //check if enemy is created
+	if (enemy && enemy->initWithFile(Enemy_1)) {  //check if enemy is created
 		enemy->autorelease();
 		auto body = PhysicsBody::create();
+		/*
 		body->setCategoryBitmask(0x01);
 		body->setCollisionBitmask(0x02);
 		body->setContactTestBitmask(0x01);
 
 		enemy->setPhysicsBody(body);
+		*/
 		enemy->setVisible(false);
 		enemy->spawn();
 		enemy->unscheduleUpdate();
@@ -42,7 +42,7 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 }
 
 void Enemy::update(float dt) {
-	Vec2 moveLen = velocity;
+	Vec2 moveLen = Vec2(0, -50)*dt;
 	this->setPosition(this->getPosition() + moveLen);
 	if (this->getPosition().y + this->getContentSize().height / 2 < 0) {
 		this->spawn();
@@ -57,7 +57,6 @@ void Enemy::spawn() {
 		+ this->getContentSize().width / 2;
 	this->setPosition(Vec2(xPos, yPos));
 	this->setAnchorPoint(Vec2(0.5f, 0.5f));
-	hitPoints = initialHitPoints;
 	this->setVisible(true);
 }
 

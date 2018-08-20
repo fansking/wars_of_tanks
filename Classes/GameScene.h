@@ -2,7 +2,7 @@
 #include<cocos2d.h>
 #include <SimpleAudioEngine.h>
 #include "OurTank.h"
-
+#include"Enemy.h"
 #ifndef _GAME_SCENE_H_
 #define _GAME_SCENE_H_
 
@@ -13,7 +13,8 @@ class Game :public Layer
 	TMXTiledMap *_tileMap;
 	OurTank *_player;
 	TMXLayer *_collidable;
-
+	Enemy *_enemy_1;
+	Enemy *_enemy_2;
 public:
 	static Scene * createScene();
 	virtual bool onTouchBegan(Touch* touch, Event * event);
