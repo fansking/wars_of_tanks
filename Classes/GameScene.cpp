@@ -1,7 +1,8 @@
 #include "SimpleAudioEngine.h"
 #include "GameScene.h"
-
+#include "Bullet.h"
 USING_NS_CC;
+
 Scene *Game::createScene()
 {
 	auto scene = Scene::createWithPhysics();
@@ -65,8 +66,15 @@ bool Game::init()
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
 
 	_tileMap = TMXTiledMap::create("map/map2.tmx");
+	Bullet::walklay = _tileMap->getLayer("layer1");
+	
 	_tileMap->setScale(Director::getInstance()->getVisibleSize().width / (_tileMap->getMapSize().width * _tileMap->getTileSize().width));
 	this->addChild(_tileMap);
+
+	
+	
+	
+	
 
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("ninja");
@@ -94,6 +102,7 @@ bool Game::init()
 	_player->setPosition(Vec2(x0, y0));
 	addChild(_player, 2, 200);
 	_collidable = _tileMap->getLayer("collidable");
+	Bullet::coll = _collidable;
 
 	_player->setDirection(146);
 

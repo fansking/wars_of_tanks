@@ -10,12 +10,14 @@ using namespace cocos2d;
 
 class Game :public Layer
 {
-	TMXTiledMap *_tileMap;
+	
 	OurTank *_player;
 	TMXLayer *_collidable;
 	Enemy *_enemy_1;
 	Enemy *_enemy_2;
 public:
+	TMXTiledMap *_tileMap;
+	
 	static Scene * createScene();
 	void setPlayerPosition(Vec2 position);
 	Vec2 tileCoordFromPosition(Vec2 position);

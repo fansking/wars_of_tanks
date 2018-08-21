@@ -1,5 +1,8 @@
 #include "Bullet.h"
-
+#include "GameScene.h"
+#include <vector>
+TMXLayer *Bullet::walklay = nullptr;
+TMXLayer *Bullet::coll = nullptr;
 Bullet * Bullet::createWithImage()
 {
 	Bullet * bullet = new Bullet();
@@ -55,6 +58,19 @@ void Bullet::shootBulletFromTank(OurTank * tank)
 
 void Bullet::update(float dt)
 {
+	//coordinate transformation
+	Vec2 pos = this->getPosition();
+	int X = pos.x / 32;
+	int Y = ((20 * 32) - pos.y) / 32;
+	Sprite *mytile = walklay->getTileAt(Vec2(X, Y));
+	Sprite *mycoll = coll->getTileAt(Vec2(X, Y));
+	 if (mytile != nullptr && mytile->isVisible()&& this->isVisible()) {
+		 mytile->setVisible(false);
+		 mycoll->removeFromParent();
+		 this->setVisible(false);
+		 this->removeFromParent();
+		 return;
+	 }
 	Size screenSize = Director::getInstance()->getVisibleSize();
 	this->setPosition(this->getPosition() + velocity * dt);
 	int y = this->getPosition().y;
