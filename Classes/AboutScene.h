@@ -5,12 +5,11 @@ USING_NS_CC_EXT;
 using namespace cocos2d::extension;
 #include "audio/include/SimpleAudioEngine.h"
 using namespace CocosDenshion;
-#ifndef _SETTING_SCENE_H_
-#define _SETTING_SCENE_H_
 
-class Setting :public cocos2d::Layer
+class About :public cocos2d::Layer,public ScrollViewDelegate
 {
 public:
+	ScrollView * scrollView;
 	static cocos2d::Scene * createScene();
 	bool init();
 	void menuSoundToggleCallback(Ref *pSender);
@@ -19,7 +18,10 @@ public:
 	void musicChanged(Ref *sender, Control::EventType);
 	void soundChanged(Ref *sender, Control::EventType);
 
-	CREATE_FUNC(Setting);
+	virtual void scrollViewDidScroll(ScrollView * view) {};
+	virtual void scrollViewDidZoom(ScrollView * view) {};
+
+
+	CREATE_FUNC(About);
 
 };
-#endif

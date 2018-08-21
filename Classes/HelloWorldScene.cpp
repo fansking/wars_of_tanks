@@ -22,9 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "HelloWorldScene.h"
-#include <SimpleAudioEngine.h>
+#include "SimpleAudioEngine.h"
 #include "SettingScene.h"
 #include "GameScene.h"
+#include "AboutScene.h"
+USING_NS_CC;
 #define USE_SIMPLE_AUDIO_ENGINE 1
 
 #if USE_AUDIO_ENGINE && USE_SIMPLE_AUDIO_ENGINE
@@ -39,6 +41,7 @@ using namespace cocos2d::experimental;
 using namespace CocosDenshion;
 #endif
 USING_NS_CC;
+
 Scene* HelloWorld::createScene()
 {
     return HelloWorld::create();
@@ -53,8 +56,10 @@ static void problemLoading(const char* filename)
 
 void HelloWorld::menuItem2Callback(Ref *pSender)
 {
-	MenuItem *item = (MenuItem*)pSender;
-	log("Touch Help Menu Item %p", item);
+	//MenuItem *item = (MenuItem*)pSender;
+	//log("Touch Help Menu Item %p", item);
+	auto sc = About::createScene();
+	Director::getInstance()->pushScene(sc);
 }
 void HelloWorld::menuItemSettingCallback(Ref *pSender)
 {
@@ -76,11 +81,11 @@ bool HelloWorld::init()
     {
         return false;
     }
-	SimpleAudioEngine::getInstance()->playBackgroundMusic("sound/background.mp3");
-	
+
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
+	SimpleAudioEngine::getInstance()->playBackgroundMusic("sound/background.mp3");
+	SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5);
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -88,10 +93,10 @@ bool HelloWorld::init()
 
     // add a "close" icon to exit the progress. it's an autorelease object
     auto closeItem = MenuItemImage::create(
-                                           "CloseNormal.png",
-                                           "CloseSelected.png",
+                                           "UI/closebt.png",
+                                           "UI/closebt_h.png",
                                            CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
-
+	closeItem->setScale(0.5);
     if (closeItem == nullptr ||
         closeItem->getContentSize().width <= 0 ||
         closeItem->getContentSize().height <= 0)
@@ -100,8 +105,8 @@ bool HelloWorld::init()
     }
     else
     {
-        float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
-        float y = origin.y + closeItem->getContentSize().height/2;
+        float x = origin.x + visibleSize.width  - 30;
+        float y = origin.y + visibleSize.height  - 30;
         closeItem->setPosition(Vec2(x,y));
     }
 
@@ -109,7 +114,7 @@ bool HelloWorld::init()
     auto menu = Menu::create(closeItem, NULL);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
-	Sprite *bg = Sprite::create("menu/background.png");
+	Sprite *bg = Sprite::create("menu/bg_new.png");
 	bg->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
 	this->addChild(bg);
     /////////////////////////////
@@ -117,18 +122,22 @@ bool HelloWorld::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-	MenuItemFont::setFontName("Times New Roman");
-	MenuItemFont::setFontSize(70);
-	MenuItemFont *item1 = MenuItemFont::create("Start", CC_CALLBACK_1(HelloWorld::menuItemStartCallback, this));
-	MenuItemFont::setFontSize(60);
-	MenuItemFont *item2 = MenuItemFont::create("Help", CC_CALLBACK_1(HelloWorld::menuItem2Callback, this));
-	MenuItemFont *item3 = MenuItemFont::create("Setting", CC_CALLBACK_1(HelloWorld::menuItemSettingCallback, this));
+	auto item1 = MenuItemImage::create("UI/gameStart.png", "UI/gameStart1.png", CC_CALLBACK_1(HelloWorld::menuItemStartCallback, this));
+	item1->setScale(0.7);
+	item1->setPosition(Vec2(visibleSize.width/2,visibleSize.height/2));
+	auto item2 = MenuItemImage::create("UI/about.png", "UI/about1.png", CC_CALLBACK_1(HelloWorld::menuItem2Callback, this));
+	item2->setScale(0.5);
+	item2->setPosition(Vec2( 80, visibleSize.height - 30));
+	auto item3 = MenuItemImage::create("UI/setting.png", "UI/setting1.png", CC_CALLBACK_1(HelloWorld::menuItemSettingCallback, this));
+	item3->setScale(0.5);
+	item3->setPosition(Vec2(30, visibleSize.height - 30));
+
 	Menu *mn = Menu::create(item1, item2,item3, NULL);
-	mn->alignItemsVertically();
+	mn->setPosition(Vec2(0, 0 ));
+	//mn->setAnchorPoint(Vec2(0, 0));
 	this->addChild(mn);
     return true;
 }
-
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
