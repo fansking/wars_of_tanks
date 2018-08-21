@@ -212,9 +212,3 @@ void Game::keepMoving(float dt)
 	this->setPlayerPosition(playerPos);
 
 }
-
-void Game::RestartCallback(Ref * pSender)
-{
-	auto scene = Game::createScene();
-	Director::getInstance()->replaceScene(scene);
-}
