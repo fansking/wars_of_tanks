@@ -17,9 +17,6 @@ class Game :public Layer
 	Enemy *_enemy_2;
 public:
 	static Scene * createScene();
-	virtual bool onTouchBegan(Touch* touch, Event * event);
-	virtual void onTouchMoved(Touch* touch, Event * event);
-	virtual void onTouchEnded(Touch* touch, Event * event);
 	void setPlayerPosition(Vec2 position);
 	Vec2 tileCoordFromPosition(Vec2 position);
 	virtual bool init();

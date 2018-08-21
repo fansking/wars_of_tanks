@@ -4,49 +4,12 @@
 USING_NS_CC;
 Scene *Game::createScene()
 {
-	auto scene = Scene::create();
+	auto scene = Scene::createWithPhysics();
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+
 	auto layer = Game::create();
 	scene->addChild(layer);
 	return scene;
-}
-bool Game::onTouchBegan(Touch* touch, Event * event)
-{
-	log("onTouchBegan");
-	return true;
-}
-void Game::onTouchMoved(Touch* touch, Event * event)
-{
-	log("onTouchMoved");
-}
-void Game::onTouchEnded(Touch* touch, Event * event)
-{
-	log("onTouchEnded");
-	Vec2 touchLocation = touch->getLocation();
-	Vec2 playerPos = _player->getPosition();
-	Vec2 diff = touchLocation - playerPos;
-
-	if (abs(diff.x) > abs(diff.y))
-	{
-		if (diff.x>0)
-		{
-			playerPos.x += _tileMap->getTileSize().width;
-		}
-		else
-		{
-			playerPos.x -= _tileMap->getTileSize().width;
-		}
-	}
-	else {
-		if (diff.y > 0)
-		{
-			playerPos.y += _tileMap->getTileSize().height;
-		}
-		else
-		{
-			playerPos.y -= _tileMap->getTileSize().height;
-		}
-	}
-	this->runAction(MoveTo::create(5, playerPos));
 }
 void Game::setPlayerPosition(Vec2 position)
 {
@@ -84,6 +47,22 @@ bool Game::init()
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+	auto listener = EventListenerPhysicsContact::create();
+	listener->onContactBegin = [](PhysicsContact & contact)
+	{
+		log("onContactBegin");
+		auto spriteA = (Sprite *)contact.getShapeA()->getBody()->getNode();
+		auto spriteB = (Sprite *)contact.getShapeB()->getBody()->getNode();
+		if (spriteA && spriteB)
+		{
+			spriteA->removeFromParent();
+			spriteB->removeFromParent();
+		}
+		return true;
+	};
+
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
 
 	_tileMap = TMXTiledMap::create("map/map2.tmx");
 	_tileMap->setScale(Director::getInstance()->getVisibleSize().width / (_tileMap->getMapSize().width * _tileMap->getTileSize().width));

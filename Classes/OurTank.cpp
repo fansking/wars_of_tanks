@@ -8,6 +8,14 @@ OurTank::OurTank(int initialHP)
 {
 	this->nHP = initialHP;
 	this->weaponType = WEAPON_0;
+
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+
+	auto body = PhysicsBody::createEdgeBox(Size(32, 32),
+		PHYSICSBODY_MATERIAL_DEFAULT, 3.0f, Vec2(16, 16));
+	body->setCategoryBitmask(0x01);
+	body->setContactTestBitmask(0x01);
+	this->setPhysicsBody(body);
 }
 
 OurTank * OurTank::createWithImage(int initialHP)
