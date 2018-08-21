@@ -1,7 +1,5 @@
 #include"Enemy.h"
 
-
-
 Enemy::Enemy(EnemyTypes enemyType) : OurTank(2){
 	this->enemyType = enemyType;
 }
@@ -37,6 +35,7 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 		enemy->spawn();
 		enemy->unscheduleUpdate();
 		enemy->scheduleUpdate();
+		enemy->setTag(2);
 
 		return enemy;
 		

@@ -25,6 +25,7 @@ OurTank * OurTank::createWithImage(int initialHP)
 	{
 		player->autorelease();
 	}
+	//player->setTag(1);
 	return player;
 }
 

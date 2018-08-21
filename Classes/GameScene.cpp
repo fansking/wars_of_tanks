@@ -1,11 +1,12 @@
 #include "SimpleAudioEngine.h"
 #include "GameScene.h"
+#include "Gold.h"
 
 USING_NS_CC;
 Scene *Game::createScene()
 {
 	auto scene = Scene::createWithPhysics();
-	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = Game::create();
 	scene->addChild(layer);
@@ -54,11 +55,20 @@ bool Game::init()
 		log("onContactBegin");
 		auto spriteA = (Sprite *)contact.getShapeA()->getBody()->getNode();
 		auto spriteB = (Sprite *)contact.getShapeB()->getBody()->getNode();
-		if (spriteA && spriteB)
+		//log("%d %d", spriteA->getTag(), spriteB->getTag());
+		if (spriteA && spriteA->getTag()==2 && spriteB && spriteB->getTag()==3)
 		{
 			spriteA->removeFromParent();
 			spriteB->removeFromParent();
 		}
+		else if (spriteA && spriteB && spriteA->getTag()==1 && spriteB->getTag()==6)
+		{
+			log("%d %d", spriteA->getTag(), spriteB->getTag());
+			((PickupBase *)spriteB)->isContact((OurTank *)spriteA);
+		}
+
+		//auto item = MenuItemImage::create("weixin.png", "weixin_h.png");
+
 		return true;
 	};
 
@@ -86,13 +96,23 @@ bool Game::init()
 	auto _enemy_2 = Enemy::createWithEnemyTypes(EnemyTypeEnemy2);
 	_enemy_1->setPosition(Vec2(x1,y1));
 	_enemy_2->setPosition(Vec2(x2,y2));
-	addChild(_enemy_1, 2, 200);
-	addChild(_enemy_2, 2, 200);
+	addChild(_enemy_1, 2, 3);
+	addChild(_enemy_2, 2, 3);
+
+	ValueMap spawnPoint_3 = group->getObject("gold");
+	float x3 = spawnPoint_3["x"].asFloat();
+	float y3 = spawnPoint_3["y"].asFloat();
+
+	auto gold = PickupBase::createWithType(Gold);
+	gold->setPosition(Vec2(x3, y3));
+	this->addChild(gold);
+	gold->setTag(6);
 
 	_player = OurTank::createWithImage(5);
 	_player->setAnchorPoint(Vec2(0.5, 0.5));
 	_player->setPosition(Vec2(x0, y0));
-	addChild(_player, 2, 200);
+	addChild(_player);
+	_player->setTag(1);
 	_collidable = _tileMap->getLayer("collidable");
 
 	_player->setDirection(146);
@@ -181,4 +201,10 @@ void Game::keepMoving(float dt)
 	}
 	this->setPlayerPosition(playerPos);
 
+}
+
+void Game::RestartCallback(Ref * pSender)
+{
+	auto scene = Game::createScene();
+	Director::getInstance()->replaceScene(scene);
 }

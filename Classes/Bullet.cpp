@@ -21,6 +21,7 @@ Bullet * Bullet::createWithImage()
 		body->setCategoryBitmask(0x02);
 		body->setContactTestBitmask(0x02);
 		bullet->setPhysicsBody(body);
+		bullet->setTag(2);
 		return bullet;
 	}
 	CC_SAFE_DELETE(bullet);

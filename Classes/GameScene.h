@@ -24,6 +24,8 @@ public:
 	virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event);
 	virtual void onKeyReleased(EventKeyboard::KeyCode, Event *);
 	void keepMoving(float dt);
+
+	//static void RestartCallback(Ref * pSender);
 	
 	CREATE_FUNC(Game);
 
