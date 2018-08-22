@@ -5,7 +5,7 @@
 using namespace cocos2d;
 
 #define GOLDPATH "map/stageGold1.png"
-#define WEAPON_1 ""
+
 
 typedef enum
 {

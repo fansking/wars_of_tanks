@@ -44,6 +44,7 @@ void PickupBase::isContact(OurTank * player)
 	{
 	case Gold:
 		player->setHP(player->getHP()+1);
+		player->setWeaponType(WEAPON_3);
 		log("HP: %d", player->getHP());
 		this->removeFromParent();
 		break;
