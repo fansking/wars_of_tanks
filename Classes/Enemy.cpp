@@ -34,7 +34,7 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 		enemy->setVisible(false);
 		enemy->spawn();
 		enemy->unscheduleUpdate();
-		enemy->scheduleUpdate();
+		//enemy->scheduleUpdate();
 		enemy->setTag(2);
 
 		return enemy;

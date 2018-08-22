@@ -1,9 +1,11 @@
-#include "SimpleAudioEngine.h"
 #include "GameScene.h"
-#include "Gold.h"
 
-#include "Bullet.h"
 USING_NS_CC;
+
+TMXTiledMap * EnemyAI::tileMap = nullptr;
+TMXLayer * EnemyAI::layer = nullptr;
+int EnemyAI::mapSize = 20;
+int EnemyAI::tileSize = 32;
 
 Scene *Game::createScene()
 {
@@ -78,17 +80,26 @@ bool Game::init()
 
 	_tileMap = TMXTiledMap::create("map/map2.tmx");
 	Bullet::walklay = _tileMap->getLayer("layer1");
-	
-	_tileMap->setScale(Director::getInstance()->getVisibleSize().width / (_tileMap->getMapSize().width * _tileMap->getTileSize().width));
-	this->addChild(_tileMap);
 
+	EnemyAI::tileMap = _tileMap;
 	
-	
-	
-	
+	_tileMap->setTag(1);
+	//_tileMap->setScale(Director::getInstance()->getVisibleSize().width / (_tileMap->getMapSize().width * _tileMap->getTileSize().width));
+	this->addChild(_tileMap);
 
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("ninja");
+
+	ValueMap spawnPoint_4 = group->getObject("enemyTest");
+	float x4 = spawnPoint_4["x"].asFloat();
+	float y4 = spawnPoint_4["y"].asFloat();
+	auto enemy4 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
+	enemy4->setAnchorPoint(Vec2(0.5, 0.5));
+	enemy4->setPosition(Vec2(x4, y4));
+	this->addChild(enemy4);
+
+	
+	enemyAIs[0] = EnemyAI::createWithEnemy(enemy4);
 
 	float x0 = spawnPoint_0["x"].asFloat();
 	float y0 = spawnPoint_0["y"].asFloat();
@@ -105,6 +116,9 @@ bool Game::init()
 	auto _enemy_2 = Enemy::createWithEnemyTypes(EnemyTypeEnemy2);
 	_enemy_1->setPosition(Vec2(x1,y1));
 	_enemy_2->setPosition(Vec2(x2,y2));
+	enemyAIs[1] = EnemyAI::createWithEnemy(_enemy_1);
+	enemyAIs[2] = EnemyAI::createWithEnemy(_enemy_2);
+
 	addChild(_enemy_1, 2, 3);
 	addChild(_enemy_2, 2, 3);
 
@@ -125,6 +139,8 @@ bool Game::init()
 	_collidable = _tileMap->getLayer("collidable");
 	Bullet::coll = _collidable;
 
+	EnemyAI::layer = _collidable;
+
 	_player->setDirection(146);
 
 	/*setTouchEnabled(true);
@@ -132,6 +148,12 @@ bool Game::init()
 	setKeypadEnabled(true);*/
 
 	setKeyboardEnabled(true);
+
+	auto path = FileUtils::getInstance()->getWritablePath();
+	log("%s", MyUtility::gbk_2_utf8(path));
+	auto str = FileUtils::getInstance()->writeStringToFile("123", path + "file_data.json");
+
+	this->scheduleUpdate();
 
 	return true;
 }
@@ -188,7 +210,7 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 
 void Game::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
 {
-	this->unscheduleAllSelectors();
+	this->unschedule(schedule_selector(Game::keepMoving));
 }
 
 void Game::keepMoving(float dt)
@@ -211,4 +233,12 @@ void Game::keepMoving(float dt)
 	}
 	this->setPlayerPosition(playerPos);
 
+}
+
+void Game::update(float dt)
+{
+	for (int i = 0; enemyAIs[i]; ++i)
+	{
+		enemyAIs[i]->update(dt);
+	}
 }

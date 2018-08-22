@@ -3,6 +3,11 @@
 #include <SimpleAudioEngine.h>
 #include "OurTank.h"
 #include"Enemy.h"
+#include "EnemyAI.h"
+#include "Bullet.h"
+#include "MyUtility.h"
+#include "PickupBase.h"
+
 #ifndef _GAME_SCENE_H_
 #define _GAME_SCENE_H_
 
@@ -15,6 +20,8 @@ class Game :public Layer
 	TMXLayer *_collidable;
 	Enemy *_enemy_1;
 	Enemy *_enemy_2;
+	EnemyAI * enemyAIs[5];
+
 public:
 	TMXTiledMap *_tileMap;
 	
@@ -28,6 +35,7 @@ public:
 	void keepMoving(float dt);
 
 	//static void RestartCallback(Ref * pSender);
+	virtual void update(float dt);
 	
 	CREATE_FUNC(Game);
 
