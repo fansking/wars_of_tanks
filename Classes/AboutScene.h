@@ -2,6 +2,7 @@
 #include<cocos2d.h>
 #include"cocos-ext.h"
 USING_NS_CC_EXT;
+USING_NS_CC;
 using namespace cocos2d::extension;
 #include "audio/include/SimpleAudioEngine.h"
 using namespace CocosDenshion;
@@ -9,19 +10,21 @@ using namespace CocosDenshion;
 class About :public cocos2d::Layer,public ScrollViewDelegate
 {
 public:
-	ScrollView * scrollView;
 	static cocos2d::Scene * createScene();
 	bool init();
-	void menuSoundToggleCallback(Ref *pSender);
-	void menuMusicToggleCallback(Ref *pSender);
-	void menuOkCallback(Ref *pSender);
-	void musicChanged(Ref *sender, Control::EventType);
-	void soundChanged(Ref *sender, Control::EventType);
 
+private:
+	ScrollView * scrollView;
+	int x, page = 0, spiritwidth;
 	virtual void scrollViewDidScroll(ScrollView * view) {};
 	virtual void scrollViewDidZoom(ScrollView * view) {};
-
-
+	bool onTouchBegan(Touch* touch, Event* event);//触摸开始方法
+	void onTouchMoved(Touch* touch, Event* event);//触摸移动方法
+	void onTouchEnded(Touch* touch, Event* event);//触摸结束方法
+	void adjustScrollView();
+	void onMouseUp(Event * event);
+	void onMouseDown(Event *event);
+	void menuOkCallback(Ref *pSender);
 	CREATE_FUNC(About);
 
 };

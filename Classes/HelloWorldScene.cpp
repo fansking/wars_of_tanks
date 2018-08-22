@@ -59,7 +59,8 @@ void HelloWorld::menuItem2Callback(Ref *pSender)
 	//MenuItem *item = (MenuItem*)pSender;
 	//log("Touch Help Menu Item %p", item);
 	auto sc = About::createScene();
-	Director::getInstance()->pushScene(sc);
+	auto transition = TransitionCrossFade::create(1, sc);
+	Director::getInstance()->pushScene(transition);
 }
 void HelloWorld::menuItemSettingCallback(Ref *pSender)
 {
@@ -70,7 +71,8 @@ void HelloWorld::menuItemSettingCallback(Ref *pSender)
 void HelloWorld::menuItemStartCallback(cocos2d::Ref *pSender)
 {
 	auto sc = Game::createScene();
-	Director::getInstance()->pushScene(sc);
+	auto transition = TransitionFade::create(1, sc);
+	Director::getInstance()->pushScene(transition);
 }
 // on "init" you need to initialize your instance
 bool HelloWorld::init()

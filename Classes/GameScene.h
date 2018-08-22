@@ -29,6 +29,8 @@ public:
 
 	//static void RestartCallback(Ref * pSender);
 	
+private:
+	int tileX, tileY, mapX, mapY;
 	CREATE_FUNC(Game);
 
 };
