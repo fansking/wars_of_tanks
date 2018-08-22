@@ -65,7 +65,7 @@ void Bullet::update(float dt)
 	int Y = ((20 * 32) - pos.y) / 32;
 	Sprite *mytile = walklay->getTileAt(Vec2(X, Y));
 	Sprite *mycoll = coll->getTileAt(Vec2(X, Y));
-	 if (mytile != nullptr && mytile->isVisible()&& this->isVisible()) {
+	 if (mytile != nullptr && mytile->isVisible()&& this->isVisible() && mycoll) {
 		 mytile->setVisible(false);
 		 mycoll->removeFromParent();
 		 this->setVisible(false);
