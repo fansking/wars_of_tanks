@@ -16,6 +16,7 @@ class OurTank : public Sprite
 	CC_SYNTHESIZE(int, nHP, HP);
 	CC_SYNTHESIZE(int, nDirection, Direction);
 	CC_SYNTHESIZE(WeaponType, weaponType, WeaponType);
+	CC_SYNTHESIZE(Vec2, vel, Vel);
 
 public:
 	OurTank(int);

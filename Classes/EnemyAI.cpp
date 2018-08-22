@@ -4,7 +4,6 @@
 
 EnemyAI::EnemyAI()
 {
-
 }
 
 EnemyAI * EnemyAI::createWithEnemy(Enemy * obj)
@@ -28,7 +27,8 @@ void EnemyAI::update(float dt)
 
 	Vec2 target = obj->getPosition() + vel * dt;
 	Size screenSize = Director::getInstance()->getVisibleSize();
-	if (target.y + 16 >= screenSize.height || target.y - 16 <= 0 || target.x + 16 >= screenSize.width || target.x - 16 <= 0)
+	if (target.y + 16 >= screenSize.height || target.y - 16 <= 0 || 
+		target.x + 16 >= screenSize.width || target.x - 16 <= 0)
 	{
 		srand(time(NULL));
 		int nDirection = rand() % 4;

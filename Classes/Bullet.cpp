@@ -21,8 +21,8 @@ Bullet * Bullet::createWithImage()
 		//bullet->setPhysicsBody(body);
 		auto body = PhysicsBody::createEdgeBox(Size(16, 16), 
 			PHYSICSBODY_MATERIAL_DEFAULT, 2.0f, Vec2(0, 0));
-		body->setCategoryBitmask(0x02);
-		body->setContactTestBitmask(0x02);
+		body->setCategoryBitmask(0x0F);
+		body->setContactTestBitmask(0xF0);
 		bullet->setPhysicsBody(body);
 		bullet->setTag(2);
 		return bullet;

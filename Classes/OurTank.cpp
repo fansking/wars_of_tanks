@@ -14,7 +14,7 @@ OurTank::OurTank(int initialHP)
 	auto body = PhysicsBody::createEdgeBox(Size(32, 32),
 		PHYSICSBODY_MATERIAL_DEFAULT, 3.0f, Vec2(16, 16));
 	body->setCategoryBitmask(0x01);
-	body->setContactTestBitmask(0x01);
+	body->setContactTestBitmask(0x02);
 	this->setPhysicsBody(body);
 }
 

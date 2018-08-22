@@ -14,7 +14,6 @@ class Enemy :public OurTank {
 public:
 	Enemy(EnemyTypes enemyType);
 
-	void spawn();//make enemy
 	void shoot();
 	virtual void update(float dt);
 	static Enemy * createWithEnemyTypes(EnemyTypes enemyType);

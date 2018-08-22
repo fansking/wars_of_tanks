@@ -18,6 +18,11 @@ Scene *Game::createScene()
 }
 void Game::setPlayerPosition(Vec2 position)
 {
+	Size screenSize = Director::getInstance()->getVisibleSize();
+	if (position.y >= screenSize.height || position.y <= 0 || position.x >= screenSize.width || position.x <= 0)
+	{
+		return;
+	}
 	Vec2 tileCoord = this->tileCoordFromPosition(position);
 	int tileGid = _collidable->getTileGIDAt(tileCoord);
 	if (tileGid > 0) {
@@ -29,11 +34,6 @@ void Game::setPlayerPosition(Vec2 position)
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("empty.mp3");
 			return;
 		}
-	}
-	Size screenSize = Director::getInstance()->getVisibleSize();
-	if (position.y >= screenSize.height || position.y <= 0 || position.x >= screenSize.width || position.x <= 0)
-	{
-		return;
 	}
 	_player->runAction(MoveTo::create(0.1, position));
 }
@@ -60,7 +60,7 @@ bool Game::init()
 		auto spriteA = (Sprite *)contact.getShapeA()->getBody()->getNode();
 		auto spriteB = (Sprite *)contact.getShapeB()->getBody()->getNode();
 		//log("%d %d", spriteA->getTag(), spriteB->getTag());
-		if (spriteA && spriteA->getTag()==2 && spriteB && spriteB->getTag()==3)
+		if (spriteA && spriteB && spriteA->getTag()==3 && spriteB->getTag()==2)
 		{
 			spriteA->removeFromParent();
 			spriteB->removeFromParent();
@@ -119,8 +119,8 @@ bool Game::init()
 	enemyAIs[1] = EnemyAI::createWithEnemy(_enemy_1);
 	enemyAIs[2] = EnemyAI::createWithEnemy(_enemy_2);
 
-	addChild(_enemy_1, 2, 3);
-	addChild(_enemy_2, 2, 3);
+	addChild(_enemy_1);
+	addChild(_enemy_2);
 
 	ValueMap spawnPoint_3 = group->getObject("gold");
 	float x3 = spawnPoint_3["x"].asFloat();
