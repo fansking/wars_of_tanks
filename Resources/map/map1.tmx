@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" infinite="0" nextobjectid="19">
+ <tileset firstgid="1" name="tmw_desert_spacing2" tilewidth="60" tileheight="60" tilecount="6" columns="3">
+  <image source="tmw_desert_spacing2.png" width="180" height="120"/>
+ </tileset>
+ <tileset firstgid="7" name="0" tilewidth="60" tileheight="60" tilecount="40" columns="8">
+  <image source="0.png" width="480" height="300"/>
+ </tileset>
+ <tileset firstgid="47" name="collidable" tilewidth="60" tileheight="60" tilecount="1" columns="1">
+  <image source="collidable.png" width="60" height="60"/>
+ </tileset>
+ <tileset firstgid="48" name="bg6" tilewidth="60" tileheight="60" tilecount="252" columns="21">
+  <image source="bg6.png" width="1280" height="720"/>
+ </tileset>
+ <layer name="ground" width="20" height="12">
+  <data encoding="base64" compression="zlib">
+   eJwtzGOM1wEAANBfdpdumXfxU7ZbuuyW7ZbtVksXLq4tW2vZXMvmst2y3Wv7f3hfX/4gCApQkEIUpghFKUZxSlCSUpSmDGUpR3kqUJFKVKYKValGdaKoQU1qUZs61KUe9WlAQxrRmCY0pRnNaUFLWtGaNrSlHe3pQEc60ZkudKUb3elBT3rRmz70pR/9GcBABjGYIQxlGMMZwUhGMZoxjGUc4wlnAhOZxGSmEM1UpjGdGcQwk1nMZg5zmcf80PXfAhayiMUsYSnLWM4KVrKK1axhLetYzwY2hq5NbGYLW9nGdnawk13sZg972cd+DnCQQxzmSOg7yjGOc4KTnOI0ZzjLOc5zgYtc4jJXuMo1rnODm9ziNne4yz3u84CHPOIxT3jKM57zgpe84jVveMs73vOBj3ziM1/4yje+84Of/OI3f/hLECsIYhOHuMQjPglISCISk4SkJCM5YaQgJalITRrCSUs60pOBjGQiM1nISjayk4MIIslJLnKTh7zk4x+0l3aV
+  </data>
+ </layer>
+ <layer name="breakable0" width="20" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUDFUAAAPAAAE=
+  </data>
+ </layer>
+ <layer name="breakable1" width="20" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAN4INibIANisk1kw+HGDZ5SsxGlkMGxLidEYiZ8OjjwyGOC7AAMSseeVL8jM8+WNyQG464ACXmYQtLSgCusCQ3XeICxJpHib0App0Bkw==
+  </data>
+ </layer>
+ <layer name="collidable" width="20" height="12" opacity="0">
+  <properties>
+   <property name="collision" value="ture"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYKAN0IdiUuWIMVMfhxg2eUrMRpYjhY9sHi51uNikmEdIDynmo9tDKP5IBZSkB3LjlFTz6GUPNe0FAETmCQA=
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="1" name="gold" x="960" y="77" width="60" height="60"/>
+  <object id="2" name="re1" x="721" y="71" width="60" height="60"/>
+  <object id="3" name="re2" x="448" y="116" width="60" height="60"/>
+  <object id="4" name="player" x="720" y="600" width="60" height="60"/>
+  <object id="5" name="re4" x="240" y="120" width="60" height="60"/>
+  <object id="6" name="enemy0" x="420" y="600" width="60" height="60"/>
+  <object id="7" name="re6" x="742" y="454"/>
+  <object id="8" name="enemy1" x="443" y="454"/>
+  <object id="9" name="re8" x="270" y="270"/>
+  <object id="10" name="re9" x="278" y="510"/>
+  <object id="11" name="re10" x="1101" y="352"/>
+ </objectgroup>
+</map>

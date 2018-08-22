@@ -1,5 +1,8 @@
 #include "OurTank.h"
 #include "Bullet.h"
+#include "bullet/BulletFire.h"
+#include "bullet/BulletPlus.h"
+#include "bullet/BulletScatter.h"
 #include <SimpleAudioEngine.h>
 
 using namespace CocosDenshion;
@@ -31,13 +34,46 @@ OurTank * OurTank::createWithImage(int initialHP)
 
 void OurTank::openFire()
 {
-	switch (weaponType)
+	SimpleAudioEngine::getInstance()->playEffect("sound/sfx_fire1.mp3");
+	if (weaponType == WEAPON_0) {
+		Bullet * bullet = Bullet::createWithImage();
+		this->getParent()->addChild(bullet);
+		bullet->shootBulletFromTank(this);
+	}
+	else if(weaponType == WEAPON_1){
+		BulletPlus * bullet = BulletPlus::createWithImage();
+		this->getParent()->addChild(bullet);
+		bullet->shootBulletFromTank(this);
+		
+	}
+	else if (weaponType == WEAPON_2) {
+		BulletFire * bullet = BulletFire::createWithImage();
+		this->getParent()->addChild(bullet);
+		bullet->shootBulletFromTank(this);
+	}else if(weaponType == WEAPON_3) {
+		BulletScatter * bullet1 = BulletScatter::createWithImage(1);
+		BulletScatter * bullet2 = BulletScatter::createWithImage(2);
+		BulletScatter * bullet3 = BulletScatter::createWithImage(3);
+		this->getParent()->addChild(bullet1);
+		bullet1->shootBulletFromTank(this);
+		this->getParent()->addChild(bullet2);
+		bullet2->shootBulletFromTank(this);
+		this->getParent()->addChild(bullet3);
+		bullet3->shootBulletFromTank(this);
+	}
+	/*switch (weaponType)
 	{
 	case WEAPON_0:
-		SimpleAudioEngine::getInstance()->playEffect("sound/sfx_fire1.mp3");
+		
 		Bullet * bullet = Bullet::createWithImage();
 		this->getParent()->addChild(bullet);
 		bullet->shootBulletFromTank(this);
 		break;
-	}
+	case WEAPON_1:
+		BulletPlus * bullet1 = BulletPlus::createWithImage();
+		this->getParent()->addChild(bullet1);
+		bullet1->shootBulletFromTank(this);
+		break;
+
+	}*/
 }
