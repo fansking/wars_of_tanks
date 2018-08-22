@@ -68,8 +68,6 @@ bool Game::init()
 
 	EnemyAI::tileMap = _tileMap;
 	
-	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
-	ValueMap spawnPoint_0 = group->getObject("tankpoint");
 
 /*<<<<<<< HEAD
 	ValueMap spawnPoint_4 = group->getObject("enemyTest");
@@ -87,6 +85,10 @@ bool Game::init()
 	float y0 = spawnPoint_0["y"].asFloat();
 	ValueMap spawnPoint_1 = group->getObject("enemy_1");
 =======*/
+
+	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
+	ValueMap spawnPoint_0 = group->getObject("tankpoint");
+
 	int  x0 = spawnPoint_0["x"].asInt();
 	int  y0 = spawnPoint_0["y"].asInt();
 	ValueMap spawnPoint_1 = group->getObject("re1");
@@ -114,7 +116,6 @@ bool Game::init()
 
 	auto gold = PickupBase::createWithType(Gold);
 	gold->setPosition(Vec2(x3, y3));
-	this->addChild(gold);
 	gold->setTag(6);
 
 	_player = OurTank::createWithImage(5);
