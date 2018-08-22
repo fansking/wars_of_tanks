@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60">
+ <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="60" tileheight="60">
+  <image source="tmw_desert_spacing.png" width="480" height="300"/>
+ </tileset>
+ <tileset firstgid="41" name="tmw_desert_spacing - 副本" tilewidth="60" tileheight="60">
+  <image source="tmw_desert_spacing - 副本.png" width="480" height="300"/>
+ </tileset>
+ <layer name="layer1" width="20" height="12">
+  <data encoding="base64" compression="zlib">
+   eJy1kEEOgDAIBDc8xKMnj6b/f5oXSBBxXQ5OsmlDmykF4KyP8wmrRGX3ZMwdsca+3rGmXn1xJ/dmLwGevszRvM1czBPJvu5vUd9KGEpvqot5gXvfzKfMbDLDCRPn6VG9f3IBUBsFiQ==
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object name="ninja" x="70" y="425" width="53" height="44"/>
+  <object name="enemy_1" x="234" y="96"/>
+  <object name="enemy_2" x="168" y="238" width="1" height="14"/>
+ </objectgroup>
+</map>

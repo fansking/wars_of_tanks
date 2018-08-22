@@ -37,6 +37,8 @@ public:
 	//static void RestartCallback(Ref * pSender);
 	virtual void update(float dt);
 	
+private:
+	int tileX, tileY, mapX, mapY;
 	CREATE_FUNC(Game);
 
 };

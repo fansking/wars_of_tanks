@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextobjectid="18">
  <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48" columns="8">
+=======
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1">
+>>>>>>> hbj
   <image source="tmw_desert_spacing.png" width="265" height="199"/>
  </tileset>
- <tileset firstgid="49" name="collidable" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="collidable.png" width="32" height="32"/>
+ <tileset firstgid="49" name="collidable" tilewidth="32" tileheight="32">
+  <image source="collidable.png" width="60" height="60"/>
   <tile id="0">
    <properties>
     <property name="collidable" value="true"/>
@@ -27,10 +32,18 @@
   </data>
  </layer>
  <objectgroup name="objects">
+<<<<<<< HEAD
   <object id="1" name="ninja" x="16" y="16" width="32" height="32"/>
   <object id="7" name="enemy_2" x="64" y="64"/>
   <object id="8" name="enemy_1" x="128" y="128"/>
   <object id="9" name="gold" x="336" y="144" width="32" height="32"/>
   <object id="17" name="enemyTest" x="336" y="336"/>
+=======
+  <object name="ninja" x="16" y="16" width="32" height="32"/>
+  <object gid="31" x="758" y="25" width="32" height="32"/>
+  <object name="enemy_2" x="64" y="64"/>
+  <object name="enem_1" x="128" y="128"/>
+  <object name="gold" x="336" y="144" width="32" height="32"/>
+>>>>>>> hbj
  </objectgroup>
 </map>

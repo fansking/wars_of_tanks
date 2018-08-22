@@ -1,4 +1,6 @@
 #include "GameScene.h"
+#include "Gold.h"
+#include "Bullet.h"
 
 USING_NS_CC;
 
@@ -15,32 +17,6 @@ Scene *Game::createScene()
 	auto layer = Game::create();
 	scene->addChild(layer);
 	return scene;
-}
-void Game::setPlayerPosition(Vec2 position)
-{
-	Size screenSize = Director::getInstance()->getVisibleSize();
-	if (position.y >= screenSize.height || position.y <= 0 || position.x >= screenSize.width || position.x <= 0)
-	{
-		return;
-	}
-	Vec2 tileCoord = this->tileCoordFromPosition(position);
-	int tileGid = _collidable->getTileGIDAt(tileCoord);
-	if (tileGid > 0) {
-		Value prop = _tileMap->getPropertiesForGID(tileGid);
-		ValueMap propValueMap = prop.asValueMap();
-
-		std::string collision = propValueMap["collidable"].asString();
-		if (collision == "true") {
-			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("empty.mp3");
-			return;
-		}
-	}
-	_player->runAction(MoveTo::create(0.1, position));
-}
-Vec2 Game::tileCoordFromPosition(Vec2 pos) {
-	int x = pos.x / _tileMap->getTileSize().width;
-	int y = ((_tileMap->getMapSize().height * _tileMap->getTileSize().height) - pos.y) / _tileMap->getTileSize().height;
-	return Vec2(x, y);
 }
 
 bool Game::init()
@@ -78,18 +54,24 @@ bool Game::init()
 
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
 
-	_tileMap = TMXTiledMap::create("map/map2.tmx");
+	_tileMap = TMXTiledMap::create("map/37.tmx");
 	Bullet::walklay = _tileMap->getLayer("layer1");
 
-	EnemyAI::tileMap = _tileMap;
-	
-	_tileMap->setTag(1);
+	tileX = _tileMap->getTileSize().width;
+	tileY = _tileMap->getTileSize().height;
+	mapX = _tileMap->getMapSize().width;
+	mapY = _tileMap->getMapSize().height;
+	//log("%d,%d", tileX, tileY);
+
 	//_tileMap->setScale(Director::getInstance()->getVisibleSize().width / (_tileMap->getMapSize().width * _tileMap->getTileSize().width));
 	this->addChild(_tileMap);
 
+	EnemyAI::tileMap = _tileMap;
+	
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
-	ValueMap spawnPoint_0 = group->getObject("ninja");
+	ValueMap spawnPoint_0 = group->getObject("tankpoint");
 
+/*<<<<<<< HEAD
 	ValueMap spawnPoint_4 = group->getObject("enemyTest");
 	float x4 = spawnPoint_4["x"].asFloat();
 	float y4 = spawnPoint_4["y"].asFloat();
@@ -104,13 +86,17 @@ bool Game::init()
 	float x0 = spawnPoint_0["x"].asFloat();
 	float y0 = spawnPoint_0["y"].asFloat();
 	ValueMap spawnPoint_1 = group->getObject("enemy_1");
+=======*/
+	int  x0 = spawnPoint_0["x"].asInt();
+	int  y0 = spawnPoint_0["y"].asInt();
+	ValueMap spawnPoint_1 = group->getObject("re1");
 
-	float x1 = spawnPoint_1["x"].asFloat();
-	float y1 = spawnPoint_1["y"].asFloat();
-	ValueMap spawnPoint_2 = group->getObject("enemy_2");
+	int x1 = spawnPoint_1["x"].asInt();
+	int y1 = spawnPoint_1["y"].asInt();
+	ValueMap spawnPoint_2 = group->getObject("re2");
 
-	float x2 = spawnPoint_2["x"].asFloat();
-	float y2 = spawnPoint_2["y"].asFloat();
+	int x2 = spawnPoint_2["x"].asInt();
+	int y2 = spawnPoint_2["y"].asInt();
 
 	auto _enemy_1 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
 	auto _enemy_2 = Enemy::createWithEnemyTypes(EnemyTypeEnemy2);
@@ -141,6 +127,8 @@ bool Game::init()
 
 	EnemyAI::layer = _collidable;
 
+	Vec2 playerPos = _player->getPosition();
+	//log("%d,%d", playerPos.x, playerPos.y);
 	_player->setDirection(146);
 
 	/*setTouchEnabled(true);
@@ -158,10 +146,43 @@ bool Game::init()
 	return true;
 }
 
+void Game::setPlayerPosition(Vec2 position)
+{
+	Size screenSize = Director::getInstance()->getVisibleSize();
+	if (position.y > screenSize.height - tileY / 2 || position.y < 0 || position.x > screenSize.width - tileX / 2 || position.x < 0)
+	{
+		return;
+	}
+	Vec2 tileCoord = this->tileCoordFromPosition(position);
+	log("%f, %f", tileCoord.x, tileCoord.y);
+	int tileGid = _collidable->getTileGIDAt(tileCoord);
+	if (tileGid > 0) {
+		Value prop = _tileMap->getPropertiesForGID(tileGid);
+		ValueMap propValueMap = prop.asValueMap();
+		std::string collision = propValueMap["collidable"].asString();
+		if (collision == "true") {
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("empty.mp3");
+			return;
+		}
+	}
+	_player->runAction(MoveTo::create(0.1, position));
+}
+Vec2 Game::tileCoordFromPosition(Vec2 pos) {
+	int x = (int)pos.x / tileX;
+	//log("%d,%d", tileX, tileY);
+	//log("%f,%fasdas", pos.x, pos.y);
+//	log("%d, %d", _tileMap->getTileSize().width, _tileMap->getMapSize().width);
+	int y = (int)(mapY*tileY - pos.y) / tileY;
+	//log("%d,%d", x, y);
+	return Vec2(x, y);
+}
+
+
 void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 {
 	log("%d has been pressed", keyCode);
 	Vec2 playerPos = _player->getPosition();
+	log("%f,%f", _player->getPosition().x, _player->getPosition().y);
 	if ((int)keyCode == 59)
 	{
 		_player->openFire();
@@ -203,6 +224,7 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 		playerPos.x += _tileMap->getTileSize().width;
 		break;
 	}
+	//log("%f,%f", playerPos.x, playerPos.y);
 	this->setPlayerPosition(playerPos);
 
 	this->schedule(schedule_selector(Game::keepMoving), 0.1f);
