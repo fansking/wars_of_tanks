@@ -251,7 +251,6 @@ void Game::update(float dt)
 {
 	for (int i = 0; enemyAIs[i]; ++i)
 	{
-
 		enemyAIs[i]->update(dt);
 	}
 }
