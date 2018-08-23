@@ -1,4 +1,5 @@
 #include "OurTank.h"
+#include "GameScene.h"
 #include "Bullet.h"
 #include "bullet/BulletFire.h"
 #include "bullet/BulletPlus.h"
@@ -9,6 +10,8 @@ using namespace CocosDenshion;
 
 OurTank::OurTank(int initialHP)
 {
+	
+	
 	this->nHP = initialHP;
 	this->weaponType = WEAPON_0;
 
@@ -19,6 +22,7 @@ OurTank::OurTank(int initialHP)
 	body->setCategoryBitmask(0x01);
 	body->setContactTestBitmask(0x02);
 	this->setPhysicsBody(body);
+	
 }
 
 OurTank * OurTank::createWithImage(int initialHP)
@@ -76,4 +80,42 @@ void OurTank::openFire()
 		break;
 
 	}*/
+}
+
+void OurTank::addenemy() {
+	TMXObjectGroup *group = Game::_tileMap->getObjectGroup("objects");
+	ValueMap spawnPoint_0 = group->getObject("playerA");
+	ValueMap enemy_spawn[10] = {};
+	Enemy * enemy[10] = {NULL};
+	static int x = 0;
+	while (spawnPoint_0 != ValueMap()) {
+		
+		char enemyname[10] = "enemy";
+		char str[10];
+		sprintf(str, "%d", x);
+		strcat(enemyname, str);
+		++x;
+		log("%s", enemyname);
+		spawnPoint_0 = group->getObject(enemyname);
+		if (spawnPoint_0 == ValueMap()) { break; }
+		/*int  x0 = spawnPoint_0["x"].asInt();
+		int  y0 = spawnPoint_0["y"].asInt();
+		auto _enemy_1 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
+		_enemy_1->setPosition(Vec2(x0, y0));
+		this->getParent()->addChild(_enemy_1, 2, 200);*/
+	}
+	for (int i = 0; i <= x; i++) {
+		char enemyname[10] = "enemy";
+		char str[10];
+		sprintf(str, "%d", i);
+		strcat(enemyname, str);
+		log("%s", enemyname);
+		spawnPoint_0 = group->getObject(enemyname);
+		if (spawnPoint_0 == ValueMap()) { break; }
+		int  x0 = spawnPoint_0["x"].asInt();
+		int  y0 = spawnPoint_0["y"].asInt();
+		enemy[i] = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
+		enemy[i]->setPosition(Vec2(x0, y0));
+		this->getParent()->addChild(enemy[i], 2, 200);
+	}
 }

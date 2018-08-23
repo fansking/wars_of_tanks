@@ -21,9 +21,9 @@ class Game :public Layer
 	Enemy *_enemy_1;
 	Enemy *_enemy_2;
 	EnemyAI * enemyAIs[5];
-
 public:
-	TMXTiledMap *_tileMap;
+	
+	static TMXTiledMap *_tileMap;
 	
 	static Scene * createScene();
 	void setPlayerPosition(Vec2 position);
@@ -33,7 +33,6 @@ public:
 	virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event);
 	virtual void onKeyReleased(EventKeyboard::KeyCode, Event *);
 	void keepMoving(float dt);
-
 	//static void RestartCallback(Ref * pSender);
 	virtual void update(float dt);
 	

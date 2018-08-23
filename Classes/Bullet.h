@@ -13,6 +13,7 @@ class Bullet : public Sprite
 	CC_SYNTHESIZE(int, akt, AKT);
 
 public:
+	static int score;
 	static TMXLayer   *_breakable0;
 	static TMXLayer   *coll;
 	static TMXLayer * _breakable1;

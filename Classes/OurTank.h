@@ -23,4 +23,5 @@ public:
 	OurTank(int);
 	static OurTank * createWithImage(int);
 	void openFire();
+	void addenemy();
 };

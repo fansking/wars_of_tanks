@@ -3,11 +3,12 @@
 #include "Bullet.h"
 
 USING_NS_CC;
-
+TMXTiledMap *Game::_tileMap = nullptr;
 TMXTiledMap * EnemyAI::tileMap = nullptr;
 TMXLayer * EnemyAI::layer = nullptr;
 int EnemyAI::mapSize = 20;
 int EnemyAI::tileSize = 32;
+
 
 Scene *Game::createScene()
 {
@@ -25,7 +26,6 @@ bool Game::init()
 	{
 		return false;
 	}
-
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -72,9 +72,12 @@ bool Game::init()
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
 
+	
+	
+	
 	int  x0 = spawnPoint_0["x"].asInt();
 	int  y0 = spawnPoint_0["y"].asInt();
-	ValueMap spawnPoint_1 = group->getObject("enemy0");
+	/*ValueMap spawnPoint_1 = group->getObject("enemy0");
 
 	int x1 = spawnPoint_1["x"].asInt();
 	int y1 = spawnPoint_1["y"].asInt();
@@ -98,7 +101,7 @@ bool Game::init()
 
 	addChild(_enemy_1);
 	addChild(_enemy_2);
-
+*/
 	ValueMap spawnPoint_3 = group->getObject("gold");
 	float x3 = spawnPoint_3["x"].asFloat();
 	float y3 = spawnPoint_3["y"].asFloat();
@@ -111,6 +114,7 @@ bool Game::init()
 	_player->setAnchorPoint(Vec2(0.5, 0.5));
 	_player->setPosition(Vec2(x0, y0));
 	addChild(_player);
+	_player->addenemy();
 	_player->setTag(1);
 	_collidable = _tileMap->getLayer("collidable");
 	Bullet::coll = _collidable;

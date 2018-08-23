@@ -1,6 +1,7 @@
 #include "Bullet.h"
 #include "GameScene.h"
 #include <vector>
+int Bullet::score = 0;
 TMXLayer *Bullet::_breakable0 = nullptr;
 TMXLayer *Bullet::coll = nullptr;
 TMXLayer *Bullet::_breakable1 = nullptr;
@@ -74,6 +75,8 @@ void Bullet::update(float dt)
 	 if (mytile0 != nullptr && mytile0->isVisible()&& this->isVisible() && mycoll) {
 		 mytile0->setVisible(false);
 		 mycoll->removeFromParent();
+		 score++;
+		 log("%d", score);
 		 this->setVisible(false);
 		 this->removeFromParent();
 		 return;
