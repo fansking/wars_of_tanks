@@ -1,9 +1,9 @@
 #include "Bullet.h"
 #include "GameScene.h"
 #include <vector>
-TMXLayer *Bullet::_breakable0 = nullptr;
+TMXLayer *Bullet::walklay = nullptr;
 TMXLayer *Bullet::coll = nullptr;
-TMXLayer *Bullet::_breakable1 = nullptr;
+
 Bullet * Bullet::createWithImage()
 {
 	Bullet * bullet = new Bullet();
@@ -68,23 +68,15 @@ void Bullet::update(float dt)
 	Vec2 pos = this->getPosition();
 	int X = pos.x / 60;
 	int Y = ((12 * 60) - pos.y) / 60;
-	Sprite *mytile0 = _breakable0->getTileAt(Vec2(X, Y));
-	
+	Sprite *mytile = walklay->getTileAt(Vec2(X, Y));
 	Sprite *mycoll = coll->getTileAt(Vec2(X, Y));
-	 if (mytile0 != nullptr && mytile0->isVisible()&& this->isVisible() && mycoll) {
-		 mytile0->setVisible(false);
+	 if (mytile != nullptr && mytile->isVisible()&& this->isVisible() && mycoll) {
+		 mytile->setVisible(false);
 		 mycoll->removeFromParent();
 		 this->setVisible(false);
 		 this->removeFromParent();
 		 return;
 	 }
-	 Sprite *mytile1 = _breakable1->getTileAt(Vec2(X, Y));
-	 if (mytile1 && mytile1->isVisible() && this->isVisible() && mycoll) {
-		 this->setVisible(false);
-		 this->removeFromParent();
-		 return;
-	 }
-	 
 	Size screenSize = Director::getInstance()->getVisibleSize();
 	this->setPosition(this->getPosition() + velocity * dt);
 	int y = this->getPosition().y;

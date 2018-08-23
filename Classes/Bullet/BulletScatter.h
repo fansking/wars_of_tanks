@@ -173,17 +173,11 @@ void BulletScatter::update(float dt)
 	Vec2 pos = this->getPosition();
 	int X = pos.x / 32;
 	int Y = ((20 * 32) - pos.y) / 32;
-	Sprite *mytile0 = _breakable0->getTileAt(Vec2(X, Y));
+	Sprite *mytile = walklay->getTileAt(Vec2(X, Y));
 	Sprite *mycoll = coll->getTileAt(Vec2(X, Y));
-	if (mytile0 != nullptr && mytile0->isVisible() && this->isVisible() && mycoll) {
-		mytile0->setVisible(false);
+	if (mytile != nullptr && mytile->isVisible() && this->isVisible() && mycoll) {
+		mytile->setVisible(false);
 		mycoll->removeFromParent();
-		this->setVisible(false);
-		this->removeFromParent();
-		return;
-	}
-	Sprite *mytile1 = _breakable1->getTileAt(Vec2(X, Y));
-	if (mytile1 && mytile1->isVisible() && this->isVisible() && mycoll) {
 		this->setVisible(false);
 		this->removeFromParent();
 		return;

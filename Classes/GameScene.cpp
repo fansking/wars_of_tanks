@@ -54,9 +54,9 @@ bool Game::init()
 
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
 
-	_tileMap = TMXTiledMap::create("map/map0.tmx");
-	Bullet::_breakable0 = _tileMap->getLayer("breakable0");
-	Bullet::_breakable1 = _tileMap->getLayer("breakable1");
+	_tileMap = TMXTiledMap::create("map/37.tmx");
+	Bullet::walklay = _tileMap->getLayer("layer1");
+
 	tileX = _tileMap->getTileSize().width;
 	tileY = _tileMap->getTileSize().height;
 	mapX = _tileMap->getMapSize().width;
@@ -69,16 +69,33 @@ bool Game::init()
 	EnemyAI::tileMap = _tileMap;
 	
 
+/*<<<<<<< HEAD
+	ValueMap spawnPoint_4 = group->getObject("enemyTest");
+	float x4 = spawnPoint_4["x"].asFloat();
+	float y4 = spawnPoint_4["y"].asFloat();
+	auto enemy4 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
+	enemy4->setAnchorPoint(Vec2(0.5, 0.5));
+	enemy4->setPosition(Vec2(x4, y4));
+	this->addChild(enemy4);
+
+	
+	enemyAIs[0] = EnemyAI::createWithEnemy(enemy4);
+
+	float x0 = spawnPoint_0["x"].asFloat();
+	float y0 = spawnPoint_0["y"].asFloat();
+	ValueMap spawnPoint_1 = group->getObject("enemy_1");
+=======*/
+
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
-	ValueMap spawnPoint_0 = group->getObject("playerA");
+	ValueMap spawnPoint_0 = group->getObject("tankpoint");
 
 	int  x0 = spawnPoint_0["x"].asInt();
 	int  y0 = spawnPoint_0["y"].asInt();
-	ValueMap spawnPoint_1 = group->getObject("enemy0");
+	ValueMap spawnPoint_1 = group->getObject("re1");
 
 	int x1 = spawnPoint_1["x"].asInt();
 	int y1 = spawnPoint_1["y"].asInt();
-	ValueMap spawnPoint_2 = group->getObject("enemy1");
+	ValueMap spawnPoint_2 = group->getObject("re2");
 
 	int x2 = spawnPoint_2["x"].asInt();
 	int y2 = spawnPoint_2["y"].asInt();
@@ -87,14 +104,8 @@ bool Game::init()
 	auto _enemy_2 = Enemy::createWithEnemyTypes(EnemyTypeEnemy2);
 	_enemy_1->setPosition(Vec2(x1,y1));
 	_enemy_2->setPosition(Vec2(x2,y2));
-	enemyAIs[0] = EnemyAI::createWithEnemy(_enemy_1);
-	enemyAIs[1] = EnemyAI::createWithEnemy(_enemy_2);
-
-	EnemyAI::tileMap = _tileMap;
-	EnemyAI::layer = _collidable;
-	EnemyAI::mapSize = _tileMap->getMapSize().height;
-	EnemyAI::tileSize = _tileMap->getTileSize().width;
-
+	enemyAIs[1] = EnemyAI::createWithEnemy(_enemy_1);
+	enemyAIs[2] = EnemyAI::createWithEnemy(_enemy_2);
 
 	addChild(_enemy_1);
 	addChild(_enemy_2);
@@ -144,6 +155,7 @@ void Game::setPlayerPosition(Vec2 position)
 		return;
 	}
 	Vec2 tileCoord = this->tileCoordFromPosition(position);
+	//log("%f, %f", tileCoord.x, tileCoord.y);
 	int tileGid = _collidable->getTileGIDAt(tileCoord);
 	if (tileGid > 0) {
 		Value prop = _tileMap->getPropertiesForGID(tileGid);
@@ -171,6 +183,7 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 {
 	log("%d has been pressed", keyCode);
 	Vec2 playerPos = _player->getPosition();
+	//log("%f,%f", _player->getPosition().x, _player->getPosition().y);
 	if ((int)keyCode == 59)
 	{
 		_player->openFire();
@@ -251,7 +264,6 @@ void Game::update(float dt)
 {
 	for (int i = 0; enemyAIs[i]; ++i)
 	{
-
 		enemyAIs[i]->update(dt);
 	}
 }

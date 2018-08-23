@@ -13,9 +13,8 @@ class Bullet : public Sprite
 	CC_SYNTHESIZE(int, akt, AKT);
 
 public:
-	static TMXLayer   *_breakable0;
+	static TMXLayer   *walklay;
 	static TMXLayer   *coll;
-	static TMXLayer * _breakable1;
 	static Bullet * createWithImage();
 	void shootBulletFromTank(OurTank * tank);
 	virtual void update(float dt);
