@@ -54,7 +54,7 @@ bool Game::init()
 
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
 
-	_tileMap = TMXTiledMap::create("map/37.tmx");
+	_tileMap = TMXTiledMap::create("map/map0.tmx");
 	Bullet::walklay = _tileMap->getLayer("layer1");
 
 	tileX = _tileMap->getTileSize().width;
