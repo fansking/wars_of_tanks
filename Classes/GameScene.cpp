@@ -155,7 +155,7 @@ void Game::setPlayerPosition(Vec2 position)
 		return;
 	}
 	Vec2 tileCoord = this->tileCoordFromPosition(position);
-	log("%f, %f", tileCoord.x, tileCoord.y);
+	//log("%f, %f", tileCoord.x, tileCoord.y);
 	int tileGid = _collidable->getTileGIDAt(tileCoord);
 	if (tileGid > 0) {
 		Value prop = _tileMap->getPropertiesForGID(tileGid);
@@ -165,8 +165,9 @@ void Game::setPlayerPosition(Vec2 position)
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("empty.mp3");
 			return;
 		}
+
 	}
-	_player->runAction(MoveTo::create(0.1, position));
+	_player->runAction(MoveTo::create(0.2, position));
 }
 Vec2 Game::tileCoordFromPosition(Vec2 pos) {
 	int x = (int)pos.x / tileX;
@@ -178,12 +179,11 @@ Vec2 Game::tileCoordFromPosition(Vec2 pos) {
 	return Vec2(x, y);
 }
 
-
 void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 {
 	log("%d has been pressed", keyCode);
 	Vec2 playerPos = _player->getPosition();
-	log("%f,%f", _player->getPosition().x, _player->getPosition().y);
+	//log("%f,%f", _player->getPosition().x, _player->getPosition().y);
 	if ((int)keyCode == 59)
 	{
 		_player->openFire();
@@ -207,7 +207,7 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 			break;
 		}
 		_player->setDirection((int)keyCode);
-		this->schedule(schedule_selector(Game::keepMoving), 0.1f);
+		this->schedule(schedule_selector(Game::keepMoving), 0.2);
 		return;
 	}
 	switch ((int)keyCode)
@@ -228,12 +228,14 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 	//log("%f,%f", playerPos.x, playerPos.y);
 	this->setPlayerPosition(playerPos);
 
-	this->schedule(schedule_selector(Game::keepMoving), 0.1f);
+	this->schedule(schedule_selector(Game::keepMoving), 0.2);
 }
 
 void Game::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
 {
-	this->unschedule(schedule_selector(Game::keepMoving));
+	//if((int)keyCode==146|| (int)keyCode==142|| (int)keyCode==124|| (int)keyCode==127)
+	if((int)keyCode==_player->getDirection())
+		this->unschedule(schedule_selector(Game::keepMoving));
 }
 
 void Game::keepMoving(float dt)
