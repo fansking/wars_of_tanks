@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" infinite="0" nextobjectid="16">
+ <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="60" tileheight="60" tilecount="40" columns="8">
+  <image source="tmw_desert_spacing1.png" width="480" height="300"/>
+  <tile id="30">
+   <properties>
+    <property name="canDes" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="41" name="bg1" tilewidth="60" tileheight="60" tilecount="252" columns="21">
+  <image source="bg1.png" width="1280" height="720"/>
+ </tileset>
+ <tileset firstgid="293" name="collidable" tilewidth="60" tileheight="60" tilecount="1" columns="1">
+  <image source="collidable.png" width="60" height="60"/>
+  <tile id="0">
+   <properties>
+    <property name="collidable" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="ground" width="20" height="12">
+  <data encoding="base64" compression="zlib">
+   eJwNw2WMDgAAANCP0zndTtwv3W26Heemu013m85Td8Pp06a7TXeb7jbdbThvey9PIBDIaz7zW8CCFrKwRSxqMYtbwpKWsrRlLGs5y1vBilayslWsajWrW8Oa1rK2daxrqPWsb5gNDLehjWxsE5vazOa2sKWtbG0b29rO9nawo53sbBe72s3u9rCnvextH/vaz/4OcKCDHOwQhzrM4Y5wpKMc7RjHOs7xTnCik5zsFCOc6jSnO8OZRhrlLGc7x2jnOs/5LnChi1xsjEtc6jKXu8KVrnK1a1zrOte7wY1ucrNb3Oo2t7vDne5yt3vc6z73e8CDHvKwRzzqMY97wpOe8rRnPOs5z3vBi17ysle86jWve8Ob3vK2d7zrPe/7wIc+8rFPfOozn/vCl77ytW986zvf+8GPfvKzX/zqN7/7w5/+8rd//Os/Yw3EwbgGGc/4JjChiUxsEpOazOSmMKWpTG0a05rO9GYwo5nMbBazms3sBpvDnOYytyH+B6wCeLU=
+  </data>
+ </layer>
+ <layer name="breakable0" width="20" height="12">
+  <data encoding="base64" compression="zlib">
+   eJy1UgkKwDAIy19W9f8/HANlImotbAFJjzTYtMC/kAPt+thvB9bK/LM9FGsR4ngpizv7MGkJ+jv5frzPwpsXhb4qP0nYfC8t84POCfPMo7+HeXGxD9TZRr3lMMmPi3Gn7/rzb9dpTzD9CxluzaAKGA==
+  </data>
+ </layer>
+ <layer name="breakable1" width="20" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgF6EAJB5vaZtPCPErNp1Q/E5XNxGYeJQCfedSOG3oAABK2ARc=
+  </data>
+ </layer>
+ <layer name="collidable" width="20" height="12" opacity="0.42">
+  <properties>
+   <property name="collidable" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYKAtUGWkrlpSzCPGLHTzYGLImFw3YjMLF6aGWbj8hM0sQmaiyxMD8IUZMf7FJk6JeehmEqOWkPtItZuY8CPWPGwAAL77DC0=
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="1" name="enemy2" x="780" y="600" width="60" height="60"/>
+  <object id="2" name="enemy0" x="718" y="61" width="60" height="60"/>
+  <object id="3" name="enemy1" x="540" y="60" width="60" height="60"/>
+  <object id="4" name="playerA" x="630" y="630" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup name="roadPoints" visible="0">
+  <object id="9" name="p1" x="182" y="360" width="60" height="60"/>
+  <object id="10" name="p2" x="420" y="360" width="60" height="60"/>
+  <object id="11" name="p3" x="420" y="540" width="60" height="60"/>
+  <object id="12" name="p4" x="1020" y="540" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup name="bossPoint" visible="0">
+  <object id="13" name="boss1" x="240" y="60" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup name="buildingPoint" visible="0">
+  <object id="14" name="building1" x="240" y="60" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup name="endPoint" visible="0">
+  <object id="15" name="endpoint" x="660" y="420" width="60" height="60"/>
+ </objectgroup>
+</map>
