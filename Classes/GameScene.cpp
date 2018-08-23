@@ -55,7 +55,6 @@ bool Game::init()
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
 
 	_tileMap = TMXTiledMap::create("map/map0.tmx");
-	Bullet::walklay = _tileMap->getLayer("layer1");
 	Bullet::_breakable0 = _tileMap->getLayer("breakable0");
 	Bullet::_breakable1 = _tileMap->getLayer("breakable1");
 	tileX = _tileMap->getTileSize().width;
@@ -145,6 +144,7 @@ void Game::setPlayerPosition(Vec2 position)
 		return;
 	}
 	Vec2 tileCoord = this->tileCoordFromPosition(position);
+	int tileGid = _collidable->getTileGIDAt(tileCoord);
 	if (tileGid > 0) {
 		Value prop = _tileMap->getPropertiesForGID(tileGid);
 		ValueMap propValueMap = prop.asValueMap();
