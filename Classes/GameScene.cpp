@@ -133,6 +133,14 @@ bool Game::init()
 
 	this->scheduleUpdate();
 
+	auto itemPause = MenuItemImage::create("UI/menu_pause.png", "UI/menu_pause1.png",
+		CC_CALLBACK_1(Game::menuItemCallbackPause, this));
+	itemPause->setAnchorPoint(Vec2(0, 0));
+	itemPause->setPosition(Vec2(0, origin.y + visibleSize.height - itemPause->getContentSize().height));
+	auto menu = Menu::create(itemPause, NULL);
+	menu->setPosition(Vec2::ZERO);
+	this->addChild(menu);
+
 	return true;
 }
 
@@ -252,5 +260,28 @@ void Game::update(float dt)
 	for (int i = 0; enemyAIs[i]; ++i)
 	{
 		enemyAIs[i]->update(dt);
+	}
+}
+
+void Game::menuItemCallbackPause(Ref * pSender)
+{
+	static bool isPause = false;
+	//auto layer = About::create();
+	//this->addChild(layer);
+	if (!isPause)
+	{
+		auto layer = PauseLayer::create();
+		layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
+			Director::getInstance()->getVisibleSize().height / 2));
+		layer->setTag(13);
+		this->addChild(layer);
+		isPause = true;
+		Director::getInstance()->pause();
+	}
+	else
+	{
+		this->removeChildByTag(13);
+		Director::getInstance()->resume();
+		isPause = false;
 	}
 }

@@ -7,6 +7,8 @@
 #include "Bullet.h"
 #include "MyUtility.h"
 #include "PickupBase.h"
+#include "AboutScene.h"
+#include "PauseLayer.h"
 
 #ifndef _GAME_SCENE_H_
 #define _GAME_SCENE_H_
@@ -36,6 +38,8 @@ public:
 
 	//static void RestartCallback(Ref * pSender);
 	virtual void update(float dt);
+
+	void menuItemCallbackPause(Ref * pSender);
 	
 private:
 	int tileX, tileY, mapX, mapY;

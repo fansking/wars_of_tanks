@@ -25,6 +25,7 @@ private:
 	void onMouseUp(Event * event);
 	void onMouseDown(Event *event);
 	void menuOkCallback(Ref *pSender);
+//public:
 	CREATE_FUNC(About);
 
 };
