@@ -104,8 +104,14 @@ bool Game::init()
 	auto _enemy_2 = Enemy::createWithEnemyTypes(EnemyTypeEnemy2);
 	_enemy_1->setPosition(Vec2(x1,y1));
 	_enemy_2->setPosition(Vec2(x2,y2));
-	enemyAIs[1] = EnemyAI::createWithEnemy(_enemy_1);
-	enemyAIs[2] = EnemyAI::createWithEnemy(_enemy_2);
+	enemyAIs[0] = EnemyAI::createWithEnemy(_enemy_1);
+	enemyAIs[1] = EnemyAI::createWithEnemy(_enemy_2);
+
+	EnemyAI::tileMap = _tileMap;
+	EnemyAI::layer = _collidable;
+	EnemyAI::mapSize = _tileMap->getMapSize().height;
+	EnemyAI::tileSize = _tileMap->getTileSize().width;
+
 
 	addChild(_enemy_1);
 	addChild(_enemy_2);
@@ -155,7 +161,6 @@ void Game::setPlayerPosition(Vec2 position)
 		return;
 	}
 	Vec2 tileCoord = this->tileCoordFromPosition(position);
-	log("%f, %f", tileCoord.x, tileCoord.y);
 	int tileGid = _collidable->getTileGIDAt(tileCoord);
 	if (tileGid > 0) {
 		Value prop = _tileMap->getPropertiesForGID(tileGid);
@@ -183,7 +188,6 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 {
 	log("%d has been pressed", keyCode);
 	Vec2 playerPos = _player->getPosition();
-	log("%f,%f", _player->getPosition().x, _player->getPosition().y);
 	if ((int)keyCode == 59)
 	{
 		_player->openFire();
@@ -262,6 +266,7 @@ void Game::update(float dt)
 {
 	for (int i = 0; enemyAIs[i]; ++i)
 	{
+
 		enemyAIs[i]->update(dt);
 	}
 }

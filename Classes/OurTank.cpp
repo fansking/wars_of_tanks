@@ -15,7 +15,7 @@ OurTank::OurTank(int initialHP)
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
 	auto body = PhysicsBody::createEdgeBox(Size(60, 60),
-		PHYSICSBODY_MATERIAL_DEFAULT, 3.0f, Vec2(16, 16));
+		PHYSICSBODY_MATERIAL_DEFAULT, 3.0f, Vec2(30, 30));
 	body->setCategoryBitmask(0x01);
 	body->setContactTestBitmask(0x02);
 	this->setPhysicsBody(body);
