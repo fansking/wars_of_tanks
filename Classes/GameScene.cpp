@@ -56,7 +56,8 @@ bool Game::init()
 
 	_tileMap = TMXTiledMap::create("map/map0.tmx");
 	Bullet::walklay = _tileMap->getLayer("layer1");
-
+	Bullet::_breakable0 = _tileMap->getLayer("breakable0");
+	Bullet::_breakable1 = _tileMap->getLayer("breakable1");
 	tileX = _tileMap->getTileSize().width;
 	tileY = _tileMap->getTileSize().height;
 	mapX = _tileMap->getMapSize().width;
@@ -87,15 +88,15 @@ bool Game::init()
 =======*/
 
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
-	ValueMap spawnPoint_0 = group->getObject("tankpoint");
+	ValueMap spawnPoint_0 = group->getObject("playerA");
 
 	int  x0 = spawnPoint_0["x"].asInt();
 	int  y0 = spawnPoint_0["y"].asInt();
-	ValueMap spawnPoint_1 = group->getObject("re1");
+	ValueMap spawnPoint_1 = group->getObject("enemy0");
 
 	int x1 = spawnPoint_1["x"].asInt();
 	int y1 = spawnPoint_1["y"].asInt();
-	ValueMap spawnPoint_2 = group->getObject("re2");
+	ValueMap spawnPoint_2 = group->getObject("enemy1");
 
 	int x2 = spawnPoint_2["x"].asInt();
 	int y2 = spawnPoint_2["y"].asInt();

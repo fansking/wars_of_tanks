@@ -1,0 +1,32 @@
+地图命名
+map0
+map1
+map2
+
+图层命名
+ground		背景图层
+breakable0      可打破层0
+breakable1	可打破层1
+collidable      碰撞检测层
+objects		对象层	
+
+碰撞层图块属性
+collision	String类型  内容为true
+
+命名对象
+playerA		玩家A
+playerB		玩家B
+enemy0		敌人0
+enemy1		敌人1
+enemy2		敌人3
+
+武器，道具，技能
+pickup1
+pickup2
+
+源代码变量
+_breakable0 可打破层0
+_breakable1 可打破层1
+mycoll	    碰撞层瓦片
+mytile0     可打破层0瓦片
+mytile1     可打破层1瓦片
