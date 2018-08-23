@@ -70,23 +70,6 @@ bool Game::init()
 	EnemyAI::tileMap = _tileMap;
 	
 
-/*<<<<<<< HEAD
-	ValueMap spawnPoint_4 = group->getObject("enemyTest");
-	float x4 = spawnPoint_4["x"].asFloat();
-	float y4 = spawnPoint_4["y"].asFloat();
-	auto enemy4 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
-	enemy4->setAnchorPoint(Vec2(0.5, 0.5));
-	enemy4->setPosition(Vec2(x4, y4));
-	this->addChild(enemy4);
-
-	
-	enemyAIs[0] = EnemyAI::createWithEnemy(enemy4);
-
-	float x0 = spawnPoint_0["x"].asFloat();
-	float y0 = spawnPoint_0["y"].asFloat();
-	ValueMap spawnPoint_1 = group->getObject("enemy_1");
-=======*/
-
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
 
@@ -162,7 +145,6 @@ void Game::setPlayerPosition(Vec2 position)
 		return;
 	}
 	Vec2 tileCoord = this->tileCoordFromPosition(position);
-	int tileGid = _collidable->getTileGIDAt(tileCoord);
 	if (tileGid > 0) {
 		Value prop = _tileMap->getPropertiesForGID(tileGid);
 		ValueMap propValueMap = prop.asValueMap();
@@ -171,8 +153,9 @@ void Game::setPlayerPosition(Vec2 position)
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("empty.mp3");
 			return;
 		}
+
 	}
-	_player->runAction(MoveTo::create(0.1, position));
+	_player->runAction(MoveTo::create(0.2, position));
 }
 Vec2 Game::tileCoordFromPosition(Vec2 pos) {
 	int x = (int)pos.x / tileX;
@@ -183,7 +166,6 @@ Vec2 Game::tileCoordFromPosition(Vec2 pos) {
 	//log("%d,%d", x, y);
 	return Vec2(x, y);
 }
-
 
 void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 {
@@ -212,7 +194,7 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 			break;
 		}
 		_player->setDirection((int)keyCode);
-		this->schedule(schedule_selector(Game::keepMoving), 0.1f);
+		this->schedule(schedule_selector(Game::keepMoving), 0.2);
 		return;
 	}
 	switch ((int)keyCode)
@@ -233,12 +215,14 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 	//log("%f,%f", playerPos.x, playerPos.y);
 	this->setPlayerPosition(playerPos);
 
-	this->schedule(schedule_selector(Game::keepMoving), 0.1f);
+	this->schedule(schedule_selector(Game::keepMoving), 0.2);
 }
 
 void Game::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
 {
-	this->unschedule(schedule_selector(Game::keepMoving));
+	//if((int)keyCode==146|| (int)keyCode==142|| (int)keyCode==124|| (int)keyCode==127)
+	if((int)keyCode==_player->getDirection())
+		this->unschedule(schedule_selector(Game::keepMoving));
 }
 
 void Game::keepMoving(float dt)
