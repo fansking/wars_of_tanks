@@ -3,11 +3,13 @@
 #include "Bullet.h"
 
 USING_NS_CC;
-
+TMXTiledMap *Game::_tileMap = nullptr;
 TMXTiledMap * EnemyAI::tileMap = nullptr;
 TMXLayer * EnemyAI::layer = nullptr;
 int EnemyAI::mapSize = 20;
 int EnemyAI::tileSize = 32;
+EnemyAI * Game::enemyAIs[10] = { nullptr };
+
 
 Scene *Game::createScene()
 {
@@ -25,7 +27,6 @@ bool Game::init()
 	{
 		return false;
 	}
-
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -35,7 +36,6 @@ bool Game::init()
 		log("onContactBegin");
 		auto spriteA = (Sprite *)contact.getShapeA()->getBody()->getNode();
 		auto spriteB = (Sprite *)contact.getShapeB()->getBody()->getNode();
-		//log("%d %d", spriteA->getTag(), spriteB->getTag());
 		if (spriteA && spriteB && spriteA->getTag()==3 && spriteB->getTag()==2)
 		{
 			spriteA->removeFromParent();
@@ -47,68 +47,38 @@ bool Game::init()
 			((PickupBase *)spriteB)->isContact((OurTank *)spriteA);
 		}
 
-		//auto item = MenuItemImage::create("weixin.png", "weixin_h.png");
 
 		return true;
 	};
 
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
 
-	_tileMap = TMXTiledMap::create("map/37.tmx");
-	Bullet::walklay = _tileMap->getLayer("layer1");
-
+	_tileMap = TMXTiledMap::create("map/map0.tmx");
+	Bullet::_breakable0 = _tileMap->getLayer("breakable0");
+	Bullet::_breakable1 = _tileMap->getLayer("breakable1");
 	tileX = _tileMap->getTileSize().width;
 	tileY = _tileMap->getTileSize().height;
 	mapX = _tileMap->getMapSize().width;
 	mapY = _tileMap->getMapSize().height;
-	//log("%d,%d", tileX, tileY);
 
-	//_tileMap->setScale(Director::getInstance()->getVisibleSize().width / (_tileMap->getMapSize().width * _tileMap->getTileSize().width));
 	this->addChild(_tileMap);
 
 	EnemyAI::tileMap = _tileMap;
 	
 
-/*<<<<<<< HEAD
-	ValueMap spawnPoint_4 = group->getObject("enemyTest");
-	float x4 = spawnPoint_4["x"].asFloat();
-	float y4 = spawnPoint_4["y"].asFloat();
-	auto enemy4 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
-	enemy4->setAnchorPoint(Vec2(0.5, 0.5));
-	enemy4->setPosition(Vec2(x4, y4));
-	this->addChild(enemy4);
+	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
+	ValueMap spawnPoint_0 = group->getObject("playerA");
 
 	
-	enemyAIs[0] = EnemyAI::createWithEnemy(enemy4);
-
-	float x0 = spawnPoint_0["x"].asFloat();
-	float y0 = spawnPoint_0["y"].asFloat();
-	ValueMap spawnPoint_1 = group->getObject("enemy_1");
-=======*/
-
-	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
-	ValueMap spawnPoint_0 = group->getObject("tankpoint");
-
+	
+	
 	int  x0 = spawnPoint_0["x"].asInt();
 	int  y0 = spawnPoint_0["y"].asInt();
-	ValueMap spawnPoint_1 = group->getObject("re1");
 
-	int x1 = spawnPoint_1["x"].asInt();
-	int y1 = spawnPoint_1["y"].asInt();
-	ValueMap spawnPoint_2 = group->getObject("re2");
-
-	int x2 = spawnPoint_2["x"].asInt();
-	int y2 = spawnPoint_2["y"].asInt();
-
-	auto _enemy_1 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
-	auto _enemy_2 = Enemy::createWithEnemyTypes(EnemyTypeEnemy2);
-	_enemy_1->setPosition(Vec2(x1,y1));
-	_enemy_2->setPosition(Vec2(x2,y2));
-	enemyAIs[1] = EnemyAI::createWithEnemy(_enemy_1);
-	enemyAIs[2] = EnemyAI::createWithEnemy(_enemy_2);
-
-	addChild(_enemy_1);
-	addChild(_enemy_2);
+	EnemyAI::tileMap = _tileMap;
+	EnemyAI::layer = _collidable;
+	EnemyAI::mapSize = _tileMap->getMapSize().height;
+	EnemyAI::tileSize = _tileMap->getTileSize().width;
 
 	ValueMap spawnPoint_3 = group->getObject("gold");
 	float x3 = spawnPoint_3["x"].asFloat();
@@ -122,6 +92,8 @@ bool Game::init()
 	_player->setAnchorPoint(Vec2(0.5, 0.5));
 	_player->setPosition(Vec2(x0, y0));
 	addChild(_player);
+	/**/
+	_player->addenemy();
 	_player->setTag(1);
 	_collidable = _tileMap->getLayer("collidable");
 	Bullet::coll = _collidable;
@@ -129,20 +101,20 @@ bool Game::init()
 	EnemyAI::layer = _collidable;
 
 	Vec2 playerPos = _player->getPosition();
-	//log("%d,%d", playerPos.x, playerPos.y);
-	_player->setDirection(146);
 
-	/*setTouchEnabled(true);
-	setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
-	setKeypadEnabled(true);*/
+	_player->setDirection(146);
 
 	setKeyboardEnabled(true);
 
-	auto path = FileUtils::getInstance()->getWritablePath();
-	log("%s", MyUtility::gbk_2_utf8(path));
-	auto str = FileUtils::getInstance()->writeStringToFile("123", path + "file_data.json");
-
 	this->scheduleUpdate();
+
+	auto itemPause = MenuItemImage::create("UI/menu_pause.png", "UI/menu_pause1.png",
+		CC_CALLBACK_1(Game::menuItemCallbackPause, this));
+	itemPause->setAnchorPoint(Vec2(0, 0));
+	itemPause->setPosition(Vec2(0, origin.y + visibleSize.height - itemPause->getContentSize().height));
+	auto menu = Menu::create(itemPause, NULL);
+	menu->setPosition(Vec2::ZERO);
+	this->addChild(menu);
 
 	return true;
 }
@@ -155,7 +127,6 @@ void Game::setPlayerPosition(Vec2 position)
 		return;
 	}
 	Vec2 tileCoord = this->tileCoordFromPosition(position);
-	//log("%f, %f", tileCoord.x, tileCoord.y);
 	int tileGid = _collidable->getTileGIDAt(tileCoord);
 	if (tileGid > 0) {
 		Value prop = _tileMap->getPropertiesForGID(tileGid);
@@ -171,11 +142,7 @@ void Game::setPlayerPosition(Vec2 position)
 }
 Vec2 Game::tileCoordFromPosition(Vec2 pos) {
 	int x = (int)pos.x / tileX;
-	//log("%d,%d", tileX, tileY);
-	//log("%f,%fasdas", pos.x, pos.y);
-//	log("%d, %d", _tileMap->getTileSize().width, _tileMap->getMapSize().width);
 	int y = (int)(mapY*tileY - pos.y) / tileY;
-	//log("%d,%d", x, y);
 	return Vec2(x, y);
 }
 
@@ -183,7 +150,6 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 {
 	log("%d has been pressed", keyCode);
 	Vec2 playerPos = _player->getPosition();
-	//log("%f,%f", _player->getPosition().x, _player->getPosition().y);
 	if ((int)keyCode == 59)
 	{
 		_player->openFire();
@@ -225,7 +191,6 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 		playerPos.x += _tileMap->getTileSize().width;
 		break;
 	}
-	//log("%f,%f", playerPos.x, playerPos.y);
 	this->setPlayerPosition(playerPos);
 
 	this->schedule(schedule_selector(Game::keepMoving), 0.2);
@@ -233,7 +198,6 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 
 void Game::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
 {
-	//if((int)keyCode==146|| (int)keyCode==142|| (int)keyCode==124|| (int)keyCode==127)
 	if((int)keyCode==_player->getDirection())
 		this->unschedule(schedule_selector(Game::keepMoving));
 }
@@ -265,5 +229,26 @@ void Game::update(float dt)
 	for (int i = 0; enemyAIs[i]; ++i)
 	{
 		enemyAIs[i]->update(dt);
+	}
+}
+
+void Game::menuItemCallbackPause(Ref * pSender)
+{
+	static bool isPause = false;
+	if (!isPause)
+	{
+		auto layer = PauseLayer::create();
+		layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
+			Director::getInstance()->getVisibleSize().height / 2));
+		layer->setTag(13);
+		this->addChild(layer);
+		isPause = true;
+		Director::getInstance()->pause();
+	}
+	else
+	{
+		this->removeChildByTag(13);
+		Director::getInstance()->resume();
+		isPause = false;
 	}
 }

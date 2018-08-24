@@ -8,6 +8,7 @@ EnemyAI::EnemyAI()
 
 EnemyAI * EnemyAI::createWithEnemy(Enemy * obj)
 {
+	srand(time(NULL));
 	auto enemyAI = new EnemyAI();
 	enemyAI->obj = obj;
 	enemyAI->vel = Vec2(0, 100);
@@ -30,8 +31,8 @@ void EnemyAI::update(float dt)
 	if (target.y + 16 >= screenSize.height || target.y - 16 <= 0 || 
 		target.x + 16 >= screenSize.width || target.x - 16 <= 0)
 	{
-		srand(time(NULL));
 		int nDirection = rand() % 4;
+		log("%d", nDirection);
 		switch (nDirection)
 		{
 		case 0:

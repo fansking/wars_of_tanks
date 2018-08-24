@@ -2,8 +2,8 @@
 
 #include "OurTank.h"
 
-#define Enemy_1 "map/enmy_1.png"
-#define Enemy_2 "map/enmy_2.png"
+#define Enemy_1 "map/enemy_1.png"
+#define Enemy_2 "map/enemy_2.png"
 typedef enum {
 	EnemyTypeEnemy1,
 	EnemyTypeEnemy2

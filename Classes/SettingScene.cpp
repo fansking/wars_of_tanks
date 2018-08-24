@@ -80,4 +80,5 @@ void Setting::musicChanged(Ref *sender, Control::EventType)
 void Setting::soundChanged(Ref *sender, Control::EventType) 
 {
 	ControlSlider *slider = (ControlSlider*)sender;
+
 }

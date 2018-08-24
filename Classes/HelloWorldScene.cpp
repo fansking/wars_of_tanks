@@ -26,7 +26,6 @@
 #include "SettingScene.h"
 #include "GameScene.h"
 #include "AboutScene.h"
-#include "ChoseLevel.h"
 USING_NS_CC;
 #define USE_SIMPLE_AUDIO_ENGINE 1
 
@@ -71,12 +70,7 @@ void HelloWorld::menuItemSettingCallback(Ref *pSender)
 }
 void HelloWorld::menuItemStartCallback(cocos2d::Ref *pSender)
 {
-	//Sprite * sp = Sprite::create("menu/grey.png");
-	//auto visibleSize = Director::getInstance()->getVisibleSize();
-	//sp->setPosition(visibleSize.width / 2, visibleSize.height / 2);
-	//this->addChild(sp, 3);
-	//this->removeChildByTag(5);
-	auto sc = ChoseLevel::createScene();
+	auto sc = Game::createScene();
 	auto transition = TransitionFade::create(1, sc);
 	Director::getInstance()->pushScene(transition);
 }
@@ -89,7 +83,6 @@ bool HelloWorld::init()
     {
         return false;
     }
-
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	SimpleAudioEngine::getInstance()->playBackgroundMusic("sound/background.mp3");
@@ -141,7 +134,6 @@ bool HelloWorld::init()
 	item3->setPosition(Vec2(30, visibleSize.height - 30));
 
 	Menu *mn = Menu::create(item1, item2,item3, NULL);
-	mn->setTag(5);;
 	mn->setPosition(Vec2(0, 0 ));
 	//mn->setAnchorPoint(Vec2(0, 0));
 	this->addChild(mn);
