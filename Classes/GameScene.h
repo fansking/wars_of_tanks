@@ -30,6 +30,7 @@ public:
 	static int nPickup;
 	static EnemyAI * enemyAIs[10];
 	static TMXTiledMap *_tileMap;
+	static int levelNum ;
 
 	static int nEnemy;
 	
@@ -45,7 +46,7 @@ public:
 	virtual void update(float dt);
 
 	void menuItemCallbackPause(Ref * pSender);
-	
+
 private:
 	int tileX, tileY, mapX, mapY;
 	Vec2 viewPoint;

@@ -26,6 +26,7 @@
 #include "SettingScene.h"
 #include "GameScene.h"
 #include "AboutScene.h"
+#include "ChoseLevel.h"
 USING_NS_CC;
 #define USE_SIMPLE_AUDIO_ENGINE 1
 
@@ -42,6 +43,7 @@ using namespace CocosDenshion;
 #endif
 USING_NS_CC;
 
+int Game::levelNum = 0;
 Scene* HelloWorld::createScene()
 {
     return HelloWorld::create();
@@ -70,7 +72,10 @@ void HelloWorld::menuItemSettingCallback(Ref *pSender)
 }
 void HelloWorld::menuItemStartCallback(cocos2d::Ref *pSender)
 {
-	auto sc = Game::createScene();
+	//auto sc = Game::createScene();
+	//auto transition = TransitionFade::create(1, sc);
+	//Director::getInstance()->pushScene(transition);
+	auto sc = ChoseLevel::createScene();
 	auto transition = TransitionFade::create(1, sc);
 	Director::getInstance()->pushScene(transition);
 }
