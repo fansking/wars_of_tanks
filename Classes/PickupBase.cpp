@@ -34,6 +34,7 @@ PickupBase * PickupBase::createWithImage(const char * path)
 	body->setCategoryBitmask(0x01);
 	body->setContactTestBitmask(0x01);
 	item->setPhysicsBody(body);
+	item->setTag(6);
 	return item;
 }
 

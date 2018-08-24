@@ -23,6 +23,7 @@ class Game :public Layer
 	Enemy *_enemy_1;
 	Enemy *_enemy_2;
 public:
+	static int nPickup;
 	static EnemyAI * enemyAIs[10];
 	static TMXTiledMap *_tileMap;
 	

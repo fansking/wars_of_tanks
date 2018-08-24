@@ -9,6 +9,7 @@ TMXLayer * EnemyAI::layer = nullptr;
 int EnemyAI::mapSize = 20;
 int EnemyAI::tileSize = 32;
 EnemyAI * Game::enemyAIs[10] = { nullptr };
+int Game::nPickup = 0;
 
 
 Scene *Game::createScene()
@@ -94,6 +95,7 @@ bool Game::init()
 	addChild(_player);
 	/**/
 	_player->addenemy();
+	_player->addpickup();
 	_player->setTag(1);
 	_collidable = _tileMap->getLayer("collidable");
 	Bullet::coll = _collidable;
