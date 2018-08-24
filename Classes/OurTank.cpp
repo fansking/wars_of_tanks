@@ -117,5 +117,6 @@ void OurTank::addenemy() {
 		enemy[i] = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
 		enemy[i]->setPosition(Vec2(x0, y0));
 		this->getParent()->addChild(enemy[i], 2, 200);
+		Game::enemyAIs[i] = EnemyAI::createWithEnemy(enemy[i]);
 	}
 }

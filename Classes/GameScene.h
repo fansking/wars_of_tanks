@@ -22,9 +22,8 @@ class Game :public Layer
 	TMXLayer *_collidable;
 	Enemy *_enemy_1;
 	Enemy *_enemy_2;
-	EnemyAI * enemyAIs[5];
 public:
-	
+	static EnemyAI * enemyAIs[10];
 	static TMXTiledMap *_tileMap;
 	
 	static Scene * createScene();

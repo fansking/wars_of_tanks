@@ -8,6 +8,7 @@ TMXTiledMap * EnemyAI::tileMap = nullptr;
 TMXLayer * EnemyAI::layer = nullptr;
 int EnemyAI::mapSize = 20;
 int EnemyAI::tileSize = 32;
+EnemyAI * Game::enemyAIs[10] = { nullptr };
 
 
 Scene *Game::createScene()
@@ -35,7 +36,6 @@ bool Game::init()
 		log("onContactBegin");
 		auto spriteA = (Sprite *)contact.getShapeA()->getBody()->getNode();
 		auto spriteB = (Sprite *)contact.getShapeB()->getBody()->getNode();
-		//log("%d %d", spriteA->getTag(), spriteB->getTag());
 		if (spriteA && spriteB && spriteA->getTag()==3 && spriteB->getTag()==2)
 		{
 			spriteA->removeFromParent();
@@ -47,7 +47,6 @@ bool Game::init()
 			((PickupBase *)spriteB)->isContact((OurTank *)spriteA);
 		}
 
-		//auto item = MenuItemImage::create("weixin.png", "weixin_h.png");
 
 		return true;
 	};
@@ -61,9 +60,7 @@ bool Game::init()
 	tileY = _tileMap->getTileSize().height;
 	mapX = _tileMap->getMapSize().width;
 	mapY = _tileMap->getMapSize().height;
-	//log("%d,%d", tileX, tileY);
 
-	//_tileMap->setScale(Director::getInstance()->getVisibleSize().width / (_tileMap->getMapSize().width * _tileMap->getTileSize().width));
 	this->addChild(_tileMap);
 
 	EnemyAI::tileMap = _tileMap;
@@ -77,31 +74,12 @@ bool Game::init()
 	
 	int  x0 = spawnPoint_0["x"].asInt();
 	int  y0 = spawnPoint_0["y"].asInt();
-	/*ValueMap spawnPoint_1 = group->getObject("enemy0");
-
-	int x1 = spawnPoint_1["x"].asInt();
-	int y1 = spawnPoint_1["y"].asInt();
-	ValueMap spawnPoint_2 = group->getObject("enemy1");
-
-	int x2 = spawnPoint_2["x"].asInt();
-	int y2 = spawnPoint_2["y"].asInt();
-
-	auto _enemy_1 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
-	auto _enemy_2 = Enemy::createWithEnemyTypes(EnemyTypeEnemy2);
-	_enemy_1->setPosition(Vec2(x1,y1));
-	_enemy_2->setPosition(Vec2(x2,y2));
-	enemyAIs[0] = EnemyAI::createWithEnemy(_enemy_1);
-	enemyAIs[1] = EnemyAI::createWithEnemy(_enemy_2);
 
 	EnemyAI::tileMap = _tileMap;
 	EnemyAI::layer = _collidable;
 	EnemyAI::mapSize = _tileMap->getMapSize().height;
 	EnemyAI::tileSize = _tileMap->getTileSize().width;
 
-
-	addChild(_enemy_1);
-	addChild(_enemy_2);
-*/
 	ValueMap spawnPoint_3 = group->getObject("gold");
 	float x3 = spawnPoint_3["x"].asFloat();
 	float y3 = spawnPoint_3["y"].asFloat();
@@ -114,6 +92,7 @@ bool Game::init()
 	_player->setAnchorPoint(Vec2(0.5, 0.5));
 	_player->setPosition(Vec2(x0, y0));
 	addChild(_player);
+	/**/
 	_player->addenemy();
 	_player->setTag(1);
 	_collidable = _tileMap->getLayer("collidable");
@@ -122,18 +101,10 @@ bool Game::init()
 	EnemyAI::layer = _collidable;
 
 	Vec2 playerPos = _player->getPosition();
-	//log("%d,%d", playerPos.x, playerPos.y);
+
 	_player->setDirection(146);
 
-	/*setTouchEnabled(true);
-	setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
-	setKeypadEnabled(true);*/
-
 	setKeyboardEnabled(true);
-
-	auto path = FileUtils::getInstance()->getWritablePath();
-	log("%s", MyUtility::gbk_2_utf8(path));
-	auto str = FileUtils::getInstance()->writeStringToFile("123", path + "file_data.json");
 
 	this->scheduleUpdate();
 
@@ -171,11 +142,7 @@ void Game::setPlayerPosition(Vec2 position)
 }
 Vec2 Game::tileCoordFromPosition(Vec2 pos) {
 	int x = (int)pos.x / tileX;
-	//log("%d,%d", tileX, tileY);
-	//log("%f,%fasdas", pos.x, pos.y);
-//	log("%d, %d", _tileMap->getTileSize().width, _tileMap->getMapSize().width);
 	int y = (int)(mapY*tileY - pos.y) / tileY;
-	//log("%d,%d", x, y);
 	return Vec2(x, y);
 }
 
@@ -224,7 +191,6 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 		playerPos.x += _tileMap->getTileSize().width;
 		break;
 	}
-	//log("%f,%f", playerPos.x, playerPos.y);
 	this->setPlayerPosition(playerPos);
 
 	this->schedule(schedule_selector(Game::keepMoving), 0.2);
@@ -232,7 +198,6 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 
 void Game::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
 {
-	//if((int)keyCode==146|| (int)keyCode==142|| (int)keyCode==124|| (int)keyCode==127)
 	if((int)keyCode==_player->getDirection())
 		this->unschedule(schedule_selector(Game::keepMoving));
 }
@@ -270,8 +235,6 @@ void Game::update(float dt)
 void Game::menuItemCallbackPause(Ref * pSender)
 {
 	static bool isPause = false;
-	//auto layer = About::create();
-	//this->addChild(layer);
 	if (!isPause)
 	{
 		auto layer = PauseLayer::create();
