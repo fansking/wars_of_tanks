@@ -117,7 +117,7 @@ void OurTank::addenemy() {
 		int  y0 = spawnPoint_0["y"].asInt();
 		enemy[i] = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
 		enemy[i]->setPosition(Vec2(x0, y0));
-		this->getParent()->addChild(enemy[i], 2, 200);
+		this->getParent()->addChild(enemy[i]);
 		Game::enemyAIs[i] = EnemyAI::createWithEnemy(enemy[i]);
 	}
 }
@@ -148,7 +148,7 @@ void OurTank::addpickup() {
 		int  y0 = spawnPoint_0["y"].asInt();
 		pickup[i] = PickupBase::createWithType(Gold);
 		pickup[i]->setPosition(Vec2(x0, y0));
-		this->getParent()->addChild(pickup[i], 2, 200);
+		this->getParent()->addChild(pickup[i]);
 	}
 
 }

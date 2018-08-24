@@ -17,9 +17,10 @@ PickupBase * PickupBase::createWithType(PickupTypes type)
 		item->autorelease();
 	}
 	auto body = PhysicsBody::createEdgeBox(item->getContentSize());
-	body->setCategoryBitmask(0x01);
+	body->setCategoryBitmask(0x02);
 	body->setContactTestBitmask(0x01);
 	item->setPhysicsBody(body);
+	item->setTag(6);
 	return item;
 }
 
@@ -31,7 +32,7 @@ PickupBase * PickupBase::createWithImage(const char * path)
 		item->autorelease();
 	}
 	auto body = PhysicsBody::createEdgeBox(item->getContentSize());
-	body->setCategoryBitmask(0x01);
+	body->setCategoryBitmask(0x02);
 	body->setContactTestBitmask(0x01);
 	item->setPhysicsBody(body);
 	item->setTag(6);

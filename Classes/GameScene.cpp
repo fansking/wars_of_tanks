@@ -40,6 +40,8 @@ bool Game::init()
 		log("onContactBegin");
 		auto spriteA = (Sprite *)contact.getShapeA()->getBody()->getNode();
 		auto spriteB = (Sprite *)contact.getShapeB()->getBody()->getNode();
+		//log("%d %d", spriteA->getTag(), spriteB->getTag());
+
 		if (spriteA && spriteB && spriteA->getTag()==3 && spriteB->getTag()==2)
 		{
 			spriteA->removeFromParent();
@@ -47,7 +49,6 @@ bool Game::init()
 		}
 		else if (spriteA && spriteB && spriteA->getTag()==1 && spriteB->getTag()==6)
 		{
-			log("%d %d", spriteA->getTag(), spriteB->getTag());
 			((PickupBase *)spriteB)->isContact((OurTank *)spriteA);
 		}
 
