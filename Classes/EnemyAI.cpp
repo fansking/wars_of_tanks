@@ -18,7 +18,7 @@ EnemyAI * EnemyAI::createWithEnemy(Enemy * obj)
 
 Vec2 EnemyAI::tileCoordFromPosition(Vec2 pos) {
 	int x = pos.x / tileSize;
-	int y = ((mapSize * tileSize) - pos.y) / tileSize;
+	int y = ((mapSizeHeight * tileSize) - pos.y) / tileSize;
 	return Vec2(x, y);
 }
 
@@ -27,12 +27,12 @@ void EnemyAI::update(float dt)
 	//obj->runAction(MoveBy::create(0.2, Vec2(0, 5) * dt));
 
 	Vec2 target = obj->getPosition() + vel * dt;
-	Size screenSize = Director::getInstance()->getVisibleSize();
+	Size screenSize = Size((Vec2(mapSizeWidth * tileSize, mapSizeHeight * tileSize)));
 	if (target.y + 16 >= screenSize.height || target.y - 16 <= 0 || 
 		target.x + 16 >= screenSize.width || target.x - 16 <= 0)
 	{
 		int nDirection = rand() % 4;
-		log("%d", nDirection);
+		//log("%d", nDirection);
 		switch (nDirection)
 		{
 		case 0:

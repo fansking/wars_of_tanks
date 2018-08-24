@@ -7,8 +7,6 @@
 #include "Bullet.h"
 #include "MyUtility.h"
 #include "PickupBase.h"
-#include "AboutScene.h"
-#include "PauseLayer.h"
 
 #ifndef _GAME_SCENE_H_
 #define _GAME_SCENE_H_
@@ -17,15 +15,16 @@ using namespace cocos2d;
 
 class Game :public Layer
 {
-	
+
 	OurTank *_player;
 	TMXLayer *_collidable;
 	Enemy *_enemy_1;
 	Enemy *_enemy_2;
+	EnemyAI * enemyAIs[5];
+
 public:
-	static EnemyAI * enemyAIs[10];
-	static TMXTiledMap *_tileMap;
-	
+	TMXTiledMap * _tileMap;
+
 	static Scene * createScene();
 	void setPlayerPosition(Vec2 position);
 	Vec2 tileCoordFromPosition(Vec2 position);
@@ -34,15 +33,12 @@ public:
 	virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event);
 	virtual void onKeyReleased(EventKeyboard::KeyCode, Event *);
 	void keepMoving(float dt);
+
 	//static void RestartCallback(Ref * pSender);
 	virtual void update(float dt);
 
-	void menuItemCallbackPause(Ref * pSender);
-	
 private:
 	int tileX, tileY, mapX, mapY;
-	Vec2 viewPoint;
-	Layer * menuLayer = Layer::create();
 	void setViewpointCenter(Point position);
 	bool isMoveable(Vec2 position);
 	CREATE_FUNC(Game);
