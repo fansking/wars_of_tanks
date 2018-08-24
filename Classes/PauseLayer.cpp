@@ -1,6 +1,7 @@
 #include "PauseLayer.h"
 #include "GameScene.h"
 #include "HelloWorldScene.h"
+#include "ChoseLevel.h"
 
 bool PauseLayer::init()
 {
@@ -35,6 +36,8 @@ void PauseLayer::menuItemRestartCallback(Ref * pSender)
 void PauseLayer::menuItemChooseStageCallback(Ref * pSender)
 {
 	log("ChooseStage");
+	Director::getInstance()->resume();
+	Director::getInstance()->replaceScene(ChoseLevel::createScene());
 }
 void PauseLayer::menuItemHomePageCallback(Ref * pSender)
 {
