@@ -68,7 +68,7 @@ void Bullet::update(float dt)
 	//coordinate transformation
 	Vec2 pos = this->getPosition();
 	int X = pos.x / 60;
-	int Y = ((12 * 60) - pos.y) / 60;
+	int Y = ((Game::_tileMap->getTileSize().height * Game::_tileMap->getMapSize().height) - pos.y) / 60;
 	Sprite *mytile0 = _breakable0->getTileAt(Vec2(X, Y));
 	
 	Sprite *mycoll = coll->getTileAt(Vec2(X, Y));
@@ -92,7 +92,8 @@ void Bullet::update(float dt)
 	this->setPosition(this->getPosition() + velocity * dt);
 	int y = this->getPosition().y;
 	int x = this->getPosition().x;
-	if (y >= screenSize.height || y <= 0 || x >= screenSize.width || x <= 0)
+	if (y >= Game::_tileMap->getTileSize().height * Game::_tileMap->getMapSize().height|| y <= 0 || 
+		x >= Game::_tileMap->getTileSize().width * Game::_tileMap->getMapSize().width || x <= 0)
 	{
 		this->setVisible(false);
 		this->unscheduleUpdate();
