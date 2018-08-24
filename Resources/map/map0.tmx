@@ -43,10 +43,10 @@
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="1" name="enemy2" x="780" y="600" width="60" height="60"/>
-  <object id="2" name="enemy0" x="718" y="61" width="60" height="60"/>
-  <object id="3" name="enemy1" x="540" y="60" width="60" height="60"/>
-  <object id="4" name="playerA" x="630" y="630" width="60" height="60"/>
+  <object id="1" name="enemy2" type="e" x="780" y="600" width="60" height="60"/>
+  <object id="2" name="enemy0" type="enemy" x="718" y="61" width="60" height="60"/>
+  <object id="3" name="enemy1" type="e" x="540" y="60" width="60" height="60"/>
+  <object id="4" name="playerA" type="e" x="630" y="630" width="60" height="60"/>
  </objectgroup>
  <objectgroup name="roadPoints" visible="0">
   <object id="9" name="p1" x="182" y="360" width="60" height="60"/>
