@@ -36,7 +36,7 @@ void EnemyAI::update(float dt)
 		return;
 	}
 
-	Vec2 target = obj->getPosition() + vel * dt;
+	target = obj->getPosition() + vel * dt;
 	Size screenSize = Size((Vec2(mapSizeWidth * tileSize, mapSizeHeight * tileSize)));
 	if (target.y + 16 >= screenSize.height || target.y - 16 <= 0 || 
 		target.x + 16 >= screenSize.width || target.x - 16 <= 0)
