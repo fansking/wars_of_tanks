@@ -10,7 +10,7 @@ Enemy * Game::enemy[10] = { NULL };
 int EnemyAI::mapSizeHeight = 0;
 int EnemyAI::mapSizeWidth = 0;
 int EnemyAI::tileSize =0;
-
+float Game::mydt =1;
 EnemyAI * Game::enemyAIs[10] = { nullptr };
 bool Game::bVictory = false;
 int Game::nEnemy = -1;
@@ -175,7 +175,11 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 	Vec2 playerPos = _player->getPosition();
 	if ((int)keyCode == 59)
 	{
+		if (mydt  <0) {
 		_player->openFire();
+		mydt =1;
+		}
+		
 		return;
 	}
 	if ((int)keyCode != _player->getDirection())
@@ -255,6 +259,7 @@ void Game::keepMoving(float dt)
 
 void Game::update(float dt)
 {
+	mydt -= dt;
 	if (bVictory)
 	{
 		Director::getInstance()->replaceScene(HelloWorld::createScene());

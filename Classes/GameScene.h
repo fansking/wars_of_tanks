@@ -33,12 +33,12 @@ public:
 	static TMXTiledMap *_tileMap;
 
 	static int nEnemy;
-	
+	static float mydt;
 	static Scene * createScene();
 	void setPlayerPosition(Vec2 position);
 	Vec2 tileCoordFromPosition(Vec2 position);
 	virtual bool init();
-
+	
 	virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event);
 	virtual void onKeyReleased(EventKeyboard::KeyCode, Event *);
 	void keepMoving(float dt);
@@ -48,6 +48,7 @@ public:
 	void menuItemCallbackPause(Ref * pSender);
 	
 private:
+	
 	int tileX, tileY, mapX, mapY;
 	Vec2 viewPoint;
 	Layer * menuLayer = Layer::create();
