@@ -10,9 +10,9 @@ Enemy * Game::enemy[10] = { NULL };
 int EnemyAI::mapSizeHeight = 0;
 int EnemyAI::mapSizeWidth = 0;
 int EnemyAI::tileSize =0;
+bool Game::bVictory = false;
 
 EnemyAI * Game::enemyAIs[10] = { nullptr };
-bool Game::bVictory = false;
 int Game::nEnemy = -1;
 int Game::nPickup = -1;
 
@@ -55,7 +55,7 @@ bool Game::init()
 			((PickupBase *)spriteB)->isContact((OurTank *)spriteA);
 		}
 		if (nEnemy == 0) {
-			log("win");
+			Game::bVictory = true;
 		}
 
 		return true;
@@ -274,13 +274,13 @@ void Game::menuItemCallbackPause(Ref * pSender)
 		layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
 		Director::getInstance()->getVisibleSize().height / 2));
 		layer->setTag(13);
-		this->addChild(layer);
+		menuLayer->addChild(layer);
 		isPause = true;
 		Director::getInstance()->pause();
 	}
 	else
 	{
-		this->removeChildByTag(13);
+		menuLayer->removeChildByTag(13);
 		Director::getInstance()->resume();
 		isPause = false;
 	}

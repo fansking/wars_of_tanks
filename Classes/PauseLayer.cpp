@@ -13,11 +13,11 @@ bool PauseLayer::init()
 	
 	this->addChild(bgPause);
 
-	auto itemRestart = MenuItemImage::create("UI/restart.png", "UI/restartPressed.png", 
+	auto itemRestart = MenuItemImage::create("UI/restartNormal.png", "UI/restartPressed.png", 
 		CC_CALLBACK_1(PauseLayer::menuItemRestartCallback, this));
-	auto itemChooseStage = MenuItemImage::create("UI/chooseStage.png", "UI/chooseStagePressed.png", 
+	auto itemChooseStage = MenuItemImage::create("UI/chooseStageNormal.png", "UI/chooseStagePressed.png", 
 		CC_CALLBACK_1(PauseLayer::menuItemChooseStageCallback, this));
-	auto itemHomePage = MenuItemImage::create("UI/homePage.png", "UI/homePagePressed.png", 
+	auto itemHomePage = MenuItemImage::create("UI/homePageNormal.png", "UI/homePagePressed.png", 
 		CC_CALLBACK_1(PauseLayer::menuItemHomePageCallback, this));
 	auto menuPause = Menu::create(itemRestart, itemChooseStage, itemHomePage, NULL);
 	menuPause->alignItemsVertically();
