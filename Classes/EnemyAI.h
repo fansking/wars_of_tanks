@@ -15,7 +15,8 @@ public:
 	virtual void update(float dt);
 
 	static TMXLayer * layer;
-	static int mapSize;
+	static int mapSizeHeight;
+	static int mapSizeWidth;
 	static int tileSize;
 	static TMXTiledMap * tileMap;
 
