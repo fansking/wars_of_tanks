@@ -24,4 +24,5 @@ public:
 	static OurTank * createWithImage(int);
 	void openFire();
 	void addenemy();
+	void addpickup();
 };

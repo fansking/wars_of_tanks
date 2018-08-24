@@ -9,7 +9,11 @@ TMXLayer * EnemyAI::layer = nullptr;
 int EnemyAI::mapSizeHeight = 0;
 int EnemyAI::mapSizeWidth = 0;
 int EnemyAI::tileSize =0;
+
 EnemyAI * Game::enemyAIs[10] = { nullptr };
+bool Game::bVictory = false;
+int Game::nEnemy = 0;
+int Game::nPickup = 0;
 
 
 Scene *Game::createScene()
@@ -100,6 +104,7 @@ bool Game::init()
 
 	/**/
 	_player->addenemy();
+	_player->addpickup();
 	_player->setTag(1);
 	_collidable = _tileMap->getLayer("collidable");
 	Bullet::coll = _collidable;
@@ -126,6 +131,8 @@ bool Game::init()
 	menuLayer->addChild(menu);
 
 	log("%d,%d",this->getPosition().x,this->getPosition().y);
+
+	log("There are %d enemys ***************************", nEnemy);
 
 	return true;
 }
@@ -243,6 +250,10 @@ void Game::keepMoving(float dt)
 
 void Game::update(float dt)
 {
+	if (bVictory)
+	{
+		Director::getInstance()->replaceScene(HelloWorld::createScene());
+	}
 	for (int i = 0; enemyAIs[i]; ++i)
 	{
 		enemyAIs[i]->update(dt);
