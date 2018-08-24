@@ -27,6 +27,7 @@ class Game :public Layer
 	static bool bVictory;
 
 public:
+	static int nPickup;
 	static EnemyAI * enemyAIs[10];
 	static TMXTiledMap *_tileMap;
 

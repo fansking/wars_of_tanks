@@ -171,8 +171,8 @@ void BulletScatter::update(float dt)
 {
 	//coordinate transformation
 	Vec2 pos = this->getPosition();
-	int X = pos.x / 32;
-	int Y = ((20 * 32) - pos.y) / 32;
+	int X = pos.x / 60;
+	int Y = ((12 * 60) - pos.y) / 60;
 	Sprite *mytile0 = _breakable0->getTileAt(Vec2(X, Y));
 	Sprite *mycoll = coll->getTileAt(Vec2(X, Y));
 	if (mytile0 != nullptr && mytile0->isVisible() && this->isVisible() && mycoll) {
