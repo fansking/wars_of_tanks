@@ -1,5 +1,5 @@
 #include"Enemy.h"
-
+#include "GameScene.h"
 Enemy::Enemy(EnemyTypes enemyType) : OurTank(2){
 	this->enemyType = enemyType;
 }
@@ -26,9 +26,9 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 		auto body = PhysicsBody::createEdgeBox(Size(32, 32),
 			PHYSICSBODY_MATERIAL_DEFAULT, 3.0f);
 		
-		body->setCategoryBitmask(0x04);
+		body->setCategoryBitmask(0x02);
 		//body->setCollisionBitmask(0x02);
-		body->setContactTestBitmask(0x0F);
+		body->setContactTestBitmask(0x02);
 
 		enemy->setPhysicsBody(body);
 		
@@ -52,3 +52,4 @@ void Enemy::update(float dt) {
 void Enemy::shoot() {
 	
 }
+

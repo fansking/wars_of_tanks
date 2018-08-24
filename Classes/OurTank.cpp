@@ -88,7 +88,6 @@ void OurTank::addenemy() {
 	TMXObjectGroup *group = Game::_tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
 	ValueMap enemy_spawn[10] = {};
-	Enemy * enemy[10] = {NULL};
 	while (spawnPoint_0 != ValueMap()) {
 		char enemyname[10] = "enemy";
 		char str[10];
@@ -105,7 +104,7 @@ void OurTank::addenemy() {
 		_enemy_1->setPosition(Vec2(x0, y0));
 		this->getParent()->addChild(_enemy_1, 2, 200);*/
 	}
-	for (int i = 0; i <= x; i++) {
+	for (int i = 0; i < x-1; i++) {
 		char enemyname[10] = "enemy";
 		char str[10];
 		sprintf(str, "%d", i);
@@ -115,14 +114,15 @@ void OurTank::addenemy() {
 		if (spawnPoint_0 == ValueMap()) { break; }
 		int  x0 = spawnPoint_0["x"].asInt();
 		int  y0 = spawnPoint_0["y"].asInt();
-		enemy[i] = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
-		enemy[i]->setPosition(Vec2(x0, y0));
-		this->getParent()->addChild(enemy[i], 2, 200);
-		Game::enemyAIs[i] = EnemyAI::createWithEnemy(enemy[i]);
+		Game::enemy[i] = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
+		Game::enemy[i]->setPosition(Vec2(x0, y0));
+		this->getParent()->addChild(Game::enemy[i]);
+		Game::enemyAIs[i] = EnemyAI::createWithEnemy(Game::enemy[i]);
 	}
 }
 
 void OurTank::addpickup() {
+	static int x = 0;
 	TMXObjectGroup *group = Game::_tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
 	ValueMap pickup_spawn[10] = {};
@@ -130,14 +130,15 @@ void OurTank::addpickup() {
 	while (spawnPoint_0 != ValueMap()) {
 		char pickupname[10] = "pickup";
 		char str[10];
-		sprintf(str, "%d", Game::nPickup);
+		sprintf(str, "%d",x);
 		strcat(pickupname, str);
+		++x;
 		++Game::nPickup;
 		log("%s", pickupname);
 		spawnPoint_0 = group->getObject(pickupname);
 		if (spawnPoint_0 == ValueMap()) { break; }
 	}
-	for (int i = 0; i <= Game::nPickup; i++) {
+	for (int i = 0; i < x-1; i++) {
 		char pickupname[10] = "pickup";
 		char str[10];
 		sprintf(str, "%d", i);
@@ -148,7 +149,7 @@ void OurTank::addpickup() {
 		int  y0 = spawnPoint_0["y"].asInt();
 		pickup[i] = PickupBase::createWithType(Gold);
 		pickup[i]->setPosition(Vec2(x0, y0));
-		this->getParent()->addChild(pickup[i], 2, 200);
+		this->getParent()->addChild(pickup[i]);
 	}
 
 }

@@ -6,14 +6,15 @@ USING_NS_CC;
 TMXTiledMap *Game::_tileMap = nullptr;
 TMXTiledMap * EnemyAI::tileMap = nullptr;
 TMXLayer * EnemyAI::layer = nullptr;
+Enemy * Game::enemy[10] = { NULL };
 int EnemyAI::mapSizeHeight = 0;
 int EnemyAI::mapSizeWidth = 0;
 int EnemyAI::tileSize =0;
 
 EnemyAI * Game::enemyAIs[10] = { nullptr };
 bool Game::bVictory = false;
-int Game::nEnemy = 0;
-int Game::nPickup = 0;
+int Game::nEnemy = -1;
+int Game::nPickup = -1;
 
 
 Scene *Game::createScene()
@@ -41,17 +42,21 @@ bool Game::init()
 		log("onContactBegin");
 		auto spriteA = (Sprite *)contact.getShapeA()->getBody()->getNode();
 		auto spriteB = (Sprite *)contact.getShapeB()->getBody()->getNode();
-		if (spriteA && spriteB && spriteA->getTag()==3 && spriteB->getTag()==2)
+		if (spriteA && spriteB && spriteA->getTag()==3 && spriteB->getTag()==2 && spriteA->isVisible())
 		{
-			spriteA->removeFromParent();
+			spriteA->setVisible(false);
 			spriteB->removeFromParent();
+			nEnemy--;
+			log("%d",nEnemy);
 		}
 		else if (spriteA && spriteB && spriteA->getTag()==1 && spriteB->getTag()==6)
 		{
 			log("%d %d", spriteA->getTag(), spriteB->getTag());
 			((PickupBase *)spriteB)->isContact((OurTank *)spriteA);
 		}
-
+		if (nEnemy == 0) {
+			log("win");
+		}
 
 		return true;
 	};
