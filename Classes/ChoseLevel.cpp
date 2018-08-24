@@ -1,5 +1,6 @@
 #include "ChoseLevel.h"
 #include "SimpleAudioEngine.h"
+#include "GameScene.h"
 
 USING_NS_CC;
 
@@ -49,15 +50,18 @@ void ChoseLevel::init2() {
 	for (int i = 0; i < now; i++) {
 		auto item = MenuItemImage::create("UI/stageGoldBig.png", "UI/stageGoldSmall.png", CC_CALLBACK_1(ChoseLevel::menuEnterGameCallback, this));
 		item->setPosition(Vec2(myPosition[i][0], myPosition[i][1]));
+		item->setTag(i);
 		menu->addChild(item);
 	}
 	auto item = MenuItemImage::create("UI/stageUnlockBig.png", "UI/stageUnlockSmall.png", CC_CALLBACK_1(ChoseLevel::menuEnterGameCallback, this));
 	item->setPosition(Vec2(myPosition[now][0], myPosition[now][1]));
 	menu->addChild(item);
+	item->setTag(now);
 
 	for (int i = now + 1; i < num; i++) {
 		auto item = MenuItemImage::create("UI/stageUnattachBig.png", "UI/stageUnattachSmall.png", CC_CALLBACK_1(ChoseLevel::menuEnterGameCallback, this));
 		item->setPosition(Vec2(myPosition[i][0], myPosition[i][1]));
+		item->setTag(i);
 		menu->addChild(item);
 	}
 	
@@ -82,6 +86,12 @@ void ChoseLevel::menuDoubleCallback(cocos2d::Ref* pSender) {
 }
 
 void ChoseLevel::menuEnterGameCallback(cocos2d::Ref* pSender) {
-
+	MenuItem* nmitem = (MenuItem*)pSender;
+	if (nmitem->getTag() <= now) {
+		Game::levelNum = nmitem->getTag();
+		auto sc = Game::createScene();
+		auto transition = TransitionFade::create(1, sc);
+		Director::getInstance()->pushScene(transition);
+	}
 }
 

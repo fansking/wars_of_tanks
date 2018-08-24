@@ -11,11 +11,11 @@ int EnemyAI::mapSizeHeight = 0;
 int EnemyAI::mapSizeWidth = 0;
 int EnemyAI::tileSize =0;
 float Game::mydt =1;
-EnemyAI * Game::enemyAIs[10] = { nullptr };
 bool Game::bVictory = false;
+
+EnemyAI * Game::enemyAIs[10] = { nullptr };
 int Game::nEnemy = -1;
 int Game::nPickup = -1;
-
 
 Scene *Game::createScene()
 {
@@ -55,7 +55,7 @@ bool Game::init()
 			((PickupBase *)spriteB)->isContact((OurTank *)spriteA);
 		}
 		if (nEnemy == 0) {
-			log("win");
+			Game::bVictory = true;
 		}
 
 		return true;
@@ -63,7 +63,8 @@ bool Game::init()
 
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
 
-	_tileMap = TMXTiledMap::create("map/map3.tmx");
+	string s1 = to_string(levelNum), s2 = "map/map" + s1 + ".tmx";
+	_tileMap = TMXTiledMap::create(s2);
 	Bullet::_breakable0 = _tileMap->getLayer("breakable0");
 	Bullet::_breakable1 = _tileMap->getLayer("breakable1");
 	tileX = _tileMap->getTileSize().width;
@@ -104,6 +105,7 @@ bool Game::init()
 	_player->setPosition(Vec2(x0, y0));
 	addChild(_player);
 	this->setViewpointCenter(Vec2(x0, y0));
+	log("%f,%f", viewPoint.x, viewPoint.y);
 	//this->setPosition(Vec2(200, 200));
 
 
@@ -125,7 +127,8 @@ bool Game::init()
 	this->scheduleUpdate();
 
 
-	menuLayer->runAction(MoveTo::create(0.2, -viewPoint));
+	//menuLayer->runAction(MoveTo::create(0.2, -viewPoint));
+	menuLayer->setPosition(Vec2(0,0));
 	this->addChild(menuLayer);
 	auto itemPause = MenuItemImage::create("UI/menu_pause.png", "UI/menu_pause1.png",
 		CC_CALLBACK_1(Game::menuItemCallbackPause, this));
@@ -134,8 +137,8 @@ bool Game::init()
 	auto menu = Menu::create(itemPause, NULL);
 	menu->setPosition(Vec2::ZERO);
 	menuLayer->addChild(menu);
-
-	log("%d,%d",this->getPosition().x,this->getPosition().y);
+	log("%f,%f", menuLayer->getPosition().x, menuLayer->getPosition().y);
+	//log("%d,%d",this->getPosition().x,this->getPosition().y);
 
 	log("There are %d enemys ***************************", nEnemy);
 
@@ -279,13 +282,13 @@ void Game::menuItemCallbackPause(Ref * pSender)
 		layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
 		Director::getInstance()->getVisibleSize().height / 2));
 		layer->setTag(13);
-		this->addChild(layer);
+		menuLayer->addChild(layer);
 		isPause = true;
 		Director::getInstance()->pause();
 	}
 	else
 	{
-		this->removeChildByTag(13);
+		menuLayer->removeChildByTag(13);
 		Director::getInstance()->resume();
 		isPause = false;
 	}
@@ -309,17 +312,6 @@ void Game::setViewpointCenter(Point position) {
 	this->runAction(MoveTo::create(0.2, viewPoint));
 	log("%f,%f", this->getPosition().x, this->getPosition().y);
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	////log("%f,%f", origin.x, origin.y);
-	//auto layer1 = Layer::create();
-	////layer1->runAction(MoveTo::create(0.2, viewPoint));
-	//auto itemPause = MenuItemImage::create("UI/menu_pause.png", "UI/menu_pause1.png",
-	//	CC_CALLBACK_1(Game::menuItemCallbackPause, this));
-	//itemPause->setAnchorPoint(Vec2(0, 0));
-	//itemPause->setPosition(Vec2(600, 360));
-	//auto menu = Menu::create(itemPause, NULL);
-	//menu->setPosition(Vec2::ZERO);
-	//layer1->addChild(menu);
-	//this->addChild(layer1);
 	menuLayer->runAction(MoveTo::create(0.2, -viewPoint));
 }
 
