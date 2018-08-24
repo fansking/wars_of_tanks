@@ -6,10 +6,11 @@ USING_NS_CC;
 TMXTiledMap *Game::_tileMap = nullptr;
 TMXTiledMap * EnemyAI::tileMap = nullptr;
 TMXLayer * EnemyAI::layer = nullptr;
-int EnemyAI::mapSize = 20;
-int EnemyAI::tileSize = 32;
+int EnemyAI::mapSize = 0;
+int EnemyAI::tileSize = 0;
 EnemyAI * Game::enemyAIs[10] = { nullptr };
-
+bool Game::bVictory = false;
+int Game::nEnemy = 0;
 
 Scene *Game::createScene()
 {
@@ -115,6 +116,8 @@ bool Game::init()
 	auto menu = Menu::create(itemPause, NULL);
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu);
+
+	log("There are %d enemys ***************************", nEnemy);
 
 	return true;
 }
@@ -226,6 +229,10 @@ void Game::keepMoving(float dt)
 
 void Game::update(float dt)
 {
+	if (bVictory)
+	{
+		Director::getInstance()->replaceScene(HelloWorld::createScene());
+	}
 	for (int i = 0; enemyAIs[i]; ++i)
 	{
 		enemyAIs[i]->update(dt);

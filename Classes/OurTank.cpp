@@ -83,17 +83,18 @@ void OurTank::openFire()
 }
 
 void OurTank::addenemy() {
+	static int x = 0;
+
 	TMXObjectGroup *group = Game::_tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
 	ValueMap enemy_spawn[10] = {};
 	Enemy * enemy[10] = {NULL};
-	static int x = 0;
 	while (spawnPoint_0 != ValueMap()) {
-		
 		char enemyname[10] = "enemy";
 		char str[10];
 		sprintf(str, "%d", x);
 		strcat(enemyname, str);
+		++Game::nEnemy;
 		++x;
 		log("%s", enemyname);
 		spawnPoint_0 = group->getObject(enemyname);
@@ -109,7 +110,7 @@ void OurTank::addenemy() {
 		char str[10];
 		sprintf(str, "%d", i);
 		strcat(enemyname, str);
-		log("%s", enemyname);
+		//log("%s", enemyname);
 		spawnPoint_0 = group->getObject(enemyname);
 		if (spawnPoint_0 == ValueMap()) { break; }
 		int  x0 = spawnPoint_0["x"].asInt();
@@ -119,4 +120,5 @@ void OurTank::addenemy() {
 		this->getParent()->addChild(enemy[i], 2, 200);
 		Game::enemyAIs[i] = EnemyAI::createWithEnemy(enemy[i]);
 	}
+	//enemy[0]->removeFromParent();
 }

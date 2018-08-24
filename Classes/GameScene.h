@@ -9,6 +9,7 @@
 #include "PickupBase.h"
 #include "AboutScene.h"
 #include "PauseLayer.h"
+#include "HelloWorldScene.h"
 
 #ifndef _GAME_SCENE_H_
 #define _GAME_SCENE_H_
@@ -22,9 +23,14 @@ class Game :public Layer
 	TMXLayer *_collidable;
 	Enemy *_enemy_1;
 	Enemy *_enemy_2;
+
+	static bool bVictory;
+
 public:
 	static EnemyAI * enemyAIs[10];
 	static TMXTiledMap *_tileMap;
+
+	static int nEnemy;
 	
 	static Scene * createScene();
 	void setPlayerPosition(Vec2 position);

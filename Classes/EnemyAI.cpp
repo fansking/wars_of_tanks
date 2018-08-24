@@ -1,6 +1,7 @@
 #include "EnemyAI.h"
 #include <time.h>
 #include <stdlib.h>
+#include <exception>
 
 EnemyAI::EnemyAI()
 {
@@ -25,14 +26,21 @@ Vec2 EnemyAI::tileCoordFromPosition(Vec2 pos) {
 void EnemyAI::update(float dt)
 {
 	//obj->runAction(MoveBy::create(0.2, Vec2(0, 5) * dt));
+	Vec2 target = Vec2::ZERO;
+	try
+	{
+		target = obj->getPosition() + vel * dt;
+	}
+	catch (std::exception & e)
+	{
+		return;
+	}
 
-	Vec2 target = obj->getPosition() + vel * dt;
 	Size screenSize = Director::getInstance()->getVisibleSize();
 	if (target.y + 16 >= screenSize.height || target.y - 16 <= 0 || 
 		target.x + 16 >= screenSize.width || target.x - 16 <= 0)
 	{
 		int nDirection = rand() % 4;
-		log("%d", nDirection);
 		switch (nDirection)
 		{
 		case 0:
