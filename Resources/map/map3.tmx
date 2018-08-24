@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60">
- <tileset firstgid="1" name="bg2" tilewidth="60" tileheight="60">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="5">
+ <tileset firstgid="1" name="bg2" tilewidth="60" tileheight="60" tilecount="252" columns="21">
   <image source="bg2.png" width="1280" height="720"/>
  </tileset>
- <tileset firstgid="253" name="0" tilewidth="60" tileheight="60">
+ <tileset firstgid="253" name="0" tilewidth="60" tileheight="60" tilecount="40" columns="8">
   <image source="0.png" width="480" height="300"/>
  </tileset>
- <tileset firstgid="293" name="collidable" tilewidth="60" tileheight="60">
+ <tileset firstgid="293" name="collidable" tilewidth="60" tileheight="60" tilecount="1" columns="1">
   <image source="collidable.png" width="60" height="60"/>
   <tile id="0">
    <properties>
@@ -35,8 +35,9 @@
   </data>
  </layer>
  <objectgroup name="objects">
-  <object name="playerA" x="870" y="870" width="56" height="54"/>
-  <object name="enemy0" x="272" y="1294" width="50" height="58"/>
-  <object name="enemy1" x="1522" y="566" width="52" height="50"/>
+  <object id="1" name="playerA" x="870" y="870" width="56" height="54"/>
+  <object id="2" name="enemy0" x="272" y="1294" width="50" height="58"/>
+  <object id="3" name="enemy1" x="1522" y="566" width="52" height="50"/>
+  <object id="4" name="pickup0" x="869" y="750"/>
  </objectgroup>
 </map>
