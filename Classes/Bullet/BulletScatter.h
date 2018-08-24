@@ -83,7 +83,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_x = -500;
 			v_y = -500;
 			this->setRotation(rotation);
-			this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
+			this->setPosition(tank->getPosition() + Vec2(0, -tank->getContentSize().height / 2));
 			this->setVelocity(Vec2(v_x, v_y));
 			break;
 		case 2:
@@ -91,7 +91,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_x = 0;
 			v_y = -500;
 			this->setRotation(rotation);
-			this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
+			this->setPosition(tank->getPosition() + Vec2(0, -tank->getContentSize().height / 2));
 			this->setVelocity(Vec2(v_x, v_y));
 			break;
 		case 3:
@@ -99,7 +99,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_x = 500;
 			v_y =-500;
 			this->setRotation(rotation);
-			this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
+			this->setPosition(tank->getPosition() + Vec2(0, -tank->getContentSize().height / 2));
 			this->setVelocity(Vec2(v_x, v_y));
 			break;
 		}
@@ -112,7 +112,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_x = -500;
 			v_y = 500;
 			this->setRotation(rotation);
-			this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
+			this->setPosition(tank->getPosition() + Vec2(-tank->getContentSize().width / 2, 0));
 			this->setVelocity(Vec2(v_x, v_y));
 			break;
 		case 2:
@@ -120,7 +120,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_x = -500;
 			v_y = 0;
 			this->setRotation(rotation);
-			this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
+			this->setPosition(tank->getPosition() + Vec2(-tank->getContentSize().width / 2, 0));
 			this->setVelocity(Vec2(v_x, v_y));
 			break;
 		case 3:
@@ -128,7 +128,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_x = -500;
 			v_y = -500;
 			this->setRotation(rotation);
-			this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
+			this->setPosition(tank->getPosition() + Vec2(-tank->getContentSize().width / 2, 0));
 			this->setVelocity(Vec2(v_x, v_y));
 			break;
 		}
@@ -140,7 +140,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_x = 500;
 			v_y = 500;
 			this->setRotation(rotation);
-			this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
+			this->setPosition(tank->getPosition() + Vec2(tank->getContentSize().width / 2, 0));
 			this->setVelocity(Vec2(v_x, v_y));
 			break;
 		case 2:
@@ -148,7 +148,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_x = 500;
 			v_y = 0;
 			this->setRotation(rotation);
-			this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
+			this->setPosition(tank->getPosition() + Vec2(tank->getContentSize().width / 2, 0));
 			this->setVelocity(Vec2(v_x, v_y));
 			break;
 		case 3:
@@ -156,7 +156,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_x = 500;
 			v_y = -500;
 			this->setRotation(rotation);
-			this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
+			this->setPosition(tank->getPosition() + Vec2(tank->getContentSize().width / 2, 0));
 			this->setVelocity(Vec2(v_x, v_y));
 			break;
 		}
@@ -171,8 +171,9 @@ void BulletScatter::update(float dt)
 {
 	//coordinate transformation
 	Vec2 pos = this->getPosition();
-	int X = pos.x / 60;
-	int Y = ((12 * 60) - pos.y) / 60;
+	int X = pos.x / Game::_tileMap->getTileSize().width;
+	int Y = ((Game::_tileMap->getMapSize().height * Game::_tileMap->getTileSize().height) - pos.y)
+		/ Game::_tileMap->getTileSize().width;
 	Sprite *mytile0 = _breakable0->getTileAt(Vec2(X, Y));
 	Sprite *mycoll = coll->getTileAt(Vec2(X, Y));
 	if (mytile0 != nullptr && mytile0->isVisible() && this->isVisible() && mycoll) {
@@ -188,7 +189,8 @@ void BulletScatter::update(float dt)
 		this->removeFromParent();
 		return;
 	}
-	Size screenSize = Director::getInstance()->getVisibleSize();
+	Size screenSize = Size((Vec2(Game::_tileMap->getTileSize().width * Game::_tileMap->getMapSize().width,
+		Game::_tileMap->getTileSize().height * Game::_tileMap->getMapSize().height)));
 	this->setPosition(this->getPosition() + velocity * dt);
 	int y = this->getPosition().y;
 	int x = this->getPosition().x;
