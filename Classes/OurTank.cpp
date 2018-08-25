@@ -93,11 +93,12 @@ void OurTank::addenemy() {
 		char str[10];
 		sprintf(str, "%d", x);
 		strcat(enemyname, str);
-		++Game::nEnemy;
+		
 		++x;
 		log("%s", enemyname);
 		spawnPoint_0 = group->getObject(enemyname);
 		if (spawnPoint_0 == ValueMap()) { break; }
+		
 		/*int  x0 = spawnPoint_0["x"].asInt();
 		int  y0 = spawnPoint_0["y"].asInt();
 		auto _enemy_1 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
@@ -133,7 +134,7 @@ void OurTank::addpickup() {
 		sprintf(str, "%d",x);
 		strcat(pickupname, str);
 		++x;
-		++Game::nPickup;
+		
 		log("%s", pickupname);
 		spawnPoint_0 = group->getObject(pickupname);
 		if (spawnPoint_0 == ValueMap()) { break; }

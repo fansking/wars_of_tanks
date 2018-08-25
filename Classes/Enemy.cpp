@@ -5,6 +5,7 @@ Enemy::Enemy(EnemyTypes enemyType) : OurTank(2){
 }
 
 Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
+	++Game::nEnemy;
 	Enemy *enemy = new Enemy(enemyType);
 	//auto body = PhysicsBody::createEdgeBox(Size(32, 32), PHYSICSBODY_MATERIAL_DEFAULT, 3.0f, Vec2(16, 16));
 	//body->setCategoryBitmask(0x02);
@@ -46,7 +47,13 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 }
 
 void Enemy::update(float dt) {
-	
+	/*static float t = 0;
+	t += dt;
+	if (t > 1) {
+		Bullet * bullet = Bullet::createWithImage();
+		this->getParent()->addChild(bullet);
+		bullet->shootBulletFromTank(this);
+	}*/
 }
 
 void Enemy::shoot() {
