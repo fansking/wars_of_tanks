@@ -88,7 +88,7 @@ bool Game::init()
 			log("HP: %d", Game::_player->getHP());
 			if (Game::_player->getHP() == 0)
 			{
-				auto layer = VictoryLayer::create();
+				auto layer = GameoverLayer::create();
 				layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
 					Director::getInstance()->getVisibleSize().height / 2));
 				layer->setTag(99);
@@ -103,7 +103,7 @@ bool Game::init()
 			log("HP: %d", Game::_player->getHP());
 			if (Game::_player->getHP() == 0)
 			{
-				auto layer = VictoryLayer::create();
+				auto layer = GameoverLayer::create();
 				layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
 					Director::getInstance()->getVisibleSize().height / 2));
 				layer->setTag(99);

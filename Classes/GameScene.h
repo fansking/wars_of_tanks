@@ -10,6 +10,7 @@
 #include "PauseLayer.h"
 #include "HelloWorldScene.h"
 #include "EnemyAI.h"
+#include "GameoverLayer.h"
 #ifndef _GAME_SCENE_H_
 #define _GAME_SCENE_H_
 

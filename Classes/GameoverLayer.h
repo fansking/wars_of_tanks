@@ -3,15 +3,14 @@
 
 using namespace cocos2d;
 
-class VictoryLayer : public Layer
+class GameoverLayer : public Layer
 {
 public:
-	CREATE_FUNC(VictoryLayer);
+	CREATE_FUNC(GameoverLayer);
 
 	virtual bool init();
 
 	void menuItemChooseStageCallback(Ref * pSender);
 	void menuItemHomePageCallback(Ref * pSender);
 	void menuItemRestartCallback(Ref * pSender);
-	void menuItemNextLevelCallback(Ref * pSender);
 };
