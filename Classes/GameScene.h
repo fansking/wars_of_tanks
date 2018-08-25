@@ -18,7 +18,7 @@ using namespace cocos2d;
 class Game :public Layer
 {
 	
-	OurTank *_player;
+	static OurTank *_player;
 	TMXLayer *_collidable;
 	Enemy *_enemy_1;
 	Enemy *_enemy_2;

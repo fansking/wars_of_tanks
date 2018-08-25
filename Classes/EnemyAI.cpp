@@ -41,11 +41,22 @@ void EnemyAI::update(float dt)
 	target = obj->getPosition() + vel * dt;
 	Size screenSize = Size((Vec2(Game::mapSizeWidth * Game::tileSize,
 		Game:: mapSizeHeight * Game::tileSize)));
-	if (target.y + 16 >= screenSize.height || target.y - 16 <= 0 || 
-		target.x + 16 >= screenSize.width || target.x - 16 <= 0)
+	int objContantSizeOfHalf = obj->getContentSize().height / 2;
+	if (target.y + objContantSizeOfHalf >= screenSize.height || target.y - objContantSizeOfHalf <= 0 ||
+		target.x + objContantSizeOfHalf >= screenSize.width || target.x - objContantSizeOfHalf <= 0)
 	{
 		int nDirection = rand() % 4;
-		obj->setDirection(nDirection);
+		switch (nDirection)
+		{
+		case 0:
+			obj->setDirection(146); break;
+		case 1:
+			obj->setDirection(142); break;
+		case 2:
+			obj->setDirection(127); break;
+		case 3:
+			obj->setDirection(124); break;
+		}
 
 		switch (nDirection)
 		{
@@ -74,8 +85,19 @@ void EnemyAI::update(float dt)
 		std::string collision = propValueMap["collidable"].asString();
 		if (collision == "true") {
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("empty.mp3");
-			srand(time(NULL));
 			int nDirection = rand() % 4;
+			switch (nDirection)
+			{
+			case 0:
+				obj->setDirection(146); break;
+			case 1:
+				obj->setDirection(142); break;
+			case 2:
+				obj->setDirection(127); break;
+			case 3:
+				obj->setDirection(124); break;
+			}
+
 			switch (nDirection)
 			{
 			case 0:
@@ -94,8 +116,8 @@ void EnemyAI::update(float dt)
 			return;
 		}
 	}
-	if (obj->mydt < 0) {
-		//obj->openFire();
+	if (obj->mydt < 0 && obj->isVisible()) {
+		obj->openFire(false);
 		obj->mydt = 1;
 	}
 	obj->mydt -= dt;

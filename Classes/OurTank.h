@@ -22,7 +22,7 @@ class OurTank : public Sprite
 public:
 	OurTank(int);
 	static OurTank * createWithImage(int);
-	void openFire();
+	void openFire(bool);
 	void addenemy();
 	void addpickup();
 	float mydt;
