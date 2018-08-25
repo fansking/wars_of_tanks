@@ -10,7 +10,7 @@ Enemy * Game::enemy[10] = { NULL };
 
 int Game::mapSizeHeight = 0;
 int Game::mapSizeWidth = 0;
-int Game::tileSize =0;
+int Game::tileSize = 0;
 bool Game::bVictory = false;
 
 EnemyAI * Game::enemyAIs[10] = { nullptr };
@@ -55,27 +55,31 @@ bool Game::init()
 		log("onContactBegin");
 		auto spriteA = (Sprite *)contact.getShapeA()->getBody()->getNode();
 		auto spriteB = (Sprite *)contact.getShapeB()->getBody()->getNode();
-		if(spriteA && spriteB)
+		if (spriteA && spriteB)
 		{
 			log("A: %d, B: %d", spriteA->getTag(), spriteB->getTag());
 		}
-		if (spriteA && spriteB && spriteA->getTag()==3 && spriteB->getTag()==2 && spriteA->isVisible())
+		if (spriteA && spriteB && spriteA->getTag() == 3 && spriteB->getTag() == 2 && spriteA->isVisible())
 		{
 			spriteA->setVisible(false);
 			spriteB->removeFromParent();
 			nEnemy--;
-			log("%d",nEnemy);
+			log("%d", nEnemy);
 		}
-		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() ==3 && spriteB->isVisible())
+		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 3 && spriteB->isVisible())
 		{
 			spriteB->setVisible(false);
 			spriteA->removeFromParent();
 			nEnemy--;
 			log("%d", nEnemy);
 		}
-		else if (spriteA && spriteB && spriteA->getTag()==1 && spriteB->getTag()==6)
+		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 6)
 		{
 			((PickupBase *)spriteB)->isContact((OurTank *)spriteA);
+		}
+		else if (spriteA && spriteB && spriteA->getTag() == 6 && spriteB->getTag() == 1)
+		{
+			((PickupBase *)spriteA)->isContact((OurTank *)spriteB);
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 2)
 		{
@@ -135,14 +139,14 @@ bool Game::init()
 	this->addChild(_tileMap);
 
 
-	
+
 
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
 
-	
-	
-	
+
+
+
 	int  x0 = spawnPoint_0["x"].asInt();
 	int  y0 = spawnPoint_0["y"].asInt();
 	EnemyAI::layer = _collidable;
@@ -183,7 +187,7 @@ bool Game::init()
 
 
 	//menuLayer->runAction(MoveTo::create(0.2, -viewPoint));
-	menuLayer->setPosition(Vec2(0,0));
+	menuLayer->setPosition(Vec2(0, 0));
 	this->addChild(menuLayer);
 	auto itemPause = MenuItemImage::create("UI/menu_pause.png", "UI/menu_pause1.png",
 		CC_CALLBACK_1(Game::menuItemCallbackPause, this));
@@ -203,7 +207,7 @@ bool Game::init()
 void Game::setPlayerPosition(Vec2 position)
 {
 	Size screenSize = Director::getInstance()->getVisibleSize();
-	if (position.y > tileY*mapY || position.y < 0 || position.x > tileX*tileX  || position.x < 0)
+	if (position.y > tileY*mapY || position.y < 0 || position.x > tileX*tileX || position.x < 0)
 	{
 		return;
 	}
@@ -233,11 +237,11 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 	Vec2 playerPos = _player->getPosition();
 	if ((int)keyCode == 59)
 	{
-		if (_player->mydt  <0) {
-		_player->openFire(true);
-		_player->mydt = 1;
+		if (_player->mydt < 0) {
+			_player->openFire(true);
+			_player->mydt = 1;
 		}
-		
+
 		return;
 	}
 	if ((int)keyCode != _player->getDirection())
@@ -286,7 +290,7 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 
 void Game::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
 {
-	if((int)keyCode==_player->getDirection())
+	if ((int)keyCode == _player->getDirection())
 		this->unschedule(schedule_selector(Game::keepMoving));
 }
 
@@ -341,7 +345,7 @@ void Game::menuItemCallbackPause(Ref * pSender)
 	{
 		auto layer = PauseLayer::create();
 		layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
-		Director::getInstance()->getVisibleSize().height / 2));
+			Director::getInstance()->getVisibleSize().height / 2));
 		layer->setTag(13);
 		menuLayer->addChild(layer);
 		isPause = true;
@@ -378,7 +382,7 @@ void Game::setViewpointCenter(Point position) {
 
 bool Game::isMoveable(Vec2 position) {
 	Size screenSize = Director::getInstance()->getVisibleSize();
-	if (position.y > tileY*mapY  || position.y < 0 || position.x > tileX*mapX  || position.x < 0)
+	if (position.y > tileY*mapY || position.y < 0 || position.x > tileX*mapX || position.x < 0)
 	{
 		return false;
 	}

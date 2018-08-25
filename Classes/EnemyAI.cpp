@@ -118,5 +118,5 @@ void EnemyAI::update(float dt)
 		obj->mydt = 1;
 	}
 	obj->mydt -= dt;
-	//obj->runAction(MoveTo::create(0, target));
+	obj->runAction(MoveTo::create(0, target));
 }
