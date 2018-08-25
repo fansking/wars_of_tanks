@@ -21,6 +21,8 @@ int Game::nPickup = 0;
 Size Game::_mapSize = Size(Vec2::ZERO);
 Size Game::_tileSize = Size(Vec2::ZERO);
 
+OurTank * Game::_player = nullptr;
+
 Scene *Game::createScene()
 {
 	auto scene = Scene::createWithPhysics();
@@ -59,6 +61,20 @@ bool Game::init()
 		else if (spriteA && spriteB && spriteA->getTag()==1 && spriteB->getTag()==6)
 		{
 			((PickupBase *)spriteB)->isContact((OurTank *)spriteA);
+		}
+		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 2)
+		{
+			Game::_player->setHP(Game::_player->getHP() - 1);
+			log("HP: %d", Game::_player->getHP());
+			if (Game::_player->getHP() == 0)
+			{
+				auto layer = VictoryLayer::create();
+				layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
+					Director::getInstance()->getVisibleSize().height / 2));
+				layer->setTag(99);
+				Director::getInstance()->getRunningScene()->addChild(layer);
+				Director::getInstance()->pause();
+			}
 		}
 		if (nEnemy == 0) {
 			Game::bVictory = true;
@@ -108,7 +124,7 @@ bool Game::init()
 	gold->setPosition(Vec2(x3, y3));
 	gold->setTag(6);
 
-	_player = OurTank::createWithImage(5);
+	_player = OurTank::createWithImage(2);
 	_player->setAnchorPoint(Vec2(0.5, 0.5));
 	_player->setPosition(Vec2(x0, y0));
 	addChild(_player);
@@ -129,7 +145,6 @@ bool Game::init()
 
 	Vec2 playerPos = _player->getPosition();
 
-	_player->setDirection(146);
 
 	setKeyboardEnabled(true);
 
@@ -188,7 +203,7 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 	if ((int)keyCode == 59)
 	{
 		if (_player->mydt  <0) {
-		_player->openFire();
+		_player->openFire(true);
 		_player->mydt = 1;
 		}
 		

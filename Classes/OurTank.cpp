@@ -14,6 +14,7 @@ OurTank::OurTank(int initialHP)
 	
 	this->nHP = initialHP;
 	this->weaponType = WEAPON_0;
+	this->setDirection(146);
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -37,11 +38,11 @@ OurTank * OurTank::createWithImage(int initialHP)
 	return player;
 }
 
-void OurTank::openFire()
+void OurTank::openFire(bool isFriendly)
 {
 	SimpleAudioEngine::getInstance()->playEffect("sound/sfx_fire1.mp3");
 	if (weaponType == WEAPON_0) {
-		Bullet * bullet = Bullet::createWithImage();
+		Bullet * bullet = Bullet::createWithImage(isFriendly);
 		this->getParent()->addChild(bullet);
 		bullet->shootBulletFromTank(this);
 	}

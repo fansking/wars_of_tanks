@@ -52,7 +52,5 @@ void PickupBase::isContact(OurTank * player)
 		log("HP: %d", player->getHP());
 		this->removeFromParent();
 		break;
-
 	}
-
 }

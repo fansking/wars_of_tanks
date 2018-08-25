@@ -5,26 +5,27 @@ int Bullet::score = 0;
 TMXLayer *Bullet::_breakable0 = nullptr;
 TMXLayer *Bullet::coll = nullptr;
 TMXLayer *Bullet::_breakable1 = nullptr;
-Bullet * Bullet::createWithImage()
+Bullet * Bullet::createWithImage(bool isFriendly)
 {
 	Bullet * bullet = new Bullet();
+	bullet->isFriendly = isFriendly;
 	if (bullet && bullet->initWithFile("bullet7.png"))
 	{
 		bullet->autorelease();
 		bullet->setVisible(false);
 
-		//auto body = PhysicsBody::createBox(bullet->getContentSize());
-
-		/* There are some temp value */
-		//body->setCategoryBitmask(0);
-		//body->setCollisionBitmask(0);
-		//body->setContactTestBitmask(0);
-
-		//bullet->setPhysicsBody(body);
 		auto body = PhysicsBody::createEdgeBox(Size(16, 16), 
 			PHYSICSBODY_MATERIAL_DEFAULT, 2.0f, Vec2(0, 0));
-		body->setCategoryBitmask(0x02);
-		body->setContactTestBitmask(0x02);
+		if (bullet->isFriendly)
+		{
+			body->setCategoryBitmask(0x02);
+			body->setContactTestBitmask(0x02);
+		}
+		else
+		{
+			body->setCategoryBitmask(0x02);
+			body->setContactTestBitmask(0x01);
+		}
 		bullet->setPhysicsBody(body);
 		bullet->setTag(2);
 		return bullet;
@@ -60,7 +61,6 @@ void Bullet::shootBulletFromTank(OurTank * tank)
 	}
 	this->setVisible(true);
 	this->scheduleUpdate();
-	this->scheduleUpdate();
 }
 
 void Bullet::update(float dt)
@@ -74,8 +74,11 @@ void Bullet::update(float dt)
 	
 	Sprite *mycoll = coll->getTileAt(Vec2(X, Y));
 	 if (mytile0 != nullptr && mytile0->isVisible()&& this->isVisible() && mycoll) {
-		 mytile0->setVisible(false);
-		 mycoll->removeFromParent();
+		 if (this->isFriendly)
+		 {
+			 mytile0->setVisible(false);
+			 mycoll->removeFromParent();
+		 }
 		 score++;
 		 //log("%d", score);
 		 this->setVisible(false);
@@ -89,7 +92,7 @@ void Bullet::update(float dt)
 		 return;
 	 }
 	 
-	 Size screenSize = Size((Vec2(Game::_tileMap->getTileSize().width * Game::_tileMap->getMapSize().width,
+	Size screenSize = Size((Vec2(Game::_tileMap->getTileSize().width * Game::_tileMap->getMapSize().width,
 		 Game::_tileMap->getTileSize().height * Game::_tileMap->getMapSize().height)));
 	this->setPosition(this->getPosition() + velocity * dt);
 	int y = this->getPosition().y;

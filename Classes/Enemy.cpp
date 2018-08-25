@@ -54,6 +54,6 @@ void Enemy::update(float dt) {
 }
 
 void Enemy::shoot() {
-	openFire();
+	openFire(true);
 }
 
