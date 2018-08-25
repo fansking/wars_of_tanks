@@ -17,6 +17,7 @@ public:
 	static TMXLayer * layer;
 
 private:
+	bool isCollidable(Vec2 target);
 	Enemy * obj;
 	Vec2 vel;
 };

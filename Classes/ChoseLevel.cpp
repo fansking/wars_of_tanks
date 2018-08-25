@@ -40,7 +40,7 @@ bool ChoseLevel::init() {
 }
 
 int myPosition[20][2] = { {178,408},{340,284},{544,403},{727,565},{855,425},{737,271},{818,108},{1056,226} };
-int num = 8, now = 4;
+int num = 8, now = 5;
 void ChoseLevel::init2() {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	auto item1 = MenuItemImage::create("UI/ReturBig.png", "UI/ReturnSmall.png", CC_CALLBACK_1(ChoseLevel::menuCloseCallback, this));

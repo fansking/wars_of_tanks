@@ -24,6 +24,20 @@ Vec2 EnemyAI::tileCoordFromPosition(Vec2 pos) {
 	return Vec2(x, y);
 }
 
+bool EnemyAI::isCollidable(Vec2 target) {
+	Vec2 coordTarget = tileCoordFromPosition(target + Vec2(vel.x / 100 * 16,
+		vel.y / 100 * 16));
+	int tileGid = layer->getTileGIDAt(coordTarget);
+	if (tileGid > 0) {
+		Value prop = Game::_tileMap->getPropertiesForGID(tileGid);
+		ValueMap propValueMap = prop.asValueMap();
+		std::string collision = propValueMap["collidable"].asString();
+		if (collision == "true")
+			return true;
+	}
+	return false;
+}
+int nposition[4][3] = { {0,0,100},{180,0,-100},{90,100,0},{270,-100 ,0} };
 void EnemyAI::update(float dt)
 {
 	//obj->runAction(MoveBy::create(0.2, Vec2(0, 5) * dt));
@@ -74,9 +88,18 @@ void EnemyAI::update(float dt)
 		std::string collision = propValueMap["collidable"].asString();
 		if (collision == "true") {
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("empty.mp3");
-			srand(time(NULL));
+			//srand(time(NULL));
 			int nDirection = rand() % 4;
-			switch (nDirection)
+			for (int i = 0; i < 4; i++) {
+				vel = Vec2(nposition[nDirection][1], nposition[nDirection][2]);
+				if (!isCollidable(target)) {
+					obj->runAction(RotateTo::create(0.2, nposition[nDirection][0]));
+					return;
+				}
+				if (nDirection == 3) nDirection = -1;
+				nDirection++;
+			}
+			/*switch (nDirection)
 			{
 			case 0:
 				obj->runAction(RotateTo::create(0.2, 0));
@@ -90,8 +113,8 @@ void EnemyAI::update(float dt)
 			case 3:
 				obj->runAction(RotateTo::create(0.2, 270));
 				vel = Vec2(-100, 0); break;
-			}
-			return;
+			}*/
+			//return;
 		}
 	}
 	if (obj->mydt < 0) {
