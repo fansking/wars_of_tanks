@@ -18,8 +18,8 @@ Bullet * Bullet::createWithImage(bool isFriendly)
 			PHYSICSBODY_MATERIAL_DEFAULT, 2.0f, Vec2(0, 0));
 		if (bullet->isFriendly)
 		{
-			body->setCategoryBitmask(0x02);
-			body->setContactTestBitmask(0x02);
+			body->setCategoryBitmask(0x04);
+			body->setContactTestBitmask(0x08);
 		}
 		else
 		{

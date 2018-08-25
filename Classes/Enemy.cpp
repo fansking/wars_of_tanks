@@ -9,10 +9,7 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 	Enemy *enemy = new Enemy(enemyType);
 	enemy->nHP = 3;
 	enemy->weaponType = WEAPON_0;
-	//auto body = PhysicsBody::createEdgeBox(Size(32, 32), PHYSICSBODY_MATERIAL_DEFAULT, 3.0f, Vec2(16, 16));
-	//body->setCategoryBitmask(0x02);
-	//body->setContactTestBitmask(0x02);
-	//enemy->setPhysicsBody(body);
+
 	const char * enemyFrameName = Enemy_1;
 	switch (enemyType) {
 	case EnemyTypeEnemy1:
@@ -29,8 +26,8 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 		auto body = PhysicsBody::createEdgeBox(enemy->getContentSize(),
 			PHYSICSBODY_MATERIAL_DEFAULT, 3.0f);
 		
-		body->setCategoryBitmask(0x02);
-		body->setContactTestBitmask(0x02);
+		body->setCategoryBitmask(0x08);
+		body->setContactTestBitmask(0x04);
 
 		enemy->setPhysicsBody(body);
 

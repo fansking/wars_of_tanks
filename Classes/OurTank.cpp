@@ -10,8 +10,6 @@ using namespace CocosDenshion;
 
 OurTank::OurTank(int initialHP)
 {
-	
-	
 	this->nHP = initialHP;
 	this->weaponType = WEAPON_0;
 	this->setDirection(146);
@@ -20,8 +18,8 @@ OurTank::OurTank(int initialHP)
 
 	auto body = PhysicsBody::createEdgeBox(Size(Vec2(60, 60)),
 		PHYSICSBODY_MATERIAL_DEFAULT, 3.0f, Vec2(30, 30));
-	body->setCategoryBitmask(0x01);
-	body->setContactTestBitmask(0x02);
+	body->setCategoryBitmask(0x07);
+	body->setContactTestBitmask(0x0A);
 	this->setPhysicsBody(body);
 	
 }
