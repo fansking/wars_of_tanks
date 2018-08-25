@@ -7,25 +7,16 @@ USING_NS_CC;
 TMXTiledMap *Game::_tileMap = nullptr;
 TMXLayer * EnemyAI::layer = nullptr;
 Enemy * Game::enemy[10] = { NULL };
-<<<<<<< HEAD
-int EnemyAI::mapSizeHeight = 0;
-int EnemyAI::mapSizeWidth = 0;
-int EnemyAI::tileSize =0;
-=======
+
 int Game::mapSizeHeight = 0;
 int Game::mapSizeWidth = 0;
 int Game::tileSize =0;
-float Game::mydt =1;
->>>>>>> issue1
 bool Game::bVictory = false;
 
 EnemyAI * Game::enemyAIs[10] = { nullptr };
 int Game::nEnemy = 0;
-<<<<<<< HEAD
-int Game::nPickup = -1;
-=======
+
 int Game::nPickup = 0;
->>>>>>> issue1
 
 Size Game::_mapSize = Size(Vec2::ZERO);
 Size Game::_tileSize = Size(Vec2::ZERO);
@@ -47,14 +38,6 @@ bool Game::init()
 		return false;
 	}
 
-	Game::_tileMap = nullptr;
-	EnemyAI::tileMap = nullptr;
-	EnemyAI::layer = nullptr;
-	Game::enemy[10] = { NULL };
-	EnemyAI::mapSizeHeight = 0;
-	EnemyAI::mapSizeWidth = 0;
-	EnemyAI::tileSize =0;
-	Game::bVictory = false;
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -90,6 +73,10 @@ bool Game::init()
 	_tileMap = TMXTiledMap::create(s2);
 	_mapSize = _tileMap->getMapSize();
 	_tileSize = _tileMap->getTileSize();
+
+	mapSizeHeight = _mapSize.height;
+	mapSizeWidth = _mapSize.width;
+	tileSize = _tileSize.width;
 
 	Bullet::_breakable0 = _tileMap->getLayer("breakable0");
 	Bullet::_breakable1 = _tileMap->getLayer("breakable1");

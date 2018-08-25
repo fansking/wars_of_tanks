@@ -39,7 +39,8 @@ void EnemyAI::update(float dt)
 	}
 
 	target = obj->getPosition() + vel * dt;
-	Size screenSize = Size((Vec2(Game::mapSizeWidth * Game::tileSize,Game:: mapSizeHeight * Game::tileSize)));
+	Size screenSize = Size((Vec2(Game::mapSizeWidth * Game::tileSize,
+		Game:: mapSizeHeight * Game::tileSize)));
 	if (target.y + 16 >= screenSize.height || target.y - 16 <= 0 || 
 		target.x + 16 >= screenSize.width || target.x - 16 <= 0)
 	{
@@ -94,7 +95,7 @@ void EnemyAI::update(float dt)
 		}
 	}
 	if (obj->mydt < 0) {
-		obj->openFire();
+		//obj->openFire();
 		obj->mydt = 1;
 	}
 	obj->mydt -= dt;
