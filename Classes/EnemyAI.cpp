@@ -37,7 +37,7 @@ bool EnemyAI::isCollidable(Vec2 target) {
 	}
 	return false;
 }
-int nposition[4][3] = { {0,0,100},{180,0,-100},{90,100,0},{270,-100 ,0} };
+int nposition[4][4] = { {0,0,100,146},{180,0,-100,142},{90,100,0,127},{270,-100 ,0,124} };
 void EnemyAI::update(float dt)
 {
 	//obj->runAction(MoveBy::create(0.2, Vec2(0, 5) * dt));
@@ -105,39 +105,12 @@ void EnemyAI::update(float dt)
 				vel = Vec2(nposition[nDirection][1], nposition[nDirection][2]);
 				if (!isCollidable(target)) {
 					obj->runAction(RotateTo::create(0.2, nposition[nDirection][0]));
+					obj->setDirection(nposition[nDirection][3]);
 					return;
 				}
 				if (nDirection == 3) nDirection = -1;
 				nDirection++;
 			}
-			/*switch (nDirection)
-			{
-			case 0:
-				obj->setDirection(146); break;
-			case 1:
-				obj->setDirection(142); break;
-			case 2:
-				obj->setDirection(127); break;
-			case 3:
-				obj->setDirection(124); break;
-			}
-
-			switch (nDirection)
-			{
-			case 0:
-				obj->runAction(RotateTo::create(0.2, 0));
-				vel = Vec2(0, 100); break;
-			case 1:
-				obj->runAction(RotateTo::create(0.2, 180));
-				vel = Vec2(0, -100); break;
-			case 2:
-				obj->runAction(RotateTo::create(0.2, 90));
-				vel = Vec2(100, 0); break;
-			case 3:
-				obj->runAction(RotateTo::create(0.2, 270));
-				vel = Vec2(-100, 0); break;
-			}*/
-			//return;
 		}
 	}
 	if (obj->mydt < 0 && obj->isVisible()) {
@@ -145,5 +118,5 @@ void EnemyAI::update(float dt)
 		obj->mydt = 1;
 	}
 	obj->mydt -= dt;
-	obj->runAction(MoveTo::create(0, target));
+	//obj->runAction(MoveTo::create(0, target));
 }

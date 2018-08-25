@@ -40,6 +40,11 @@ bool Game::init()
 		return false;
 	}
 
+	for (int i = 0; i < 10; ++i)
+	{
+		enemyAIs[i] = nullptr;
+	}
+	nEnemy = 0;
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -50,13 +55,23 @@ bool Game::init()
 		log("onContactBegin");
 		auto spriteA = (Sprite *)contact.getShapeA()->getBody()->getNode();
 		auto spriteB = (Sprite *)contact.getShapeB()->getBody()->getNode();
+		if(spriteA && spriteB)
+		{
+			log("A: %d, B: %d", spriteA->getTag(), spriteB->getTag());
+		}
 		if (spriteA && spriteB && spriteA->getTag()==3 && spriteB->getTag()==2 && spriteA->isVisible())
-
 		{
 			spriteA->setVisible(false);
 			spriteB->removeFromParent();
 			nEnemy--;
 			log("%d",nEnemy);
+		}
+		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() ==3 && spriteB->isVisible())
+		{
+			spriteB->setVisible(false);
+			spriteA->removeFromParent();
+			nEnemy--;
+			log("%d", nEnemy);
 		}
 		else if (spriteA && spriteB && spriteA->getTag()==1 && spriteB->getTag()==6)
 		{
@@ -65,6 +80,22 @@ bool Game::init()
 		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 2)
 		{
 			Game::_player->setHP(Game::_player->getHP() - 1);
+			spriteB->removeFromParent();
+			log("HP: %d", Game::_player->getHP());
+			if (Game::_player->getHP() == 0)
+			{
+				auto layer = VictoryLayer::create();
+				layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
+					Director::getInstance()->getVisibleSize().height / 2));
+				layer->setTag(99);
+				Director::getInstance()->getRunningScene()->addChild(layer);
+				Director::getInstance()->pause();
+			}
+		}
+		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 1)
+		{
+			Game::_player->setHP(Game::_player->getHP() - 1);
+			spriteA->removeFromParent();
 			log("HP: %d", Game::_player->getHP());
 			if (Game::_player->getHP() == 0)
 			{
@@ -124,7 +155,7 @@ bool Game::init()
 	gold->setPosition(Vec2(x3, y3));
 	gold->setTag(6);
 
-	_player = OurTank::createWithImage(2);
+	_player = OurTank::createWithImage(3);
 	_player->setAnchorPoint(Vec2(0.5, 0.5));
 	_player->setPosition(Vec2(x0, y0));
 	addChild(_player);

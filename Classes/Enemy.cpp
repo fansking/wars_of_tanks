@@ -26,7 +26,7 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 	}
 	if (enemy && enemy->initWithFile(Enemy_1)) {  //check if enemy is created
 		enemy->autorelease();
-		auto body = PhysicsBody::createEdgeBox(Size(32, 32),
+		auto body = PhysicsBody::createEdgeBox(enemy->getContentSize(),
 			PHYSICSBODY_MATERIAL_DEFAULT, 3.0f);
 		
 		body->setCategoryBitmask(0x02);
