@@ -26,8 +26,8 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 		auto body = PhysicsBody::createEdgeBox(enemy->getContentSize(),
 			PHYSICSBODY_MATERIAL_DEFAULT, 3.0f);
 		
-		body->setCategoryBitmask(0x08);
-		body->setContactTestBitmask(0x04);
+		body->setCategoryBitmask(0x0C);
+		body->setContactTestBitmask(0x0C);
 
 		enemy->setPhysicsBody(body);
 
