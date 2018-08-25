@@ -5,17 +5,27 @@
 
 USING_NS_CC;
 TMXTiledMap *Game::_tileMap = nullptr;
-TMXTiledMap * EnemyAI::tileMap = nullptr;
 TMXLayer * EnemyAI::layer = nullptr;
 Enemy * Game::enemy[10] = { NULL };
+<<<<<<< HEAD
 int EnemyAI::mapSizeHeight = 0;
 int EnemyAI::mapSizeWidth = 0;
 int EnemyAI::tileSize =0;
+=======
+int Game::mapSizeHeight = 0;
+int Game::mapSizeWidth = 0;
+int Game::tileSize =0;
+float Game::mydt =1;
+>>>>>>> issue1
 bool Game::bVictory = false;
 
 EnemyAI * Game::enemyAIs[10] = { nullptr };
 int Game::nEnemy = 0;
+<<<<<<< HEAD
 int Game::nPickup = -1;
+=======
+int Game::nPickup = 0;
+>>>>>>> issue1
 
 Size Game::_mapSize = Size(Vec2::ZERO);
 Size Game::_tileSize = Size(Vec2::ZERO);
@@ -90,7 +100,7 @@ bool Game::init()
 
 	this->addChild(_tileMap);
 
-	EnemyAI::tileMap = _tileMap;
+
 	
 
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
@@ -101,12 +111,7 @@ bool Game::init()
 	
 	int  x0 = spawnPoint_0["x"].asInt();
 	int  y0 = spawnPoint_0["y"].asInt();
-
-	EnemyAI::tileMap = _tileMap;
 	EnemyAI::layer = _collidable;
-	EnemyAI::mapSizeHeight = _tileMap->getMapSize().height;
-	EnemyAI::mapSizeWidth = _tileMap->getMapSize().width;
-	EnemyAI::tileSize = _tileMap->getTileSize().width;
 
 	ValueMap spawnPoint_3 = group->getObject("gold");
 	float x3 = spawnPoint_3["x"].asFloat();
@@ -129,6 +134,7 @@ bool Game::init()
 	_player->addenemy();
 	_player->addpickup();
 	_player->setTag(1);
+	/*enemy[0]->scheduleUpdate();*/
 	_collidable = _tileMap->getLayer("collidable");
 	Bullet::coll = _collidable;
 

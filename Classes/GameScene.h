@@ -3,14 +3,13 @@
 #include <SimpleAudioEngine.h>
 #include "OurTank.h"
 #include"Enemy.h"
-#include "EnemyAI.h"
 #include "Bullet.h"
 #include "MyUtility.h"
 #include "PickupBase.h"
 #include "AboutScene.h"
 #include "PauseLayer.h"
 #include "HelloWorldScene.h"
-
+#include "EnemyAI.h"
 #ifndef _GAME_SCENE_H_
 #define _GAME_SCENE_H_
 
@@ -30,7 +29,10 @@ public:
 	static Enemy * enemy[10] ;
 	static int nPickup;
 	static EnemyAI * enemyAIs[10];
-	static TMXTiledMap * _tileMap;
+	static TMXTiledMap *_tileMap;
+	static int mapSizeHeight;
+	static int mapSizeWidth;
+	static int tileSize;
 	static int levelNum ;
 
 	static Size _mapSize;

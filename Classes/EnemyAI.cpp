@@ -2,7 +2,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <exception>
-
+#include "Bullet.h"
+#include "GameScene.h"
 EnemyAI::EnemyAI()
 {
 }
@@ -18,8 +19,8 @@ EnemyAI * EnemyAI::createWithEnemy(Enemy * obj)
 }
 
 Vec2 EnemyAI::tileCoordFromPosition(Vec2 pos) {
-	int x = pos.x / tileSize;
-	int y = ((mapSizeHeight * tileSize) - pos.y) / tileSize;
+	int x = pos.x / Game::tileSize;
+	int y = ((Game::mapSizeHeight * Game::tileSize) - pos.y) / Game::tileSize;
 	return Vec2(x, y);
 }
 
@@ -38,7 +39,7 @@ void EnemyAI::update(float dt)
 	}
 
 	target = obj->getPosition() + vel * dt;
-	Size screenSize = Size((Vec2(mapSizeWidth * tileSize, mapSizeHeight * tileSize)));
+	Size screenSize = Size((Vec2(Game::mapSizeWidth * Game::tileSize,Game:: mapSizeHeight * Game::tileSize)));
 	if (target.y + 16 >= screenSize.height || target.y - 16 <= 0 || 
 		target.x + 16 >= screenSize.width || target.x - 16 <= 0)
 	{
@@ -66,7 +67,7 @@ void EnemyAI::update(float dt)
 		vel.y / 100 * 16));
 	int tileGid = layer->getTileGIDAt(coordTarget);
 	if (tileGid > 0) {
-		Value prop = tileMap->getPropertiesForGID(tileGid);
+		Value prop = Game::_tileMap->getPropertiesForGID(tileGid);
 		ValueMap propValueMap = prop.asValueMap();
 
 		std::string collision = propValueMap["collidable"].asString();

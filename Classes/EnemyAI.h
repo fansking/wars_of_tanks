@@ -14,12 +14,7 @@ public:
 	static EnemyAI * createWithEnemy(Enemy *);
 	Vec2 tileCoordFromPosition(Vec2 pos);
 	virtual void update(float dt);
-
 	static TMXLayer * layer;
-	static int mapSizeHeight;
-	static int mapSizeWidth;
-	static int tileSize;
-	static TMXTiledMap * tileMap;
 
 private:
 	Enemy * obj;

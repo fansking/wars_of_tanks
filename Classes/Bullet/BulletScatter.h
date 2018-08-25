@@ -51,8 +51,8 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 	case 146:
 		switch (flag) {
 		case 1:
-			rotation = -45;
-			v_x = -500;
+			rotation = -30;
+			v_x = -288;
 			v_y = 500;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
@@ -67,8 +67,8 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			this->setVelocity(Vec2(v_x, v_y));
 			break;
 		case 3:
-			rotation = 45;
-			v_x = 500;
+			rotation = 30;
+			v_x = 288;
 			v_y = 500;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
@@ -79,8 +79,8 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 	case 142:
 		switch (flag) {
 		case 1:
-			rotation = 135;
-			v_x = -500;
+			rotation = 150;
+			v_x = -288;
 			v_y = -500;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(0, -tank->getContentSize().height / 2));
@@ -95,8 +95,8 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			this->setVelocity(Vec2(v_x, v_y));
 			break;
 		case 3:
-			rotation = 225;
-			v_x = 500;
+			rotation = 210;
+			v_x = 288;
 			v_y =-500;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(0, -tank->getContentSize().height / 2));
@@ -108,9 +108,9 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 	case 124:
 		switch (flag) {
 		case 1:
-			rotation = 225;
+			rotation = 240;
 			v_x = -500;
-			v_y = 500;
+			v_y = 288;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(-tank->getContentSize().width / 2, 0));
 			this->setVelocity(Vec2(v_x, v_y));
@@ -124,9 +124,9 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			this->setVelocity(Vec2(v_x, v_y));
 			break;
 		case 3:
-			rotation = 315;
+			rotation = 300;
 			v_x = -500;
-			v_y = -500;
+			v_y = -288;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(-tank->getContentSize().width / 2, 0));
 			this->setVelocity(Vec2(v_x, v_y));
@@ -136,9 +136,9 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 	case 127:
 		switch (flag) {
 		case 1:
-			rotation = 45;
+			rotation = 60;
 			v_x = 500;
-			v_y = 500;
+			v_y = 288;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(tank->getContentSize().width / 2, 0));
 			this->setVelocity(Vec2(v_x, v_y));
@@ -152,9 +152,9 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			this->setVelocity(Vec2(v_x, v_y));
 			break;
 		case 3:
-			rotation = 135;
+			rotation = 120;
 			v_x = 500;
-			v_y = -500;
+			v_y = -288;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(tank->getContentSize().width / 2, 0));
 			this->setVelocity(Vec2(v_x, v_y));

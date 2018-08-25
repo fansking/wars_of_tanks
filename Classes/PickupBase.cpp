@@ -1,8 +1,10 @@
 #include "PickupBase.h"
+#include "GameScene.h"
 #include <cstring>
 
 PickupBase * PickupBase::createWithType(PickupTypes type)
 {
+	++Game::nPickup;
 	auto item = new PickupBase();
 	std::string path;
 	switch (type)
