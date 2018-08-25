@@ -26,6 +26,7 @@ Vec2 EnemyAI::tileCoordFromPosition(Vec2 pos) {
 void EnemyAI::update(float dt)
 {
 	//obj->runAction(MoveBy::create(0.2, Vec2(0, 5) * dt));
+
 	Vec2 target = Vec2::ZERO;
 	try
 	{
@@ -42,6 +43,7 @@ void EnemyAI::update(float dt)
 		target.x + 16 >= screenSize.width || target.x - 16 <= 0)
 	{
 		int nDirection = rand() % 4;
+		obj->setDirection(nDirection);
 
 		switch (nDirection)
 		{
@@ -90,5 +92,10 @@ void EnemyAI::update(float dt)
 			return;
 		}
 	}
+	if (obj->mydt < 0) {
+		obj->openFire();
+		obj->mydt = 1;
+	}
+	obj->mydt -= dt;
 	obj->runAction(MoveTo::create(0, target));
 }

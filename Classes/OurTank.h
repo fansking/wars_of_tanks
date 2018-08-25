@@ -25,4 +25,6 @@ public:
 	void openFire();
 	void addenemy();
 	void addpickup();
+	float mydt;
+
 };

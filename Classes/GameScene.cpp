@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "Gold.h"
 #include "Bullet.h"
+#include "VictoryLayer.h"
 
 USING_NS_CC;
 TMXTiledMap *Game::_tileMap = nullptr;
@@ -10,12 +11,14 @@ Enemy * Game::enemy[10] = { NULL };
 int EnemyAI::mapSizeHeight = 0;
 int EnemyAI::mapSizeWidth = 0;
 int EnemyAI::tileSize =0;
-float Game::mydt =1;
 bool Game::bVictory = false;
 
 EnemyAI * Game::enemyAIs[10] = { nullptr };
-int Game::nEnemy = -1;
+int Game::nEnemy = 0;
 int Game::nPickup = -1;
+
+Size Game::_mapSize = Size(Vec2::ZERO);
+Size Game::_tileSize = Size(Vec2::ZERO);
 
 Scene *Game::createScene()
 {
@@ -33,6 +36,16 @@ bool Game::init()
 	{
 		return false;
 	}
+
+	Game::_tileMap = nullptr;
+	EnemyAI::tileMap = nullptr;
+	EnemyAI::layer = nullptr;
+	Game::enemy[10] = { NULL };
+	EnemyAI::mapSizeHeight = 0;
+	EnemyAI::mapSizeWidth = 0;
+	EnemyAI::tileSize =0;
+	Game::bVictory = false;
+
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -65,6 +78,9 @@ bool Game::init()
 
 	string s1 = to_string(levelNum), s2 = "map/map" + s1 + ".tmx";
 	_tileMap = TMXTiledMap::create(s2);
+	_mapSize = _tileMap->getMapSize();
+	_tileSize = _tileMap->getTileSize();
+
 	Bullet::_breakable0 = _tileMap->getLayer("breakable0");
 	Bullet::_breakable1 = _tileMap->getLayer("breakable1");
 	tileX = _tileMap->getTileSize().width;
@@ -178,9 +194,9 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 	Vec2 playerPos = _player->getPosition();
 	if ((int)keyCode == 59)
 	{
-		if (mydt  <0) {
+		if (_player->mydt  <0) {
 		_player->openFire();
-		mydt =1;
+		_player->mydt = 1;
 		}
 		
 		return;
@@ -262,10 +278,16 @@ void Game::keepMoving(float dt)
 
 void Game::update(float dt)
 {
-	mydt -= dt;
+	_player->mydt -= dt;
 	if (bVictory)
 	{
-		Director::getInstance()->replaceScene(HelloWorld::createScene());
+		bVictory = false;
+		auto layer = VictoryLayer::create();
+		layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
+			Director::getInstance()->getVisibleSize().height / 2));
+		layer->setTag(99);
+		menuLayer->addChild(layer);
+		Director::getInstance()->pause();
 	}
 	for (int i = 0; enemyAIs[i]; ++i)
 	{

@@ -30,11 +30,13 @@ public:
 	static Enemy * enemy[10] ;
 	static int nPickup;
 	static EnemyAI * enemyAIs[10];
-	static TMXTiledMap *_tileMap;
+	static TMXTiledMap * _tileMap;
 	static int levelNum ;
 
+	static Size _mapSize;
+	static Size _tileSize;
+
 	static int nEnemy;
-	static float mydt;
 	static Scene * createScene();
 	void setPlayerPosition(Vec2 position);
 	Vec2 tileCoordFromPosition(Vec2 position);
