@@ -21,6 +21,7 @@ PickupBase * PickupBase::createWithType(PickupTypes type)
 	auto body = PhysicsBody::createEdgeBox(item->getContentSize());
 	body->setCategoryBitmask(0x02);
 	body->setContactTestBitmask(0x01);
+	body->setCollisionBitmask(0x00);
 	item->setPhysicsBody(body);
 	item->setTag(6);
 	return item;

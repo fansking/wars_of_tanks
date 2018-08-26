@@ -19,10 +19,17 @@ OurTank::OurTank(int initialHP)
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	auto body = PhysicsBody::createEdgeBox(Size(Vec2(40, 40)),
-		PHYSICSBODY_MATERIAL_DEFAULT, 3.0f, Vec2(20, 20));
+	auto body = PhysicsBody::createBox(Size(Vec2(40, 40)), 
+		PHYSICSBODY_MATERIAL_DEFAULT, Vec2(20, 20));
 	body->setCategoryBitmask(0x07);
 	body->setContactTestBitmask(0x0A);
+	body->setCollisionBitmask(0xFF);
+	body->getShape(0)->setDensity(0.0f);
+	body->getShape(0)->setRestitution(0.0f);
+	body->getShape(0)->setFriction(0.0f);
+	body->setGravityEnable(false);
+
+	//this->setPhysicsBody(body);
 	this->setPhysicsBody(body);
 	
 }
@@ -98,7 +105,7 @@ void OurTank::addenemy() {
 		strcat(enemyname, str);
 		
 		++x;
-		log("%s", enemyname);
+		//log("%s", enemyname);
 		spawnPoint_0 = group->getObject(enemyname);
 		if (spawnPoint_0 == ValueMap()) { break; }
 
@@ -139,7 +146,7 @@ void OurTank::addpickup() {
 		strcat(pickupname, str);
 		++x;
 		
-		log("%s", pickupname);
+		//log("%s", pickupname);
 		spawnPoint_0 = group->getObject(pickupname);
 		if (spawnPoint_0 == ValueMap()) { break; }
 	}

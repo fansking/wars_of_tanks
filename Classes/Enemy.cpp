@@ -23,11 +23,16 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 	}
 	if (enemy && enemy->initWithFile(Enemy_1)) {  //check if enemy is created
 		enemy->autorelease();
-		auto body = PhysicsBody::createEdgeBox(enemy->getContentSize(),
-			PHYSICSBODY_MATERIAL_DEFAULT, 3.0f);
+		auto body = PhysicsBody::createBox(enemy->getContentSize());
 		
 		body->setCategoryBitmask(0x0C);
 		body->setContactTestBitmask(0x0C);
+		body->setCollisionBitmask(0xFF);
+		body->getShape(0)->setRestitution(1.0f);
+		body->getShape(0)->setFriction(0.0f);
+		body->getShape(0)->setDensity(1.0f);
+		body->setMass(100);
+		body->setGravityEnable(false);
 
 		enemy->setPhysicsBody(body);
 

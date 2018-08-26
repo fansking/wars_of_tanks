@@ -35,6 +35,7 @@ BulletScatter * BulletScatter::createWithImage(int flag)
 			PHYSICSBODY_MATERIAL_DEFAULT, 2.0f, Vec2(0, 0));
 		body->setCategoryBitmask(0x04);
 		body->setContactTestBitmask(0x08);
+		body->setCollisionBitmask(0x00);
 		bullet->setPhysicsBody(body);
 		bullet->setTag(2);
 		return bullet;

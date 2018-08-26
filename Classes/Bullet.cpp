@@ -26,6 +26,7 @@ Bullet * Bullet::createWithImage(bool isFriendly)
 			body->setCategoryBitmask(0x02);
 			body->setContactTestBitmask(0x01);
 		}
+		body->setCollisionBitmask(0x00);
 		bullet->setPhysicsBody(body);
 		bullet->setTag(2);
 		return bullet;
