@@ -46,6 +46,7 @@ bool Game::init()
 	}
 	nEnemy = 0;
 
+
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -139,12 +140,8 @@ bool Game::init()
 	this->addChild(_tileMap);
 
 
-
-
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
-
-
 
 
 	int  x0 = spawnPoint_0["x"].asInt();
@@ -241,7 +238,6 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 			_player->openFire(true);
 			_player->mydt = 1;
 		}
-
 		return;
 	}
 	if ((int)keyCode != _player->getDirection())
@@ -250,42 +246,28 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 		{
 		case 146:
 			_player->runAction(RotateTo::create(0.2, 0));
+			_player->setVel(Vec2(0, _player->nVel));
 			break;
 		case 142:
 			_player->runAction(RotateTo::create(0.2, 180));
+			_player->setVel(Vec2(0, -_player->nVel));
 			break;
 		case 124:
 			_player->runAction(RotateTo::create(0.2, 270));
+			_player->setVel(Vec2(-_player->nVel, 0));
 			break;
 		case 127:
 			_player->runAction(RotateTo::create(0.2, 90));
+			_player->setVel(Vec2(_player->nVel, 0));
 			break;
 		}
 		_player->setDirection((int)keyCode);
-		this->schedule(schedule_selector(Game::keepMoving), 0.2);
-		return;
-	}
-	switch ((int)keyCode)
-	{
-	case 146:
-		playerPos.y += _tileMap->getTileSize().height;
-		break;
-	case 142:
-		playerPos.y -= _tileMap->getTileSize().height;
-		break;
-	case 124:
-		playerPos.x -= _tileMap->getTileSize().width;
-		break;
-	case 127:
-		playerPos.x += _tileMap->getTileSize().width;
-		break;
 	}
 
 	if (!isMoveable(playerPos)) return;
 	this->setViewpointCenter(playerPos);
-	this->setPlayerPosition(playerPos);
 
-	this->schedule(schedule_selector(Game::keepMoving), 0.2);
+	this->schedule(schedule_selector(Game::keepMoving), 1.0/60);
 }
 
 void Game::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
@@ -296,26 +278,42 @@ void Game::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
 
 void Game::keepMoving(float dt)
 {
-	Vec2 playerPos = _player->getPosition();
+	//log("dt : %f", dt);
+	//log("getContantSize : %d, %d", _player->getContentSize().width, _player->getContentSize().height);
+	auto playerSize = Size(Vec2(40, 40));
+
+	Vec2 playerPos = _player->getPosition() + _player->getVel() * dt;
+	Vec2 forwardLeft = playerPos;
+	Vec2 forwardRight = playerPos;
+
 	switch (_player->getDirection())
 	{
 	case 146:
-		playerPos.y += _tileMap->getTileSize().height;
+		forwardLeft += Vec2(-playerSize.width / 2, playerSize.height / 2 + 1);
+		forwardRight += Vec2(playerSize.width / 2, playerSize.height / 2 + 1);
 		break;
 	case 142:
-		playerPos.y -= _tileMap->getTileSize().height;
-		break;
-	case 124:
-		playerPos.x -= _tileMap->getTileSize().width;
+		forwardLeft += Vec2(playerSize.width / 2, -playerSize.height / 2 - 1);
+		forwardRight += Vec2(-playerSize.width / 2, -playerSize.height / 2 - 1);
 		break;
 	case 127:
-		playerPos.x += _tileMap->getTileSize().width;
+		forwardLeft += Vec2(playerSize.width / 2 + 1, playerSize.height / 2);
+		forwardRight += Vec2(playerSize.width / 2 + 1, -playerSize.height / 2);
+		break;
+	case 124:
+		forwardLeft += Vec2(-playerSize.width / 2 - 1, -playerSize.height / 2);
+		forwardRight += Vec2(-playerSize.width / 2 - 1, playerSize.height / 2);
 		break;
 	}
 
-	if (!isMoveable(playerPos)) return;
+	if (!isMoveable(forwardLeft) || !isMoveable(forwardRight))
+		return;
+
 	this->setViewpointCenter(playerPos);
-	this->setPlayerPosition(playerPos);
+
+	_player->runAction(MoveTo::create(0, playerPos));
+
+	//this->setPlayerPosition(playerPos);
 
 }
 
@@ -374,10 +372,10 @@ void Game::setViewpointCenter(Point position) {
 	viewPoint = centerPoint - actualPoint;
 
 
-	this->runAction(MoveTo::create(0.2, viewPoint));
+	this->runAction(MoveTo::create(0, viewPoint));
 	log("%f,%f", this->getPosition().x, this->getPosition().y);
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	menuLayer->runAction(MoveTo::create(0.2, -viewPoint));
+	menuLayer->runAction(MoveTo::create(0, -viewPoint));
 }
 
 bool Game::isMoveable(Vec2 position) {

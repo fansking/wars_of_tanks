@@ -27,4 +27,6 @@ public:
 	void addpickup();
 	float mydt;
 
+	int nVel;
+
 };

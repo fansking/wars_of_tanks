@@ -10,14 +10,17 @@ using namespace CocosDenshion;
 
 OurTank::OurTank(int initialHP)
 {
+	nVel = 200;
+
 	this->nHP = initialHP;
 	this->weaponType = WEAPON_0;
+	this->setVel(Vec2(0, nVel));
 	this->setDirection(146);
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	auto body = PhysicsBody::createEdgeBox(Size(Vec2(60, 60)),
-		PHYSICSBODY_MATERIAL_DEFAULT, 3.0f, Vec2(30, 30));
+	auto body = PhysicsBody::createEdgeBox(Size(Vec2(40, 40)),
+		PHYSICSBODY_MATERIAL_DEFAULT, 3.0f, Vec2(20, 20));
 	body->setCategoryBitmask(0x07);
 	body->setContactTestBitmask(0x0A);
 	this->setPhysicsBody(body);
