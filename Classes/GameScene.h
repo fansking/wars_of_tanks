@@ -10,6 +10,7 @@
 #include "PauseLayer.h"
 #include "HelloWorldScene.h"
 #include "EnemyAI.h"
+#include "GameoverLayer.h"
 #ifndef _GAME_SCENE_H_
 #define _GAME_SCENE_H_
 
@@ -17,11 +18,11 @@ using namespace cocos2d;
 
 class Game :public Layer
 {
-	
-	OurTank *_player;
+	static OurTank *_player;
 	TMXLayer *_collidable;
 	Enemy *_enemy_1;
 	Enemy *_enemy_2;
+
 
 	static bool bVictory;
 

@@ -10,7 +10,7 @@ Enemy * Game::enemy[10] = { NULL };
 
 int Game::mapSizeHeight = 0;
 int Game::mapSizeWidth = 0;
-int Game::tileSize =0;
+int Game::tileSize = 0;
 bool Game::bVictory = false;
 
 EnemyAI * Game::enemyAIs[10] = { nullptr };
@@ -20,6 +20,8 @@ int Game::nPickup = 0;
 
 Size Game::_mapSize = Size(Vec2::ZERO);
 Size Game::_tileSize = Size(Vec2::ZERO);
+
+OurTank * Game::_player = nullptr;
 
 Scene *Game::createScene()
 {
@@ -38,6 +40,11 @@ bool Game::init()
 		return false;
 	}
 
+	for (int i = 0; i < 10; ++i)
+	{
+		enemyAIs[i] = nullptr;
+	}
+	nEnemy = 0;
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -48,17 +55,61 @@ bool Game::init()
 		log("onContactBegin");
 		auto spriteA = (Sprite *)contact.getShapeA()->getBody()->getNode();
 		auto spriteB = (Sprite *)contact.getShapeB()->getBody()->getNode();
-		if (spriteA && spriteB && spriteA->getTag()==3 && spriteB->getTag()==2 && spriteA->isVisible())
-
+		if (spriteA && spriteB)
+		{
+			log("A: %d, B: %d", spriteA->getTag(), spriteB->getTag());
+		}
+		if (spriteA && spriteB && spriteA->getTag() == 3 && spriteB->getTag() == 2 && spriteA->isVisible())
 		{
 			spriteA->setVisible(false);
 			spriteB->removeFromParent();
 			nEnemy--;
-			log("%d",nEnemy);
+			log("%d", nEnemy);
 		}
-		else if (spriteA && spriteB && spriteA->getTag()==1 && spriteB->getTag()==6)
+		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 3 && spriteB->isVisible())
+		{
+			spriteB->setVisible(false);
+			spriteA->removeFromParent();
+			nEnemy--;
+			log("%d", nEnemy);
+		}
+		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 6)
 		{
 			((PickupBase *)spriteB)->isContact((OurTank *)spriteA);
+		}
+		else if (spriteA && spriteB && spriteA->getTag() == 6 && spriteB->getTag() == 1)
+		{
+			((PickupBase *)spriteA)->isContact((OurTank *)spriteB);
+		}
+		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 2)
+		{
+			Game::_player->setHP(Game::_player->getHP() - 1);
+			spriteB->removeFromParent();
+			log("HP: %d", Game::_player->getHP());
+			if (Game::_player->getHP() == 0)
+			{
+				auto layer = GameoverLayer::create();
+				layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
+					Director::getInstance()->getVisibleSize().height / 2));
+				layer->setTag(99);
+				Director::getInstance()->getRunningScene()->addChild(layer);
+				Director::getInstance()->pause();
+			}
+		}
+		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 1)
+		{
+			Game::_player->setHP(Game::_player->getHP() - 1);
+			spriteA->removeFromParent();
+			log("HP: %d", Game::_player->getHP());
+			if (Game::_player->getHP() == 0)
+			{
+				auto layer = GameoverLayer::create();
+				layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
+					Director::getInstance()->getVisibleSize().height / 2));
+				layer->setTag(99);
+				Director::getInstance()->getRunningScene()->addChild(layer);
+				Director::getInstance()->pause();
+			}
 		}
 		if (nEnemy == 0) {
 			Game::bVictory = true;
@@ -88,14 +139,14 @@ bool Game::init()
 	this->addChild(_tileMap);
 
 
-	
+
 
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
 
-	
-	
-	
+
+
+
 	int  x0 = spawnPoint_0["x"].asInt();
 	int  y0 = spawnPoint_0["y"].asInt();
 	EnemyAI::layer = _collidable;
@@ -108,7 +159,7 @@ bool Game::init()
 	gold->setPosition(Vec2(x3, y3));
 	gold->setTag(6);
 
-	_player = OurTank::createWithImage(5);
+	_player = OurTank::createWithImage(3);
 	_player->setAnchorPoint(Vec2(0.5, 0.5));
 	_player->setPosition(Vec2(x0, y0));
 	addChild(_player);
@@ -129,7 +180,6 @@ bool Game::init()
 
 	Vec2 playerPos = _player->getPosition();
 
-	_player->setDirection(146);
 
 	setKeyboardEnabled(true);
 
@@ -137,7 +187,7 @@ bool Game::init()
 
 
 	//menuLayer->runAction(MoveTo::create(0.2, -viewPoint));
-	menuLayer->setPosition(Vec2(0,0));
+	menuLayer->setPosition(Vec2(0, 0));
 	this->addChild(menuLayer);
 	auto itemPause = MenuItemImage::create("UI/menu_pause.png", "UI/menu_pause1.png",
 		CC_CALLBACK_1(Game::menuItemCallbackPause, this));
@@ -148,7 +198,7 @@ bool Game::init()
 	menuLayer->addChild(menu);
 	log("%f,%f", menuLayer->getPosition().x, menuLayer->getPosition().y);
 	//log("%d,%d",this->getPosition().x,this->getPosition().y);
-
+	//Director::getInstance()->getRunningScene()->addChild(menu);
 	log("There are %d enemys ***************************", nEnemy);
 
 	return true;
@@ -157,7 +207,7 @@ bool Game::init()
 void Game::setPlayerPosition(Vec2 position)
 {
 	Size screenSize = Director::getInstance()->getVisibleSize();
-	if (position.y > tileY*mapY || position.y < 0 || position.x > tileX*tileX  || position.x < 0)
+	if (position.y > tileY*mapY || position.y < 0 || position.x > tileX*tileX || position.x < 0)
 	{
 		return;
 	}
@@ -187,11 +237,11 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 	Vec2 playerPos = _player->getPosition();
 	if ((int)keyCode == 59)
 	{
-		if (_player->mydt  <0) {
-		_player->openFire();
-		_player->mydt = 1;
+		if (_player->mydt < 0) {
+			_player->openFire(true);
+			_player->mydt = 1;
 		}
-		
+
 		return;
 	}
 	if ((int)keyCode != _player->getDirection())
@@ -240,7 +290,7 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 
 void Game::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
 {
-	if((int)keyCode==_player->getDirection())
+	if ((int)keyCode == _player->getDirection())
 		this->unschedule(schedule_selector(Game::keepMoving));
 }
 
@@ -295,7 +345,7 @@ void Game::menuItemCallbackPause(Ref * pSender)
 	{
 		auto layer = PauseLayer::create();
 		layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
-		Director::getInstance()->getVisibleSize().height / 2));
+			Director::getInstance()->getVisibleSize().height / 2));
 		layer->setTag(13);
 		menuLayer->addChild(layer);
 		isPause = true;
@@ -332,7 +382,7 @@ void Game::setViewpointCenter(Point position) {
 
 bool Game::isMoveable(Vec2 position) {
 	Size screenSize = Director::getInstance()->getVisibleSize();
-	if (position.y > tileY*mapY  || position.y < 0 || position.x > tileX*mapX  || position.x < 0)
+	if (position.y > tileY*mapY || position.y < 0 || position.x > tileX*mapX || position.x < 0)
 	{
 		return false;
 	}
@@ -350,3 +400,6 @@ bool Game::isMoveable(Vec2 position) {
 	}
 	return true;
 }
+
+
+

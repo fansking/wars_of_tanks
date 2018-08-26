@@ -10,17 +10,16 @@ using namespace CocosDenshion;
 
 OurTank::OurTank(int initialHP)
 {
-	
-	
 	this->nHP = initialHP;
 	this->weaponType = WEAPON_0;
+	this->setDirection(146);
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	auto body = PhysicsBody::createEdgeBox(Size(60, 60),
+	auto body = PhysicsBody::createEdgeBox(Size(Vec2(60, 60)),
 		PHYSICSBODY_MATERIAL_DEFAULT, 3.0f, Vec2(30, 30));
-	body->setCategoryBitmask(0x01);
-	body->setContactTestBitmask(0x02);
+	body->setCategoryBitmask(0x07);
+	body->setContactTestBitmask(0x0A);
 	this->setPhysicsBody(body);
 	
 }
@@ -37,11 +36,11 @@ OurTank * OurTank::createWithImage(int initialHP)
 	return player;
 }
 
-void OurTank::openFire()
+void OurTank::openFire(bool isFriendly)
 {
 	SimpleAudioEngine::getInstance()->playEffect("sound/sfx_fire1.mp3");
 	if (weaponType == WEAPON_0) {
-		Bullet * bullet = Bullet::createWithImage();
+		Bullet * bullet = Bullet::createWithImage(isFriendly);
 		this->getParent()->addChild(bullet);
 		bullet->shootBulletFromTank(this);
 	}

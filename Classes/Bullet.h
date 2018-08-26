@@ -17,9 +17,14 @@ public:
 	static TMXLayer   *_breakable0;
 	static TMXLayer   *coll;
 	static TMXLayer * _breakable1;
-	static Bullet * createWithImage();
+	static Bullet * createWithImage(bool );
 	void shootBulletFromTank(OurTank * tank);
 	virtual void update(float dt);
+
+	bool isFriendly;
+	void playBoomAnimation(Vec2 position);
+
+
 };
 
 
