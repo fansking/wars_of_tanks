@@ -28,10 +28,10 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 		body->setCategoryBitmask(0x0C);
 		body->setContactTestBitmask(0x0C);
 		body->setCollisionBitmask(0xFF);
-		body->getShape(0)->setRestitution(1.0f);
+		body->getShape(0)->setRestitution(.0f);
 		body->getShape(0)->setFriction(0.0f);
-		body->getShape(0)->setDensity(1.0f);
-		body->setMass(100);
+		body->getShape(0)->setDensity(0.0f);
+		body->setDynamic(true);
 		body->setGravityEnable(false);
 
 		enemy->setPhysicsBody(body);
