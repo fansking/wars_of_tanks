@@ -63,6 +63,7 @@ bool Game::init()
 		if (spriteA && spriteB && spriteA->getTag() == 3 && spriteB->getTag() == 2 && spriteA->isVisible())
 		{
 			spriteA->setVisible(false);
+			spriteA->getPhysicsBody()->removeFromWorld();
 			spriteB->removeFromParent();
 			nEnemy--;
 			//log("%d", nEnemy);

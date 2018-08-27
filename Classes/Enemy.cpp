@@ -23,7 +23,7 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 	}
 	if (enemy && enemy->initWithFile(Enemy_1)) {  //check if enemy is created
 		enemy->autorelease();
-		auto body = PhysicsBody::createCircle(enemy->getContentSize().width / 2);
+		auto body = PhysicsBody::createCircle(25);
 		
 		body->setCategoryBitmask(0x0C);
 		body->setContactTestBitmask(0x0C);

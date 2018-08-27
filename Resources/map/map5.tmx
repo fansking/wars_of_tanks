@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60">
- <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="60" tileheight="60">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="22">
+ <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="60" tileheight="60" tilecount="40" columns="8">
   <image source="tmw_desert_spacing1.png" width="480" height="300"/>
   <tile id="30">
    <properties>
@@ -8,10 +8,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="41" name="bg5" tilewidth="60" tileheight="60">
-  <image source="bg5.png" width="1280" height="720"/>
- </tileset>
- <tileset firstgid="293" name="collidable" tilewidth="60" tileheight="60">
+ <tileset firstgid="41" name="collidable" tilewidth="60" tileheight="60" tilecount="1" columns="1">
   <image source="collidable.png" width="60" height="60"/>
   <tile id="0">
    <properties>
@@ -19,48 +16,45 @@
    </properties>
   </tile>
  </tileset>
- <layer name="ground" width="20" height="12">
+ <tileset firstgid="42" name="bg5b" tilewidth="60" tileheight="60" tilecount="1008" columns="42">
+  <image source="bg5b.png" width="2560" height="1440"/>
+ </tileset>
+ <layer name="ground" width="40" height="24">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
- <layer name="breakable0" width="20" height="12">
+ <layer name="breakable0" width="40" height="24">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFwwVwQ/FgNQ8EeKhoFi8VzIC5h58KZvFBaW4sYrQCAJNwAIg=
+   eJztzrEJADAMA0Fv4S77j5kVDClkwh2o1ndV9WApye8JfW+29wEAkHPSAXznApP6AWE=
   </data>
  </layer>
- <layer name="breakable1" width="20" height="12">
+ <layer name="breakable1" width="40" height="24">
   <data encoding="base64" compression="zlib">
-   eJxjYBh6gIsMTMg8Uu0fbOZx4WAPVfNIiVNSw5sQGCzmEeN3AAf1Ac0=
+   eJy918EKwjAQBNBAixe1Nz0pnsT//0MNNDBMZ7IbKy4sSEzrY5NtbCm5uK95MnmEPK95GMgWyycfkCM2DvRhnCEzgU40ZXzOxkYVzjh/8iLGq29J+u4ltkVR7+9qeClb41LGfRjzmk9zzWtNjGiN0Zj1ubo125PGZrDVnIzvGvhOO32qbmhrMeJD40LjPR8bZjPX+ZqRfb0aZnxuXXu2Urb7bjKflbH52LPXp/oh8tVgY7Z+vb7I+HBez9eMGR/urd46Op+b9ysf3tc53POO5//Dp4xujK9TPuzlyHegOexzRuVz+45NU9n2q+tfd/6yKaph1BeqXzO+h/FljN/61Nqykc9g5WOjWmc8YzO2X/v493rnWtZ3NcY9vmgvjvrUmfutzxnVs0T1rXKoGjofRu//aWZt0RXVjr9nnzJG7x+uTsrl+kCFW3OO7PsbrykmG6Nstlsiq+8NNFMUkQ==
+  </data>
+ </layer>
+ <layer name="collidable" width="40" height="24" opacity="0">
+  <data encoding="base64" compression="zlib">
+   eJzNlEEOxSAIRL1O73/Brn7SBTPzwPa3JiYGcHgqcqy1jg/M33A+NVSc0uhoV0wpL2Ej/nSuZCfa9A46fMo34ats3T1uOJ7pu6R6VjmU5p18lJnyXe307lNdEL4qZzo34aM2x1FxOcZ/8Lk95J8Svk7duTyJT/lTv6D1qOxP8Dn/F/m6feW6Vjnv4lN6VL/SIHoqNtkdz6R/TPkI45Sv239232X37nb4SL5ufOd/UD7yPm/xKUY1Vc5qL+FLeorRDccw+ZuEz+Wt/PQsjqeK6+i9MU9J9DlX
   </data>
  </layer>
  <objectgroup name="objects">
-  <object name="enemy2" x="750" y="330" width="60" height="60"/>
-  <object name="enemy0" x="570" y="390" width="60" height="60"/>
-  <object name="enemy1" x="423" y="363" width="60" height="60"/>
-  <object name="playerA" x="570" y="630" width="60" height="60"/>
-  <object name="pickup0" x="450" y="270" width="60" height="60"/>
-  <object name="re5" x="632" y="237" width="60" height="60"/>
-  <object name="re6" x="746" y="218" width="60" height="57"/>
+  <object id="1" name="enemy2" x="2166.48" y="1268.06" width="60" height="60"/>
+  <object id="2" name="enemy0" x="1592.97" y="157.576" width="60" height="60"/>
+  <object id="3" name="enemy1" x="1666.27" y="1082.27" width="60" height="60"/>
+  <object id="4" name="playerA" x="126.424" y="336.242" width="60" height="60"/>
+  <object id="5" name="pickup0" x="723.576" y="698.727" width="60" height="60">
+   <properties>
+    <property name="ToolType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="15" name="enemy3" x="400" y="603.03" width="27.2727" height="33.3333"/>
+  <object id="16" name="enemy4" x="84.8485" y="557.576" width="36.3636" height="48.4848"/>
+  <object id="17" name="enemy5" x="745.455" y="457.576" width="42.4242" height="48.4848"/>
+  <object id="18" name="enemy6" x="1154.55" y="139.394" width="63.6364" height="63.6364"/>
+  <object id="19" name="enemy7" x="2245.45" y="430.303" width="57.5758" height="60.6061"/>
+  <object id="20" name="enemy8" x="1836.36" y="412.121" width="57.5758" height="54.5455"/>
+  <object id="21" x="933.333" y="-339.394"/>
  </objectgroup>
- <objectgroup name="roadPoints" visible="0">
-  <object name="p3" x="600" y="360" width="60" height="60"/>
-  <object name="p4" x="600" y="540" width="60" height="60"/>
-  <object name="p1" x="240" y="120" width="60" height="60"/>
-  <object name="p2" x="240" y="362" width="60" height="60"/>
- </objectgroup>
- <objectgroup name="bossPoint" visible="0">
-  <object name="boss1" x="240" y="60" width="60" height="60"/>
- </objectgroup>
- <objectgroup name="buildingPoint" visible="0">
-  <object name="building1" x="960" y="120" width="60" height="60"/>
- </objectgroup>
- <objectgroup name="endPoint">
-  <object name="endpoint" x="515" y="272" width="60" height="60"/>
- </objectgroup>
- <layer name="collidable" width="20" height="12" opacity="0.38">
-  <data encoding="base64" compression="zlib">
-   eJxjYBh6QJWRdEzIPFLtH2zmUdu/tDAP2VxS7CYUr6SGNy53oYtRyyxKzCOUngFJugh3
-  </data>
- </layer>
 </map>
