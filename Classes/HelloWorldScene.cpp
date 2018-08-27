@@ -93,6 +93,9 @@ bool HelloWorld::init()
 	SimpleAudioEngine::getInstance()->playBackgroundMusic("sound/background.mp3");
 	SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5);
 
+	Director::getInstance()->setDisplayStats(false);
+
+
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.

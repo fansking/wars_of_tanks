@@ -69,6 +69,7 @@ bool Game::init()
 		{
 			spriteA->setVisible(false);
 			playBoomAnimation(spriteA->getPosition());
+			spriteA->getPhysicsBody()->removeFromWorld();
 			spriteB->removeFromParent();
 			nEnemy--;
 			//log("%d", nEnemy);
