@@ -20,10 +20,10 @@ OurTank::OurTank(int initialHP)
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	auto body = PhysicsBody::createBox(Size(Vec2(40, 40)), 
-		PHYSICSBODY_MATERIAL_DEFAULT, Vec2(20, 20));
+	auto body = PhysicsBody::createBox(Size(Vec2(50, 50)),
+		PHYSICSBODY_MATERIAL_DEFAULT, Vec2(25, 25));
 	body->setCategoryBitmask(0x07);
-	body->setContactTestBitmask(0x0A);
+	//body->setContactTestBitmask(0x0A);
 	body->setCollisionBitmask(0xFF);
 	body->getShape(0)->setDensity(0.0f);
 	body->getShape(0)->setRestitution(0.0f);
@@ -44,6 +44,9 @@ OurTank * OurTank::createWithImage(int initialHP)
 	}
 	player->mydt = 1;
 	player->setTag(1);
+
+	player->setSkillType(SKILL_0);
+
 	return player;
 }
 
@@ -52,7 +55,7 @@ void OurTank::openFire(bool isFriendly)
 	SimpleAudioEngine::getInstance()->playEffect("sound/sfx_fire1.mp3");
 	if (weaponType == WEAPON_0) {
 		Bullet * bullet = Bullet::createWithImage(isFriendly);
-		this->getParent()->addChild(bullet);
+		this->getParent()->addChild(bullet, 1);
 		bullet->shootBulletFromTank(this);
 	}
 	else if(weaponType == WEAPON_1){
@@ -171,4 +174,27 @@ void OurTank::addpickup() {
 		this->getParent()->addChild(pickup[i]);
 	}
 
+}
+
+void OurTank::useSkill()
+{
+	switch (this->getSkillType())
+	{
+	case NOSKILL:
+		break;
+	case SKILL_0:
+		for (int i = 0; i < Game::nEnemy; ++i)
+		{
+			//Game::enemyAIs[i]->isFrozen = true;
+			Game::enemy[i]->mydt = 5;
+			Game::enemy[i]->setColor(Color3B::GRAY);
+		}
+		this->setSkillType(NOSKILL);
+		break;
+	case SKILL_1:
+		break;
+	case SKILL_2:
+		break;
+	}
+	return;
 }

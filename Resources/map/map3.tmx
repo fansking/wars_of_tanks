@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="7">
+=======
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="14">
+>>>>>>> master
  <tileset firstgid="1" name="bg2" tilewidth="60" tileheight="60" tilecount="252" columns="21">
   <image source="bg2.png" width="1280" height="720"/>
  </tileset>
@@ -14,6 +18,7 @@
    </properties>
   </tile>
  </tileset>
+<<<<<<< HEAD
  <tileset firstgid="294" name="bg2f" tilewidth="60" tileheight="60" tilecount="252" columns="21">
   <image source="bg2f.png" width="1280" height="720"/>
  </tileset>
@@ -21,11 +26,18 @@
   <image source="bg2ff.png" width="1280" height="720"/>
  </tileset>
  <tileset firstgid="798" name="bg2b" tilewidth="60" tileheight="60" tilecount="1008" columns="42">
+=======
+ <tileset firstgid="294" name="bg2b" tilewidth="60" tileheight="60" tilecount="1008" columns="42">
+>>>>>>> master
   <image source="bg2b.png" width="2560" height="1440"/>
  </tileset>
  <layer name="ground" width="40" height="24">
   <data encoding="base64" compression="zlib">
+<<<<<<< HEAD
    eJwN02ODEAYAANBbXZex1VZbtm3btm3btm3btm3btm3vfXg/4cUOHhAQh7jEIz4JSEgiEpOEpCQjOSlISSpSk4a0pCM9GchIJjKThaxkIzs5yEkucpOHvOQjPwUoSCGKUozilKAkpShNGcpSjvJUoCKVqEwVqlKN6tSgJrWoTR3qUo/6NKAhjWhME5rSjOa0oCWtaE0b2tOBjnSiM13oSje604Oe9KI3fehLP/ozgIEMYjBDGMowhjOCkYxiNGMYyzjGM4GJTGIyU5jKNGYyi9nMYS7zmM8CFrKIxSxhKctYzgpWsorVrGEt61jPBjayic1sYSvb2M4OdrKL3exhL/vYzwEOc4SjHOM4JzjJKU5zhrOc4zwXuMglLnOFq1zjOje4yS1uc4e73OM+D3jIIx7zhKc84zkveMkr3vKO93zgI5/4zBe+8o3v/OAnv/hNQGBAwB8EIziBhCCIkIQiNGEISzjCE4GIROJP/iIyUfibf4hKNKITg5jEIjZxiEs84pOAhCQiMUlISjKSk4KUpCI1aUhLOtKTgYxkIjNZyEo2spODnOQiN3nISz4KUojCFKEoxShOCUpSitKUoSzlKE8FKlKJylShKtWoTg1qUova1KEu9ahPAxrSiMY0oSnNaE4LWtOGtrSjPR3oSCc604WudKM7PehJL3rTh770oz8DGMggBjOEoQxjOCMYyShGM4axjGM8E5jIJKYyjenMYCazmM0c5jKP+SxgIYtYzBKWsozlrGAlq1jNGtayjvVsYCOb2MwWtrKN7exgJ7vYzR72c4CDHOIwRzjKMY5zgpOc4jRnOMs5znOBi1ziMle4yjWuc4Ob3OI2d7jLPe7zgIc84jFPeMozXvKK17zhLe94zwc+8onPfOEr3/jOD37yi98EhPCZYAQnkBAEEZJQhCYMYQlHeCIQkUj8yV9EJgpRica//Ed0YhCTWMQmDnGJR3wSkJBEJCYJSUlGclKQklSkJg1pSUd6MpCRTGQmC1nJRnZykJNc5CUf+SlAQQpRmCIUpRjFKUFJSlGaMpSlHOWpQEUqUZkqVKUa1alBTWpRmzrUpR71aUBDGtGYJjSnBS1pRWva0JZ2tKcDHelEZ7rQlW50pwc96UVv+tCXfvRnAAMZxGCGMJRhDGcEIxnFaMYwlnFMZBKTmcJUpjGdGcxkFrOZw1zmMZ8FLGQRi1nCUpaxnBWsZBWrWcNa1rGeDWxkE5vZwla2sZ0d7GYPe9nHfg5wkEMc5ghHOcZxTnCSU5zmDGc5x3kucJFLXOYKV7nGdW5wk1vc5g53ucd9HvCQRzzlGc95wUte8Zo3vOUd7/nARz7xmS985Rvf+cFPfvGbgCCfCUZwAglBECEJRWjCEJZwhCcCEYlEZKLwN/8QlWj8y39EJwYxiUVs4hCXeMQnAQlJRGKSkJRkJCcFKUlFatKQlnSkJwMZyURmspCVbOQkF7nJQ17ykZ8CFKQQhSlCUYpRnBKUpBSlKUNZylGeClSkEpWpQlWqUZ0a1KQWtalDXepRnwY0pglNaUZzWtCSVrSmDW1pR3s60JFOdKYLXelGd3rQk170pg996Ud/BjCQQQxmCEMZxnBGMJJRjGUc45nARCYxmSlMZRrTmcFMZjGbOcxlHvNZwEIWsZglLGUZy1nBSlaxmjWsZR3r2cBGNrGZLWxnBzvZxW72sJd97OcABznEYY5wlGMc5wQnOcVpznCWc5znAhe5xGWucJVrXOcGN7nFbe5wl3s85BGPecJTnvGcF7zkFa95w1ve8Z4PfOQTn/nCV77xnR/85Be/CQjpM8EITiAhCCIkoQhNGMISjv8BZuf13A==
+=======
+   eJwN09NiGAYAAMCsTWp7a7d2q23btm3btm3btm3btm1r93CfcIn/CAhIQlKSkZwUpCQVqUlDWtKRngxkJBOZyUJWspGdHOQkF7nJQ17ykZ8CFKQQhSlCUYpRnBKUpBRlKUd5KlCRSlSmClWpRnVqUJNa1KYOdalHfRrQkEY0pglNaUZzWtCSVrSmDW1pR3s60JFOdKYL3elBT3rRmz70pR/9GcBABjGYIQxlGMMZwUhGMZoxjGUc45nARCYxmSlMZRrTmcFMZjGbOcxlHgtZxGKWsJRlLGcFK1nFatawlnWsZwMb2cRmtrCVbWxnBzvZxW72sJd97OcABznEYY5wlGMc5wSnOcNZznGeC1zkEpe5wlWucZ0b3OQWt7nDXe5xnwc85BGPecJTnvGcF7zkFa95w1ve8Z4PfOQTX/nGd37wk1/8JiBYQMAfBCM4gQQRgpCEIjRhCEs4whOBiEQiMlGISjSiE4OYxOJP/iI2cfibf4hLPOKTgIQkIjFJSEoykpOClKQiNWlISzrSk4GMZCIzWchKNrKTg5zkIjd5yEs+8lOAghSiMEUoSjFKUorSlKEs5ShPBSpSicpUoSrVqE4NalKL2tShLvWoTwMa0ojGNKEpzWhOC1rSita0oS3taE8HOtOFrnSjOz3oSS9604e+9KM/AxjIIAYzhKEMYzgjGMkoRjOGsYxjPBOYyCQmM4WpTGM6M5jJLOYyj/ksYCGLWMwSlrKM5axgJatYzRrWso71bGAjm9jMFrayje3sYCe72M0e9rKP/RzgIIc4zBGOc4KTnOI0ZzjLOc5zgYtc4jJXuMo1rnODm9ziNne4yz3u84CHPOIxT3jKM57zgpe84jVveMs7PvKJz3zhK9/4zg9+8ovfBAT3mWAEJ5AgQhCSUIQmDGEJR3giEJFIRCYKUYlGdGIQk1j8yV/EJg5xice//Ed8EpCQRCQmCUlJRnJSkJJUpCYNaUlHejKQkUxkJgtZyUZ2cpCTXOQmD3nJR34KUJBCFKUYxSlBSUpRmjKUpRzlqUBFKlGZKlSlGtWpQU1qUZs61KUe9WlAQxrRmCY0pRnNaUFLWtGaNrSnAx3pRGe60JVudKcHPelFb/rQl370ZwADGcRghjCUYQxnBCMZxWjGMJZxjGcCE5nEZKYwlWnMZBazmcNc5jGfBSxkEYtZwlKWsZwVrGQVq1nDWtaxng1sZBOb2cJWtrGdHexkF7vZw172sZ8DHOYIRznGcU5wklOc5gxnOcd5LnCRS1zmCle5xnVucJNb3OYOd7nHfR7wkEc85glPecZzXvCSV7zlHe/5wEc+8ZkvfOUb3/nBT37xm4BAnwlGcAIJIgQhCUVowhCWcIQnAhGJRGSiEJVoRCcGMYlFbOLwN/8Ql3j8y3/EJwEJSURikpCUZCQnBSlJRWrSkJZ0pCcDGclEZrKQlWxkJwc5yUVu8pCXfBSkEIUpQlGKUZwSlKQUpSlDWcpRngpUpBKVqUJVqlGdGtSkFrWpQ13qUZ8GNKQRjWlCU5rRnBa0pg1taUd7OtCRTnSmC13pRnd60JNe9KYPfelHfwYwkEEMZghDGcZwRjCSUYxmDGMZx3gmMJFJTGUa05nBTGYxmznMZR7zWcBCFrGYJSxlGctZwUpWsZo1rGUd69nARjaxmS1sZRvb2cFOdrGbPeznAAc5xGGOcJRjHOcEJznFac5wlnOc5wIXucRlrnCVa1znBje5xW3ucJd73OcBD3nEY57wlGe85BWvecNb3vGeD3zkE5/5wle+8Z0f/OQXvwkI8plgBCeQIEIQklCEJgxhCUd4IhCRSEQmClGJxv9Zvex8
+>>>>>>> master
   </data>
  </layer>
  <layer name="breakable0" width="40" height="24">
@@ -38,9 +50,15 @@
    eJzt0LEJADAMxEDvP7RxkxUCKu7ge/EzAB37VlXvq6j/VO8DAP44L+cH8Q==
   </data>
  </layer>
+<<<<<<< HEAD
  <layer name="collidable" width="40" height="24" opacity="0">
   <data encoding="base64" compression="zlib">
    eJztlkEOwCAIBO1j+v8v9m6kgMyqTbqJh0a7DhHQ1n4pdV/jcZq+wKhSNWbrjL2h5qvEpc6HN8/RnMdCcno+M3wk54raJPj6OMk8qtbryCOSW5nzq/Jl1lN8kX+rvSha99Z3NDa6b1l1T3gSMVk9iVCmt2U8adH3gEqzbwbyTlbc65Sv6t0R2Te6bgfbjn0zOp2v1wNZ3hgz
+=======
+ <layer name="collidable" width="40" height="24" opacity="0.17">
+  <data encoding="base64" compression="zlib">
+   eJzNlVEOwCAIQ91hvP8V97sY0RbKoAkfizCfYnU+Y8zm0VUIX+WamLkqGLv011ozypd9rr18kV4qzsOpjh27sUT2lWHz8nk4T3zZUvCt40q/M3dvlM/r3ygfKiXft9brD4TxlHP7vvHtchWyfM/kWznsO2ONM/Mz+8Pcbai8/kBqFH3P4FtroxHhU/uD/e/f/kWEvldVbOj9V6UdX+d4AZJIKps=
+>>>>>>> master
   </data>
  </layer>
  <objectgroup name="objects">
@@ -62,5 +80,15 @@
     <property name="ToolType" type="int" value="0"/>
    </properties>
   </object>
+<<<<<<< HEAD
+=======
+  <object id="7" name="enemy2" x="1804" y="56" width="44" height="46"/>
+  <object id="8" name="enemy3" x="1854.55" y="1260.61" width="48.4848" height="39.3939"/>
+  <object id="9" name="enemy4" x="122" y="181" width="31" height="27"/>
+  <object id="10" name="enemy5" x="1742" y="898" width="31" height="31"/>
+  <object id="11" name="enemy6" x="538.667" y="538.667" width="32" height="30.6667"/>
+  <object id="12" name="enemy7" x="958.667" y="420" width="32" height="30.6667"/>
+  <object id="13" name="enemy8" x="2098.67" y="901.333" width="37.3333" height="34.6667"/>
+>>>>>>> master
  </objectgroup>
 </map>

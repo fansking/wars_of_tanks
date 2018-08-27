@@ -15,6 +15,7 @@ public:
 	Vec2 tileCoordFromPosition(Vec2 pos);
 	virtual void update(float dt);
 	static TMXLayer * layer;
+	bool isFrozen;
 
 private:
 	bool isCollidable(Vec2 target);
