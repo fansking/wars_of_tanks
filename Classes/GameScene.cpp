@@ -183,13 +183,7 @@ bool Game::init()
 	int  y0 = spawnPoint_0["y"].asInt();
 	EnemyAI::layer = _collidable;
 
-	ValueMap spawnPoint_3 = group->getObject("gold");
-	float x3 = spawnPoint_3["x"].asFloat();
-	float y3 = spawnPoint_3["y"].asFloat();
 
-	auto gold = PickupBase::createWithType(Gold);
-	gold->setPosition(Vec2(x3, y3));
-	gold->setTag(6);
 
 	_player = OurTank::createWithImage(3);
 	_player->setAnchorPoint(Vec2(0.5, 0.5));
@@ -204,6 +198,18 @@ bool Game::init()
 	_player->addenemy();
 	_player->addpickup();
 	_player->setTag(1);
+
+	if (levelNum == 5)
+	{
+		srand(time(NULL));
+		for (int i = 0; i < nEnemy; ++i)
+		{
+			if (rand() % 10 >= 5)
+			{
+				enemy[i]->setOpacity(50);
+			}
+		}
+	}
 	/*enemy[0]->scheduleUpdate();*/
 	_collidable = _tileMap->getLayer("collidable");
 	Bullet::coll = _collidable;
@@ -223,6 +229,7 @@ bool Game::init()
 	this->addChild(menuLayer);
 	auto itemPause = MenuItemImage::create("UI/menu_pause.png", "UI/menu_pause1.png",
 		CC_CALLBACK_1(Game::menuItemCallbackPause, this));
+	itemPause->setOpacity(200);
 	itemPause->setAnchorPoint(Vec2(0, 0));
 	itemPause->setPosition(Vec2(0, visibleSize.height - itemPause->getContentSize().height));
 	auto menu = Menu::create(itemPause, NULL);
@@ -273,6 +280,11 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 			_player->openFire(true);
 			_player->mydt = 1;
 		}
+		return;
+	}
+	if ((int)keyCode == 129)
+	{
+		_player->useSkill();
 		return;
 	}
 	if ((int)keyCode != _player->getDirection())
@@ -362,7 +374,7 @@ void Game::update(float dt)
 		layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
 			Director::getInstance()->getVisibleSize().height / 2));
 		layer->setTag(99);
-		menuLayer->addChild(layer);
+		menuLayer->addChild(layer, 0);
 		Director::getInstance()->pause();
 	}
 	for (int i = 0; enemyAIs[i]; ++i)

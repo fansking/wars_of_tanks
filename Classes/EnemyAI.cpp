@@ -14,6 +14,7 @@ EnemyAI * EnemyAI::createWithEnemy(Enemy * obj)
 	auto enemyAI = new EnemyAI();
 	enemyAI->obj = obj;
 	enemyAI->vel = Vec2(0, 100);
+	enemyAI->isFrozen = false;
 
 	return enemyAI;
 }
@@ -122,6 +123,10 @@ void EnemyAI::update(float dt)
 		}
 	}
 	if (obj->mydt < 0 && obj->isVisible()) {
+		if (obj->getColor() == Color3B::GRAY)
+		{
+			obj->setColor(Color3B::WHITE);
+		}
 		obj->openFire(false);
 		obj->mydt = 1;
 	}
