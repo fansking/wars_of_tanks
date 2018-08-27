@@ -148,7 +148,7 @@ bool Game::init()
 
 
 	int  x0 = spawnPoint_0["x"].asInt();
-	int  y0 = spawnPoint_0["y"].asInt();
+	float  y0 = spawnPoint_0["y"].asFloat();
 	EnemyAI::layer = _collidable;
 
 	ValueMap spawnPoint_3 = group->getObject("gold");
@@ -165,8 +165,6 @@ bool Game::init()
 	addChild(_player);
 	this->setViewpointCenter(Vec2(x0, y0));
 	log("%f,%f", viewPoint.x, viewPoint.y);
-	//this->setPosition(Vec2(200, 200));
-
 
 	/**/
 	_player->addenemy();
@@ -186,7 +184,6 @@ bool Game::init()
 	this->scheduleUpdate();
 
 
-	//menuLayer->runAction(MoveTo::create(0.2, -viewPoint));
 	menuLayer->setPosition(Vec2(0, 0));
 	this->addChild(menuLayer);
 	auto itemPause = MenuItemImage::create("UI/menu_pause.png", "UI/menu_pause1.png",
@@ -197,9 +194,10 @@ bool Game::init()
 	menu->setPosition(Vec2::ZERO);
 	menuLayer->addChild(menu);
 	log("%f,%f", menuLayer->getPosition().x, menuLayer->getPosition().y);
-	//log("%d,%d",this->getPosition().x,this->getPosition().y);
-	//Director::getInstance()->getRunningScene()->addChild(menu);
+
 	log("There are %d enemys ***************************", nEnemy);
+
+	this->schedule(schedule_selector(Game::enemyMoving), 0.2);
 
 	return true;
 }
@@ -207,7 +205,7 @@ bool Game::init()
 void Game::setPlayerPosition(Vec2 position)
 {
 	Size screenSize = Director::getInstance()->getVisibleSize();
-	if (position.y > tileY*mapY || position.y < 0 || position.x > tileX*tileX || position.x < 0)
+	if (position.y > tileY*mapY || position.y < 0 || position.x > tileX*mapX || position.x < 0)
 	{
 		return;
 	}
@@ -265,23 +263,34 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 		this->schedule(schedule_selector(Game::keepMoving), 0.2);
 		return;
 	}
+	Vec2 nPos1 = playerPos, nPos2 = playerPos;
 	switch ((int)keyCode)
 	{
 	case 146:
 		playerPos.y += _tileMap->getTileSize().height;
+		nPos1 += Vec2(_tileMap->getTileSize().width / 2, _tileMap->getTileSize().height * 3 / 2);
+		nPos2 += Vec2(-_tileMap->getTileSize().width / 2, _tileMap->getTileSize().height * 3 / 2);
 		break;
 	case 142:
 		playerPos.y -= _tileMap->getTileSize().height;
+		nPos1 -= Vec2(_tileMap->getTileSize().width / 2, _tileMap->getTileSize().height * 3 / 2);
+		nPos2 -= Vec2(-_tileMap->getTileSize().width / 2, _tileMap->getTileSize().height * 3 / 2);
 		break;
 	case 124:
 		playerPos.x -= _tileMap->getTileSize().width;
+		nPos1 -= Vec2(_tileMap->getTileSize().width * 3 / 2, _tileMap->getTileSize().height / 2);
+		nPos2 -= Vec2(_tileMap->getTileSize().width * 3 / 2, -_tileMap->getTileSize().height / 2);
 		break;
 	case 127:
 		playerPos.x += _tileMap->getTileSize().width;
+		nPos1 += Vec2(_tileMap->getTileSize().width * 3 / 2, _tileMap->getTileSize().height / 2);
+		nPos2 += Vec2(_tileMap->getTileSize().width * 3 / 2, -_tileMap->getTileSize().height / 2);
 		break;
 	}
 
-	if (!isMoveable(playerPos)) return;
+	if (!isMoveable(nPos1)) return;
+	if (!isMoveable(nPos2)) return;
+
 	this->setViewpointCenter(playerPos);
 	this->setPlayerPosition(playerPos);
 
@@ -297,23 +306,33 @@ void Game::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
 void Game::keepMoving(float dt)
 {
 	Vec2 playerPos = _player->getPosition();
+	Vec2 nPos1 = playerPos, nPos2 = playerPos;
 	switch (_player->getDirection())
 	{
 	case 146:
 		playerPos.y += _tileMap->getTileSize().height;
+		nPos1+= Vec2(_tileMap->getTileSize().width/2,_tileMap->getTileSize().height * 3 / 2);
+		nPos2 += Vec2(-_tileMap->getTileSize().width/2,_tileMap->getTileSize().height * 3 / 2);
 		break;
 	case 142:
 		playerPos.y -= _tileMap->getTileSize().height;
+		nPos1 -= Vec2(_tileMap->getTileSize().width/2,_tileMap->getTileSize().height * 3 / 2);
+		nPos2 -= Vec2(-_tileMap->getTileSize().width/2,_tileMap->getTileSize().height * 3 / 2);
 		break;
 	case 124:
 		playerPos.x -= _tileMap->getTileSize().width;
+		nPos1 -= Vec2(_tileMap->getTileSize().width * 3 / 2, _tileMap->getTileSize().height / 2);
+		nPos2 -= Vec2(_tileMap->getTileSize().width * 3 / 2, -_tileMap->getTileSize().height / 2);
 		break;
 	case 127:
 		playerPos.x += _tileMap->getTileSize().width;
+		nPos1 += Vec2(_tileMap->getTileSize().width * 3 / 2, _tileMap->getTileSize().height/2);
+		nPos2 += Vec2(_tileMap->getTileSize().width * 3 / 2,-_tileMap->getTileSize().height/2);
 		break;
 	}
 
-	if (!isMoveable(playerPos)) return;
+	if (!isMoveable(nPos1)) return;
+	if (!isMoveable(nPos2)) return;
 	this->setViewpointCenter(playerPos);
 	this->setPlayerPosition(playerPos);
 
@@ -332,10 +351,10 @@ void Game::update(float dt)
 		menuLayer->addChild(layer);
 		Director::getInstance()->pause();
 	}
-	for (int i = 0; enemyAIs[i]; ++i)
-	{
-		enemyAIs[i]->update(dt);
-	}
+	//for (int i = 0; enemyAIs[i]; ++i)
+	//{
+	//	enemyAIs[i]->update(dt);
+	//}
 }
 
 void Game::menuItemCallbackPause(Ref * pSender)
@@ -398,8 +417,87 @@ bool Game::isMoveable(Vec2 position) {
 			return false;
 		}
 	}
+	for (int i = 0; enemyAIs[i]; i++) {
+		Vec2 enemyPos = enemyAIs[i]->obj->getPosition();
+		if (abs(position.x - enemyPos.x) < tileX&&abs(position.y - enemyPos.y) < tileY)
+			return false;
+	}
+	Vec2 playerPos = _player->getPosition();
+	if (abs(position.x - playerPos.x) < tileX&&abs(position.y - playerPos.y) < tileY)
+		return false;
 	return true;
 }
+
+int nPosition[4][4] = { { 0,0,100,146 },{ 180,0,-100,142 },{ 270,100,0,124 },{ 90,-100 ,0,127 } };
+void Game::enemyMoving(float dt) {
+	for (int i = 0; enemyAIs[i]; i++) {
+		Vec2 enemyPos = enemyAIs[i]->obj->getPosition();
+		Vec2 nPos1 = enemyPos, nPos2 = enemyPos;
+		switch (enemyAIs[i]->obj->getDirection())
+		{
+		case 146:
+			enemyPos.y += _tileMap->getTileSize().height;
+			nPos1 += Vec2(_tileMap->getTileSize().width / 2, _tileMap->getTileSize().height * 3 / 2);
+			nPos2 += Vec2(-_tileMap->getTileSize().width / 2, _tileMap->getTileSize().height * 3 / 2);
+			break;
+		case 142:
+			enemyPos.y -= _tileMap->getTileSize().height;
+			nPos1 -= Vec2(_tileMap->getTileSize().width / 2, _tileMap->getTileSize().height * 3 / 2);
+			nPos2 -= Vec2(-_tileMap->getTileSize().width / 2, _tileMap->getTileSize().height * 3 / 2);
+			break;
+		case 124:
+			enemyPos.x -= _tileMap->getTileSize().width;
+			nPos1 -= Vec2(_tileMap->getTileSize().width * 3 / 2, _tileMap->getTileSize().height / 2);
+			nPos2 -= Vec2(_tileMap->getTileSize().width * 3 / 2, -_tileMap->getTileSize().height / 2);
+			break;
+		case 127:
+			enemyPos.x += _tileMap->getTileSize().width;
+			nPos1 += Vec2(_tileMap->getTileSize().width * 3 / 2, _tileMap->getTileSize().height / 2);
+			nPos2 += Vec2(_tileMap->getTileSize().width * 3 / 2, -_tileMap->getTileSize().height / 2);
+			break;
+		}
+		int nDir[4] = { 146,142,124,127 };
+		if(!isMoveable(nPos1) || !isMoveable(nPos2)) {
+			int nDirection = rand() % 4;
+			for (int j = 0; j < 4; j++) {
+				enemyPos = enemyAIs[i]->obj->getPosition();
+				nPos1 = enemyPos, nPos2 = enemyPos;
+				switch (nDir[nDirection])
+				{
+				case 146:
+					enemyPos.y += _tileMap->getTileSize().height;
+					nPos1 += Vec2(_tileMap->getTileSize().width / 2, _tileMap->getTileSize().height * 3 / 2);
+					nPos2 += Vec2(-_tileMap->getTileSize().width / 2, _tileMap->getTileSize().height * 3 / 2);
+					break;
+				case 142:
+					enemyPos.y -= _tileMap->getTileSize().height;
+					nPos1 -= Vec2(_tileMap->getTileSize().width / 2, _tileMap->getTileSize().height * 3 / 2);
+					nPos2 -= Vec2(-_tileMap->getTileSize().width / 2, _tileMap->getTileSize().height * 3 / 2);
+					break;
+				case 124:
+					enemyPos.x -= _tileMap->getTileSize().width;
+					nPos1 -= Vec2(_tileMap->getTileSize().width * 3 / 2, _tileMap->getTileSize().height / 2);
+					nPos2 -= Vec2(_tileMap->getTileSize().width * 3 / 2, -_tileMap->getTileSize().height / 2);
+					break;
+				case 127:
+					enemyPos.x += _tileMap->getTileSize().width;
+					nPos1 += Vec2(_tileMap->getTileSize().width * 3 / 2, _tileMap->getTileSize().height / 2);
+					nPos2 += Vec2(_tileMap->getTileSize().width * 3 / 2, -_tileMap->getTileSize().height / 2);
+					break;
+				}
+				if (isMoveable(nPos1)&&isMoveable(nPos2)) {
+					enemyAIs[i]->obj->runAction(RotateTo::create(0.2, nPosition[nDirection][0]));
+					enemyAIs[i]->obj->setDirection(nPosition[nDirection][3]);
+					return;
+				}
+				if (nDirection == 3) nDirection = -1;
+				nDirection++;
+			}
+		}
+		enemyAIs[i]->obj->runAction(MoveTo::create(0.2, enemyPos));
+	}
+}
+
 
 
 

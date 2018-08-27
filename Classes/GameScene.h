@@ -52,6 +52,7 @@ public:
 	virtual void update(float dt);
 
 	void menuItemCallbackPause(Ref * pSender);
+	void enemyMoving(float dt);
 
 private:
 	
