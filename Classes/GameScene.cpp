@@ -7,7 +7,8 @@ USING_NS_CC;
 TMXTiledMap *Game::_tileMap = nullptr;
 TMXLayer * EnemyAI::layer = nullptr;
 Enemy * Game::enemy[10] = { NULL };
-
+Sprite* Game::portal_1 = nullptr;
+Sprite* Game::portal_2 = nullptr;
 int Game::mapSizeHeight = 0;
 int Game::mapSizeWidth = 0;
 int Game::tileSize = 0;
@@ -119,6 +120,74 @@ bool Game::init()
 		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 200 && spriteA->isVisible()) {
 			spriteA->removeFromParent();
 		}
+		else if (spriteA && spriteB  && spriteB->getTag() == 11 && spriteA->isVisible()) {
+			switch (_player->getDirection())
+			{
+			case 146:
+				spriteA->setPosition(portal_2->getPosition()+Vec2(0,60));
+				break;
+			case 142:
+				spriteA->setPosition(portal_2->getPosition() + Vec2(0, -60));
+				break;
+			case 124:
+				spriteA->setPosition(portal_2->getPosition() + Vec2(-60,0));
+				break;
+			case 127:
+				spriteA->setPosition(portal_2->getPosition() + Vec2(60,0));
+				break;
+			}
+		}
+		else if (spriteA && spriteB  && spriteA->getTag() == 11 && spriteB->isVisible()) {
+			switch (_player->getDirection())
+			{
+			case 146:
+				spriteB->setPosition(portal_2->getPosition() + Vec2(0, 60));
+				break;
+			case 142:
+				spriteB->setPosition(portal_2->getPosition() + Vec2(0, -60));
+				break;
+			case 124:
+				spriteB->setPosition(portal_2->getPosition() + Vec2(-60, 0));
+				break;
+			case 127:
+				spriteB->setPosition(portal_2->getPosition() + Vec2(60, 0));
+				break;
+			}
+		}
+		else if (spriteA && spriteB  && spriteB->getTag() == 12 && spriteA->isVisible()) {
+			switch (_player->getDirection())
+			{
+			case 146:
+				spriteA->setPosition(portal_1->getPosition() + Vec2(0, 60));
+				break;
+			case 142:
+				spriteA->setPosition(portal_1->getPosition() + Vec2(0, -60));
+				break;
+			case 124:
+				spriteA->setPosition(portal_1->getPosition() + Vec2(-60, 0));
+				break;
+			case 127:
+				spriteA->setPosition(portal_1->getPosition() + Vec2(60, 0));
+				break;
+			}
+		}
+		else if (spriteA && spriteB  && spriteA->getTag() == 12 && spriteB->isVisible()) {
+		switch (_player->getDirection())
+		{
+		case 146:
+			spriteB->setPosition(portal_1->getPosition() + Vec2(0, 60));
+			break;
+		case 142:
+			spriteB->setPosition(portal_1->getPosition() + Vec2(0, -60));
+			break;
+		case 124:
+			spriteB->setPosition(portal_1->getPosition() + Vec2(-60, 0));
+			break;
+		case 127:
+			spriteB->setPosition(portal_1->getPosition() + Vec2(60, 0));
+			break;
+		}
+		}
 		//else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 3)
 		//{
 		//	spriteA->pause();
@@ -184,7 +253,35 @@ bool Game::init()
 
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
+	ValueMap spawnPoint_portal_1 = group->getObject("portal_1");
+	ValueMap spawnPoint_portal_2;
 
+	int x1, x2, y1, y2;
+	if (spawnPoint_portal_1 != ValueMap()) {
+		spawnPoint_portal_2 = group->getObject("portal_2");
+		x1=spawnPoint_portal_1 ["x"].asInt();
+		y1= spawnPoint_portal_1["y"].asInt();
+		x2 = spawnPoint_portal_2["x"].asInt();
+		y2 = spawnPoint_portal_2["y"].asInt();
+		portal_1 = Sprite::create("Door.png");
+		portal_2 = Sprite::create("Door.png");
+		portal_1->setPosition(Vec2(x1, y1));
+		portal_2->setPosition(Vec2(x2, y2));
+		portal_1->setTag(11);
+		portal_2->setTag(12);
+		this->addChild(portal_1);
+		this->addChild(portal_2);
+		auto body1 = PhysicsBody::createEdgeBox(portal_1->getContentSize());
+		body1->setCategoryBitmask(0xff);
+		body1->setContactTestBitmask(0xff);
+		body1->setCollisionBitmask(0x00);
+		portal_1->setPhysicsBody(body1);
+		auto body2 = PhysicsBody::createEdgeBox(portal_2->getContentSize());
+		body2->setCategoryBitmask(0xff);
+		body2->setContactTestBitmask(0xff);
+		body2->setCollisionBitmask(0x00);
+		portal_2->setPhysicsBody(body2);
+	}
 
 	int  x0 = spawnPoint_0["x"].asInt();
 	int  y0 = spawnPoint_0["y"].asInt();

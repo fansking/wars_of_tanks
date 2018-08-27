@@ -60,7 +60,7 @@ void BulletPlus::update(float dt)
 	}
 	Size screenSize = Size((Vec2(Game::_tileMap->getTileSize().width * Game::_tileMap->getMapSize().width,
 		Game::_tileMap->getTileSize().height * Game::_tileMap->getMapSize().height)));
-	this->setPosition(this->getPosition() + velocity * dt);
+	this->setPosition(this->getPosition() + vel * dt);
 	int y = this->getPosition().y;
 	int x = this->getPosition().x;
 	if (y >= Game::_tileMap->getTileSize().height * Game::_tileMap->getMapSize().height || y <= 0 ||

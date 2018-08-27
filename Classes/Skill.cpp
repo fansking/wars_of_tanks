@@ -31,6 +31,7 @@ Shield * Shield::createshield() {
 	return nullptr;
 }
 void Shield::ShowWithTank(OurTank *tank) {
+	this->mydt = 5;
 	switch (tank->getDirection())
 	{
 	case 146:
@@ -60,6 +61,7 @@ void Shield::ShowWithTank(OurTank *tank) {
 	this->scheduleUpdate();
 }
 void Shield::update(float dt) {
+	mydt -= dt;
 	switch (Game::_player ->getDirection())
 	{
 	case 146:
@@ -82,5 +84,8 @@ void Shield::update(float dt) {
 		this->setPosition(Game::_player->getPosition());
 
 		break;
+	}
+	if (mydt < 0) {
+		this->removeFromParent();
 	}
 }

@@ -9,7 +9,7 @@ using namespace cocos2d;
 class Bullet : public Sprite
 {
 	
-	CC_SYNTHESIZE(Vec2, velocity, Velocity);
+	CC_SYNTHESIZE(Vec2, vel, Velocity);
 	CC_SYNTHESIZE(int, akt, AKT);
 
 public:
