@@ -23,11 +23,14 @@ Size Game::_tileSize = Size(Vec2::ZERO);
 
 OurTank * Game::_player = nullptr;
 
+Label *Game::lifeTTF = Label::create();
+Label *Game::gradeTTF = Label::create();
+Layer * Game::menuLayer = Layer::create();
+
 Scene *Game::createScene()
 {
 	auto scene = Scene::createWithPhysics();
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = Game::create();
 	scene->addChild(layer);
 	return scene;
@@ -46,12 +49,14 @@ bool Game::init()
 	}
 	nEnemy = 0;
 
+	//gamescene = this;
+
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	auto listener = EventListenerPhysicsContact::create();
-	listener->onContactBegin = [](PhysicsContact & contact)
+	listener->onContactBegin = [this](PhysicsContact & contact)
 	{
 		log("onContactBegin");
 		auto spriteA = (Sprite *)contact.getShapeA()->getBody()->getNode();
@@ -63,13 +68,15 @@ bool Game::init()
 		if (spriteA && spriteB && spriteA->getTag() == 3 && spriteB->getTag() == 2 && spriteA->isVisible())
 		{
 			spriteA->setVisible(false);
+			playBoomAnimation(spriteA->getPosition());
 			spriteB->removeFromParent();
 			nEnemy--;
 			//log("%d", nEnemy);
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 3 && spriteB->isVisible())
 		{
-			spriteB->setVisible(false);
+			spriteB->setVisible(false);			
+			playBoomAnimation(spriteA->getPosition());
 			spriteA->removeFromParent();
 			nEnemy--;
 			//log("%d", nEnemy);
@@ -85,6 +92,8 @@ bool Game::init()
 		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 2)
 		{
 			Game::_player->setHP(Game::_player->getHP() - 1);
+			lifeTTF->setString(to_string(Game::_player->getHP()));
+			//changeLifeTTF(Game::_player->getHP());
 			spriteB->removeFromParent();
 			//log("HP: %d", Game::_player->getHP());
 			if (Game::_player->getHP() == 0)
@@ -100,6 +109,7 @@ bool Game::init()
 		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 1)
 		{
 			Game::_player->setHP(Game::_player->getHP() - 1);
+			lifeTTF->setString(to_string(Game::_player->getHP()));
 			spriteA->removeFromParent();
 			//log("HP: %d", Game::_player->getHP());
 			if (Game::_player->getHP() == 0)
@@ -160,6 +170,23 @@ bool Game::init()
 
 	};
 
+	menuLayer = Layer::create();
+	auto text1 = Label::createWithTTF(MyUtility::gbk_2_utf8("HP£º    »ý·Ö£º"), "fonts/minijtj.ttf", 40);
+	text1->setAnchorPoint(Vec2(0, 0));
+	text1->setPosition(Vec2(10, 10));
+	text1->setColor(Color3B(255, 255, 255));
+	menuLayer->addChild(text1);
+	lifeTTF = Label::createWithTTF(MyUtility::gbk_2_utf8("0"), "fonts/minijtj.ttf", 40);
+	lifeTTF->setAnchorPoint(Vec2(0, 0));
+	lifeTTF->setPosition(Vec2(100, 10));
+	lifeTTF->setColor(Color3B(255, 255, 255));
+	menuLayer->addChild(lifeTTF);
+	gradeTTF = Label::createWithTTF(MyUtility::gbk_2_utf8("0"), "fonts/minijtj.ttf", 40);
+	gradeTTF->setAnchorPoint(Vec2(0, 0));
+	gradeTTF->setPosition(Vec2(300, 10));
+	gradeTTF->setColor(Color3B(255, 255, 255));
+	menuLayer->addChild(gradeTTF);
+
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
 
 	string s1 = to_string(levelNum), s2 = "map/map" + s1 + ".tmx";
@@ -190,6 +217,8 @@ bool Game::init()
 	EnemyAI::layer = _collidable;
 
 	_player = OurTank::createWithImage(3);
+	string slife = to_string(3);
+	lifeTTF->setString(slife);
 	_player->setAnchorPoint(Vec2(0.5, 0.5));
 	_player->setPosition(Vec2(x0, y0));
 	addChild(_player);
@@ -241,6 +270,7 @@ bool Game::init()
 	menuLayer->addChild(menu);
 	//log("%f,%f", menuLayer->getPosition().x, menuLayer->getPosition().y);
 	//log("%d,%d",this->getPosition().x,this->getPosition().y);
+
 
 	log("There are %d enemys ***************************", nEnemy);
 
@@ -449,3 +479,31 @@ bool Game::isMoveable(Vec2 position) {
 	}
 	return true;
 }
+
+void Game::changeLifeTTF(int lifeNum) {
+	if (lifeNum < 0) lifeNum = 0;
+	lifeTTF->setString(to_string(lifeNum));
+}
+
+void Game::playBoomAnimation(Vec2 position) {
+	auto dic = Dictionary::createWithContentsOfFile("animation/boom.plist");
+	auto frameDic = (__Dictionary*)dic->objectForKey("frames");
+	int num = frameDic->allKeys()->count();
+	Vector<SpriteFrame*> sfme = Vector<SpriteFrame*>::Vector();
+	CCSpriteFrameCache * cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	cache->addSpriteFramesWithFile("animation/boom.plist");
+	for (int i = 0; i < num; i++) {
+		char frame[50];
+		sprintf(frame, "%d.png", i + 1);
+		auto frameName = SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(frame);
+		sfme.pushBack(frameName);
+	}
+	auto animation = Animation::createWithSpriteFrames(sfme, 0.1);
+	auto animate = Animate::create(animation);
+	auto sp = Sprite::create();
+	sp->setPosition(Vec2(position.x, position.y));
+	sp->runAction(animate);
+	_player->getParent()->addChild(sp);
+	//this->addChild(sp);
+}
+

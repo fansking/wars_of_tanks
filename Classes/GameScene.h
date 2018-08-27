@@ -54,11 +54,17 @@ public:
 
 	void menuItemCallbackPause(Ref * pSender);
 
+	static Label *lifeTTF ;
+	static Label *gradeTTF;
+	static void changeLifeTTF(int lifeNum);
+	void playBoomAnimation(Vec2 position);
+	static Layer * menuLayer;
+
 private:
 	
 	int tileX, tileY, mapX, mapY;
 	Vec2 viewPoint;
-	Layer * menuLayer = Layer::create();
+
 	void setViewpointCenter(Point position);
 	bool isMoveable(Vec2 position);
 	CREATE_FUNC(Game);
