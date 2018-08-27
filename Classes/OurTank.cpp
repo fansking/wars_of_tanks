@@ -23,11 +23,12 @@ OurTank::OurTank(int initialHP)
 	auto body = PhysicsBody::createBox(Size(Vec2(50, 50)),
 		PHYSICSBODY_MATERIAL_DEFAULT, Vec2(25, 25));
 	body->setCategoryBitmask(0x07);
-	//body->setContactTestBitmask(0x0A);
+	body->setContactTestBitmask(0x0A);
 	body->setCollisionBitmask(0xFF);
 	body->getShape(0)->setDensity(0.0f);
 	body->getShape(0)->setRestitution(0.0f);
 	body->getShape(0)->setFriction(0.0f);
+	body->setDynamic(false);
 	body->setGravityEnable(false);
 
 	//this->setPhysicsBody(body);
