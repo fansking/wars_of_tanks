@@ -9,7 +9,8 @@ typedef enum
 	WEAPON_0 = 0,
 	WEAPON_1,
 	WEAPON_2,
-	WEAPON_3
+	WEAPON_3,
+	WEAPON_4
 }WeaponType;
 
 class OurTank : public Sprite

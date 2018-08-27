@@ -4,6 +4,7 @@
 #include "bullet/BulletFire.h"
 #include "bullet/BulletPlus.h"
 #include "bullet/BulletScatter.h"
+#include "Bullet/BulletPro.h"
 #include <SimpleAudioEngine.h>
 
 using namespace CocosDenshion;
@@ -74,6 +75,11 @@ void OurTank::openFire(bool isFriendly)
 		bullet2->shootBulletFromTank(this);
 		this->getParent()->addChild(bullet3);
 		bullet3->shootBulletFromTank(this);
+	}
+	else if (weaponType == WEAPON_4) {
+		BulletPro * bullet = BulletPro::createWithImage();
+		this->getParent()->addChild(bullet);
+		bullet->shootBulletFromTank(this);
 	}
 	/*switch (weaponType)
 	{
@@ -159,7 +165,8 @@ void OurTank::addpickup() {
 		if (spawnPoint_0 == ValueMap()) { break; }
 		int  x0 = spawnPoint_0["x"].asInt();
 		int  y0 = spawnPoint_0["y"].asInt();
-		pickup[i] = PickupBase::createWithType(Gold);
+		int tooltype = spawnPoint_0["ToolType"].asInt();
+		pickup[i] = PickupBase::createWithType((PickupTypes)tooltype);
 		pickup[i]->setPosition(Vec2(x0, y0));
 		this->getParent()->addChild(pickup[i]);
 	}

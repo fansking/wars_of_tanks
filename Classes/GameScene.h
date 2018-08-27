@@ -19,14 +19,15 @@ using namespace cocos2d;
 class Game :public Layer
 {
 	
-	static OurTank *_player;
+	
 	TMXLayer *_collidable;
 	Enemy *_enemy_1;
 	Enemy *_enemy_2;
 
 	static bool bVictory;
-
+	
 public:
+	static OurTank *_player;
 	static Enemy * enemy[10] ;
 	static int nPickup;
 	static EnemyAI * enemyAIs[10];

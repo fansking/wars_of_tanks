@@ -1,5 +1,6 @@
 #pragma once
 #include "Bullet.h"
+
 class BulletPlus :public Bullet {
 public:
 	virtual void update(float dt);
@@ -25,8 +26,9 @@ BulletPlus * BulletPlus::createWithImage()
 		//bullet->setPhysicsBody(body);
 		auto body = PhysicsBody::createEdgeBox(Size(16, 16),
 			PHYSICSBODY_MATERIAL_DEFAULT, 2.0f, Vec2(0, 0));
-		body->setCategoryBitmask(0x02);
-		body->setContactTestBitmask(0x02);
+		body->setCategoryBitmask(0x04);
+		body->setContactTestBitmask(0x08);
+		body->setCollisionBitmask(0x00);
 		bullet->setPhysicsBody(body);
 		bullet->setTag(2);
 		return bullet;
@@ -40,8 +42,9 @@ void BulletPlus::update(float dt)
 {
 	//coordinate transformation
 	Vec2 pos = this->getPosition();
-	int X = pos.x / 32;
-	int Y = ((20 * 32) - pos.y) / 32;
+	int X = pos.x / Game::_tileMap->getTileSize().width;
+	int Y = ((Game::_tileMap->getMapSize().height * Game::_tileMap->getTileSize().height) - pos.y)
+		/ Game::_tileMap->getTileSize().width;
 	Sprite *mytile0 = _breakable0->getTileAt(Vec2(X, Y));
 	Sprite *mycoll = coll->getTileAt(Vec2(X, Y));
 	if (mytile0 != nullptr && mytile0->isVisible() && this->isVisible() && mycoll) {
@@ -55,11 +58,13 @@ void BulletPlus::update(float dt)
 		this->removeFromParent();
 		return;
 	}
-	Size screenSize = Director::getInstance()->getVisibleSize();
+	Size screenSize = Size((Vec2(Game::_tileMap->getTileSize().width * Game::_tileMap->getMapSize().width,
+		Game::_tileMap->getTileSize().height * Game::_tileMap->getMapSize().height)));
 	this->setPosition(this->getPosition() + velocity * dt);
 	int y = this->getPosition().y;
 	int x = this->getPosition().x;
-	if (y >= screenSize.height || y <= 0 || x >= screenSize.width || x <= 0)
+	if (y >= Game::_tileMap->getTileSize().height * Game::_tileMap->getMapSize().height || y <= 0 ||
+		x >= Game::_tileMap->getTileSize().width * Game::_tileMap->getMapSize().width || x <= 0)
 	{
 		this->setVisible(false);
 		this->unscheduleUpdate();

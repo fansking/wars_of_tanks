@@ -112,6 +112,12 @@ bool Game::init()
 				Director::getInstance()->pause();
 			}
 		}
+		else if (spriteA && spriteB && spriteA->getTag() == 200 && spriteB->getTag() == 2 && spriteB->isVisible()) {
+			spriteB->removeFromParent();
+		}
+		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 200 && spriteA->isVisible()) {
+			spriteA->removeFromParent();
+		}
 		//else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 3)
 		//{
 		//	spriteA->pause();
@@ -183,13 +189,13 @@ bool Game::init()
 	int  y0 = spawnPoint_0["y"].asInt();
 	EnemyAI::layer = _collidable;
 
-	ValueMap spawnPoint_3 = group->getObject("gold");
+	/*ValueMap spawnPoint_3 = group->getObject("gold");
 	float x3 = spawnPoint_3["x"].asFloat();
 	float y3 = spawnPoint_3["y"].asFloat();
-
-	auto gold = PickupBase::createWithType(Gold);
+*/
+	/*auto gold = PickupBase::createWithType(Skill_1);
 	gold->setPosition(Vec2(x3, y3));
-	gold->setTag(6);
+	gold->setTag(6);*/
 
 	_player = OurTank::createWithImage(3);
 	_player->setAnchorPoint(Vec2(0.5, 0.5));
