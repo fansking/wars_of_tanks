@@ -35,6 +35,7 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 		body->setGravityEnable(false);
 
 		enemy->setPhysicsBody(body);
+		
 
 		enemy->setTag(3);
 

@@ -56,32 +56,31 @@ void OurTank::openFire(bool isFriendly)
 	SimpleAudioEngine::getInstance()->playEffect("sound/sfx_fire1.mp3");
 	if (weaponType == WEAPON_0) {
 		Bullet * bullet = Bullet::createWithImage(isFriendly);
-		this->getParent()->addChild(bullet, 1);
+		this->getParent()->addChild(bullet, 5);
 		bullet->shootBulletFromTank(this);
 	}
 	else if(weaponType == WEAPON_1){
-		BulletPlus * bullet = BulletPlus::createWithImage();
+		BulletPlus * bullet = BulletPlus::createWithImage(isFriendly);
 		this->getParent()->addChild(bullet);
 		bullet->shootBulletFromTank(this);
-		
 	}
 	else if (weaponType == WEAPON_2) {
-		BulletFire * bullet = BulletFire::createWithImage();
+		BulletFire * bullet = BulletFire::createWithImage(isFriendly);
 		this->getParent()->addChild(bullet);
 		bullet->shootBulletFromTank(this);
 	}else if(weaponType == WEAPON_3) {
-		BulletScatter * bullet1 = BulletScatter::createWithImage(1);
-		BulletScatter * bullet2 = BulletScatter::createWithImage(2);
-		BulletScatter * bullet3 = BulletScatter::createWithImage(3);
-		this->getParent()->addChild(bullet1);
+		BulletScatter * bullet1 = BulletScatter::createWithImage(1, isFriendly);
+		BulletScatter * bullet2 = BulletScatter::createWithImage(2, isFriendly);
+		BulletScatter * bullet3 = BulletScatter::createWithImage(3, isFriendly);
+		this->getParent()->addChild(bullet1, 2);
 		bullet1->shootBulletFromTank(this);
-		this->getParent()->addChild(bullet2);
+		this->getParent()->addChild(bullet2, 2);
 		bullet2->shootBulletFromTank(this);
-		this->getParent()->addChild(bullet3);
+		this->getParent()->addChild(bullet3, 2);
 		bullet3->shootBulletFromTank(this);
 	}
 	else if (weaponType == WEAPON_4) {
-		BulletPro * bullet = BulletPro::createWithImage();
+		BulletPro * bullet = BulletPro::createWithImage(isFriendly);
 		this->getParent()->addChild(bullet);
 		bullet->shootBulletFromTank(this);
 	}
@@ -138,7 +137,7 @@ void OurTank::addenemy() {
 		int  y0 = spawnPoint_0["y"].asInt();
 		Game::enemy[i] = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
 		Game::enemy[i]->setPosition(Vec2(x0, y0));
-		this->getParent()->addChild(Game::enemy[i]);
+		this->getParent()->addChild(Game::enemy[i], 3);
 		Game::enemyAIs[i] = EnemyAI::createWithEnemy(Game::enemy[i]);
 	}
 }
@@ -172,7 +171,7 @@ void OurTank::addpickup() {
 		int tooltype = spawnPoint_0["ToolType"].asInt();
 		pickup[i] = PickupBase::createWithType((PickupTypes)tooltype);
 		pickup[i]->setPosition(Vec2(x0, y0));
-		this->getParent()->addChild(pickup[i]);
+		this->getParent()->addChild(pickup[i], 2);
 	}
 
 }

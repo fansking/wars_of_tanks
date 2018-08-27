@@ -26,7 +26,7 @@ OurTank * Game::_player = nullptr;
 Scene *Game::createScene()
 {
 	auto scene = Scene::createWithPhysics();
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = Game::create();
 	scene->addChild(layer);
@@ -62,17 +62,26 @@ bool Game::init()
 		}
 		if (spriteA && spriteB && spriteA->getTag() == 3 && spriteB->getTag() == 2 && spriteA->isVisible())
 		{
-			spriteA->setVisible(false);
-			spriteA->getPhysicsBody()->removeFromWorld();
+			((Enemy *)spriteA)->setHP(((Enemy *)spriteA)->getHP() - 1);
+			if (((Enemy *)spriteA)->getHP() == 0)
+			{
+				spriteA->setVisible(false);
+				spriteA->getPhysicsBody()->removeFromWorld();
+				nEnemy--;
+			}
 			spriteB->removeFromParent();
-			nEnemy--;
 			//log("%d", nEnemy);
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 3 && spriteB->isVisible())
 		{
-			spriteB->setVisible(false);
+			((Enemy *)spriteB)->setHP(((Enemy *)spriteB)->getHP() - 1);
+			if (((Enemy *)spriteB)->getHP() == 0)
+			{
+				spriteB->setVisible(false);
+				spriteB->getPhysicsBody()->removeFromWorld();
+				nEnemy--;
+			}
 			spriteA->removeFromParent();
-			nEnemy--;
 			//log("%d", nEnemy);
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 6)
@@ -94,7 +103,7 @@ bool Game::init()
 				layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
 					Director::getInstance()->getVisibleSize().height / 2));
 				layer->setTag(99);
-				Director::getInstance()->getRunningScene()->addChild(layer);
+				Director::getInstance()->getRunningScene()->addChild(layer, 0);
 				Director::getInstance()->pause();
 			}
 		}
@@ -215,6 +224,28 @@ bool Game::init()
 			}
 		}
 	}
+	for (int i = 0; i < nEnemy; ++i)
+	{
+		int nType = rand() % 5;
+		switch (nType)
+		{
+		case 0:
+			enemy[i]->setWeaponType(WEAPON_0);
+			break;
+		case 1:
+			enemy[i]->setWeaponType(WEAPON_1);
+			break;
+		case 2:
+			enemy[i]->setWeaponType(WEAPON_2);
+			break;
+		case 3:
+			enemy[i]->setWeaponType(WEAPON_3);
+			break;
+		case 4:
+			enemy[i]->setWeaponType(WEAPON_4);
+			break;
+		}
+	}
 	/*enemy[0]->scheduleUpdate();*/
 	_collidable = _tileMap->getLayer("collidable");
 	Bullet::coll = _collidable;
@@ -244,6 +275,8 @@ bool Game::init()
 	//log("%d,%d",this->getPosition().x,this->getPosition().y);
 
 	log("There are %d enemys ***************************", nEnemy);
+
+	//this->setScale(1.2);
 
 	return true;
 }
@@ -379,7 +412,7 @@ void Game::update(float dt)
 		layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
 			Director::getInstance()->getVisibleSize().height / 2));
 		layer->setTag(99);
-		menuLayer->addChild(layer, 0);
+		menuLayer->addChild(layer, 5);
 		Director::getInstance()->pause();
 	}
 	for (int i = 0; enemyAIs[i]; ++i)

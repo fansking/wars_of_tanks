@@ -27,7 +27,7 @@ bool GameoverLayer::init()
 	auto menuPause = Menu::create(itemRestart, itemChooseStage, itemHomePage, NULL);
 	menuPause->alignItemsHorizontally();
 	menuPause->setPosition(Vec2(this->getPosition().x, 
-		this->getPosition().y - bgPause->getContentSize().height / 4));
+		this->getPosition().y - bgPause->getContentSize().height / 6));
 
 	this->addChild(menuPause);
 }

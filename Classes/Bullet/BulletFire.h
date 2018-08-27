@@ -4,12 +4,12 @@
 class BulletFire : public Bullet {
 public:
 	virtual void update(float dt);
-	static BulletFire * createWithImage();
+	static BulletFire * createWithImage(bool );
 
 };
 
 
-BulletFire * BulletFire::createWithImage()
+BulletFire * BulletFire::createWithImage(bool isFriendly)
 {
 	BulletFire * bullet = new BulletFire();
 	if (bullet && bullet->initWithFile("bullet13.png"))
@@ -27,8 +27,17 @@ BulletFire * BulletFire::createWithImage()
 		//bullet->setPhysicsBody(body);
 		auto body = PhysicsBody::createEdgeBox(Size(16, 16),
 			PHYSICSBODY_MATERIAL_DEFAULT, 2.0f, Vec2(0, 0));
-		body->setCategoryBitmask(0x04);
-		body->setContactTestBitmask(0x08);
+		if (isFriendly)
+		{
+			body->setCategoryBitmask(0x04);
+			body->setContactTestBitmask(0x08);
+		}
+		else
+		{
+			body->setCategoryBitmask(0x02);
+			body->setContactTestBitmask(0x01);
+			bullet->setColor(Color3B::GREEN);
+		}
 		body->setCollisionBitmask(0x00);
 		bullet->setPhysicsBody(body);
 		bullet->setTag(2);
