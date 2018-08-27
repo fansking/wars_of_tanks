@@ -26,7 +26,7 @@ OurTank * Game::_player = nullptr;
 Scene *Game::createScene()
 {
 	auto scene = Scene::createWithPhysics();
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = Game::create();
 	scene->addChild(layer);
@@ -46,6 +46,7 @@ bool Game::init()
 	}
 	nEnemy = 0;
 
+
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -57,21 +58,21 @@ bool Game::init()
 		auto spriteB = (Sprite *)contact.getShapeB()->getBody()->getNode();
 		if (spriteA && spriteB)
 		{
-			log("A: %d, B: %d", spriteA->getTag(), spriteB->getTag());
+			//log("A: %d, B: %d", spriteA->getTag(), spriteB->getTag());
 		}
 		if (spriteA && spriteB && spriteA->getTag() == 3 && spriteB->getTag() == 2 && spriteA->isVisible())
 		{
 			spriteA->setVisible(false);
 			spriteB->removeFromParent();
 			nEnemy--;
-			log("%d", nEnemy);
+			//log("%d", nEnemy);
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 3 && spriteB->isVisible())
 		{
 			spriteB->setVisible(false);
 			spriteA->removeFromParent();
 			nEnemy--;
-			log("%d", nEnemy);
+			//log("%d", nEnemy);
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 6)
 		{
@@ -85,7 +86,7 @@ bool Game::init()
 		{
 			Game::_player->setHP(Game::_player->getHP() - 1);
 			spriteB->removeFromParent();
-			log("HP: %d", Game::_player->getHP());
+			//log("HP: %d", Game::_player->getHP());
 			if (Game::_player->getHP() == 0)
 			{
 				auto layer = GameoverLayer::create();
@@ -100,7 +101,7 @@ bool Game::init()
 		{
 			Game::_player->setHP(Game::_player->getHP() - 1);
 			spriteA->removeFromParent();
-			log("HP: %d", Game::_player->getHP());
+			//log("HP: %d", Game::_player->getHP());
 			if (Game::_player->getHP() == 0)
 			{
 				auto layer = GameoverLayer::create();
@@ -111,11 +112,46 @@ bool Game::init()
 				Director::getInstance()->pause();
 			}
 		}
+		//else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 3)
+		//{
+		//	spriteA->pause();
+		//	spriteA->unschedule(schedule_selector(Game::keepMoving));
+		//}
+		//else if (spriteA && spriteB && spriteA->getTag() == 3 && spriteB->getTag() == 1)
+		//{
+		//	spriteB->pause();
+		//}
 		if (nEnemy == 0) {
 			Game::bVictory = true;
 		}
 
 		return true;
+	};
+
+	listener->onContactSeparate = [](PhysicsContact & contact)
+	{
+		log("onContactSeparate");
+		auto spriteA = (Sprite *)contact.getShapeA()->getBody()->getNode();
+		auto spriteB = (Sprite *)contact.getShapeB()->getBody()->getNode();
+		//if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 3)
+		//{
+		//	spriteA->resume();
+		//}
+		//else if (spriteA && spriteB && spriteA->getTag() == 3 && spriteB->getTag() == 1)
+		//{
+		//	spriteB->resume();
+		//}
+		return true;
+	};
+
+	listener->onContactPreSolve = [](PhysicsContact & contact, PhysicsContactPreSolve & solve)
+	{
+		return true;
+	};
+
+	listener->onContactPostSolve = [](PhysicsContact & contact, const PhysicsContactPostSolve & solve)
+	{
+
 	};
 
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
@@ -139,12 +175,8 @@ bool Game::init()
 	this->addChild(_tileMap);
 
 
-
-
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
-
-
 
 
 	int  x0 = spawnPoint_0["x"].asInt();
@@ -164,7 +196,8 @@ bool Game::init()
 	_player->setPosition(Vec2(x0, y0));
 	addChild(_player);
 	this->setViewpointCenter(Vec2(x0, y0));
-	log("%f,%f", viewPoint.x, viewPoint.y);
+
+
 
 	/**/
 	_player->addenemy();
@@ -193,7 +226,7 @@ bool Game::init()
 	auto menu = Menu::create(itemPause, NULL);
 	menu->setPosition(Vec2::ZERO);
 	menuLayer->addChild(menu);
-	log("%f,%f", menuLayer->getPosition().x, menuLayer->getPosition().y);
+
 
 	log("There are %d enemys ***************************", nEnemy);
 
@@ -239,7 +272,6 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 			_player->openFire(true);
 			_player->mydt = 1;
 		}
-
 		return;
 	}
 	if ((int)keyCode != _player->getDirection())
@@ -248,18 +280,23 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 		{
 		case 146:
 			_player->runAction(RotateTo::create(0.2, 0));
+			_player->setVel(Vec2(0, _player->nVel));
 			break;
 		case 142:
 			_player->runAction(RotateTo::create(0.2, 180));
+			_player->setVel(Vec2(0, -_player->nVel));
 			break;
 		case 124:
 			_player->runAction(RotateTo::create(0.2, 270));
+			_player->setVel(Vec2(-_player->nVel, 0));
 			break;
 		case 127:
 			_player->runAction(RotateTo::create(0.2, 90));
+			_player->setVel(Vec2(_player->nVel, 0));
 			break;
 		}
 		_player->setDirection((int)keyCode);
+
 		this->schedule(schedule_selector(Game::keepMoving), 0.2);
 		return;
 	}
@@ -286,13 +323,13 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 		nPos1 += Vec2(_tileMap->getTileSize().width * 3 / 2, _tileMap->getTileSize().height / 2);
 		nPos2 += Vec2(_tileMap->getTileSize().width * 3 / 2, -_tileMap->getTileSize().height / 2);
 		break;
+
 	}
 
 	if (!isMoveable(nPos1)) return;
 	if (!isMoveable(nPos2)) return;
 
 	this->setViewpointCenter(playerPos);
-	this->setPlayerPosition(playerPos);
 
 	this->schedule(schedule_selector(Game::keepMoving), 0.2);
 }
@@ -305,6 +342,7 @@ void Game::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
 
 void Game::keepMoving(float dt)
 {
+
 	Vec2 playerPos = _player->getPosition();
 	Vec2 nPos1 = playerPos, nPos2 = playerPos;
 	switch (_player->getDirection())
@@ -333,8 +371,12 @@ void Game::keepMoving(float dt)
 
 	if (!isMoveable(nPos1)) return;
 	if (!isMoveable(nPos2)) return;
+
 	this->setViewpointCenter(playerPos);
-	this->setPlayerPosition(playerPos);
+
+	_player->runAction(MoveTo::create(0.2, playerPos));
+
+	//this->setPlayerPosition(playerPos);
 
 }
 
@@ -394,7 +436,7 @@ void Game::setViewpointCenter(Point position) {
 
 
 	this->runAction(MoveTo::create(0.2, viewPoint));
-	log("%f,%f", this->getPosition().x, this->getPosition().y);
+	//log("%f,%f", this->getPosition().x, this->getPosition().y);
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	menuLayer->runAction(MoveTo::create(0.2, -viewPoint));
 }

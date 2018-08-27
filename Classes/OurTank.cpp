@@ -10,16 +10,26 @@ using namespace CocosDenshion;
 
 OurTank::OurTank(int initialHP)
 {
+	nVel = 200;
+
 	this->nHP = initialHP;
 	this->weaponType = WEAPON_0;
+	this->setVel(Vec2(0, nVel));
 	this->setDirection(146);
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	auto body = PhysicsBody::createEdgeBox(Size(Vec2(60, 60)),
-		PHYSICSBODY_MATERIAL_DEFAULT, 3.0f, Vec2(30, 30));
+	auto body = PhysicsBody::createBox(Size(Vec2(50, 50)), 
+		PHYSICSBODY_MATERIAL_DEFAULT, Vec2(25, 25));
 	body->setCategoryBitmask(0x07);
 	body->setContactTestBitmask(0x0A);
+	body->setCollisionBitmask(0xFF);
+	body->getShape(0)->setDensity(0.0f);
+	body->getShape(0)->setRestitution(0.0f);
+	body->getShape(0)->setFriction(0.0f);
+	body->setDynamic(false);
+	body->setGravityEnable(false);
+
 	this->setPhysicsBody(body);
 	
 }
@@ -95,7 +105,7 @@ void OurTank::addenemy() {
 		strcat(enemyname, str);
 		
 		++x;
-		log("%s", enemyname);
+		//log("%s", enemyname);
 		spawnPoint_0 = group->getObject(enemyname);
 		if (spawnPoint_0 == ValueMap()) { break; }
 
@@ -136,7 +146,7 @@ void OurTank::addpickup() {
 		strcat(pickupname, str);
 		++x;
 		
-		log("%s", pickupname);
+		//log("%s", pickupname);
 		spawnPoint_0 = group->getObject(pickupname);
 		if (spawnPoint_0 == ValueMap()) { break; }
 	}
