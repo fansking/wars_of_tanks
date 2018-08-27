@@ -120,73 +120,29 @@ bool Game::init()
 		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 200 && spriteA->isVisible()) {
 			spriteA->removeFromParent();
 		}
-		else if (spriteA && spriteB  && spriteB->getTag() == 11 && spriteA->isVisible()) {
-			switch (_player->getDirection())
-			{
-			case 146:
-				spriteA->setPosition(portal_2->getPosition()+Vec2(0,60));
-				break;
-			case 142:
-				spriteA->setPosition(portal_2->getPosition() + Vec2(0, -60));
-				break;
-			case 124:
-				spriteA->setPosition(portal_2->getPosition() + Vec2(-60,0));
-				break;
-			case 127:
-				spriteA->setPosition(portal_2->getPosition() + Vec2(60,0));
-				break;
-			}
+		else if (spriteA && spriteB  && (spriteA->getTag()==3|| spriteA->getTag() == 1)&&spriteB->getTag() == 11 && spriteA->isVisible()) {
+				spriteA->setPosition(portal_2->getPosition()+ ((OurTank *)spriteA)->getVel()*3/10);	
 		}
-		else if (spriteA && spriteB  && spriteA->getTag() == 11 && spriteB->isVisible()) {
-			switch (_player->getDirection())
-			{
-			case 146:
-				spriteB->setPosition(portal_2->getPosition() + Vec2(0, 60));
-				break;
-			case 142:
-				spriteB->setPosition(portal_2->getPosition() + Vec2(0, -60));
-				break;
-			case 124:
-				spriteB->setPosition(portal_2->getPosition() + Vec2(-60, 0));
-				break;
-			case 127:
-				spriteB->setPosition(portal_2->getPosition() + Vec2(60, 0));
-				break;
-			}
+		else if (spriteA && spriteB  && spriteA->getTag() == 11 && (spriteB->getTag() == 3 || spriteB->getTag() == 1) &&spriteB->isVisible()) {
+			spriteB->setPosition(portal_2->getPosition() + ((OurTank *)spriteB)->getVel() * 3 / 10);
 		}
-		else if (spriteA && spriteB  && spriteB->getTag() == 12 && spriteA->isVisible()) {
-			switch (_player->getDirection())
-			{
-			case 146:
-				spriteA->setPosition(portal_1->getPosition() + Vec2(0, 60));
-				break;
-			case 142:
-				spriteA->setPosition(portal_1->getPosition() + Vec2(0, -60));
-				break;
-			case 124:
-				spriteA->setPosition(portal_1->getPosition() + Vec2(-60, 0));
-				break;
-			case 127:
-				spriteA->setPosition(portal_1->getPosition() + Vec2(60, 0));
-				break;
-			}
+		else if (spriteA && spriteB  && spriteB->getTag() == 12 && (spriteA->getTag() == 3 || spriteA->getTag() ==1) &&spriteA->isVisible()) {
+			spriteA->setPosition(portal_1->getPosition() + ((OurTank *)spriteA)->getVel() * 3 / 10);
 		}
-		else if (spriteA && spriteB  && spriteA->getTag() == 12 && spriteB->isVisible()) {
-		switch (_player->getDirection())
-		{
-		case 146:
-			spriteB->setPosition(portal_1->getPosition() + Vec2(0, 60));
-			break;
-		case 142:
-			spriteB->setPosition(portal_1->getPosition() + Vec2(0, -60));
-			break;
-		case 124:
-			spriteB->setPosition(portal_1->getPosition() + Vec2(-60, 0));
-			break;
-		case 127:
-			spriteB->setPosition(portal_1->getPosition() + Vec2(60, 0));
-			break;
+		else if (spriteA && spriteB  && spriteA->getTag() == 12 && (spriteB->getTag() == 3 || spriteB->getTag() == 1) && spriteB->isVisible()) {
+			spriteB->setPosition(portal_1->getPosition() + ((OurTank *)spriteB)->getVel() *3 / 10);
 		}
+		else if (spriteA && spriteB && (spriteA->getTag() == 2) && spriteB->getTag() == 11 && spriteA->isVisible()) {
+			spriteA->setPosition(portal_2->getPosition() + ((Bullet *)spriteA)->getVel()  / 8.3);
+		}
+		else if (spriteA && spriteB  && spriteA->getTag() == 11 && (spriteB->getTag() == 2) && spriteB->isVisible()) {
+			spriteB->setPosition(portal_2->getPosition() + ((Bullet *)spriteB)->getVel()  / 8.3);
+		}
+		else if (spriteA && spriteB  && spriteB->getTag() == 12 && (spriteA->getTag() == 2 ) && spriteA->isVisible()) {
+			spriteA->setPosition(portal_1->getPosition() + ((Bullet *)spriteA)->getVel()  / 8.3);
+		}
+		else if (spriteA && spriteB  && spriteA->getTag() == 12 && (spriteB->getTag() == 2 ) && spriteB->isVisible()) {
+			spriteB->setPosition(portal_1->getPosition() + ((Bullet *)spriteB)->getVel() /8.3);
 		}
 		//else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 3)
 		//{
