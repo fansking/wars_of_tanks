@@ -41,24 +41,28 @@ void Bullet::shootBulletFromTank(OurTank * tank)
 	switch (tank->getDirection())
 	{
 	case 146:
+	case 28:
 		this->setRotation(0);
 		this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
-		this->setVelocity(Vec2(0,500));
+		this->setVel(Vec2(0,500));
 		break;
 	case 142:
+	case 29:
 		this->setRotation(180);
 		this->setPosition(tank->getPosition() + Vec2(0, -tank->getContentSize().height / 2));
-		this->setVelocity(Vec2(0,-500));
+		this->setVel(Vec2(0,-500));
 		break;
 	case 124:
+	case 26:
 		this->setRotation(270);
 		this->setPosition(tank->getPosition() - Vec2(tank->getContentSize().width / 2, 0));
-		this->setVelocity(Vec2(-500,0));
+		this->setVel(Vec2(-500,0));
 		break;
 	case 127:
+	case 27:
 		this->setRotation(90);
 		this->setPosition(tank->getPosition() + Vec2(tank->getContentSize().width / 2, 0));
-		this->setVelocity(Vec2(500,0));
+		this->setVel(Vec2(500,0));
 		break;
 	}
 	this->setVisible(true);
@@ -96,7 +100,7 @@ void Bullet::update(float dt)
 	 
 	Size screenSize = Size((Vec2(Game::_tileMap->getTileSize().width * Game::_tileMap->getMapSize().width,
 		 Game::_tileMap->getTileSize().height * Game::_tileMap->getMapSize().height)));
-	this->setPosition(this->getPosition() + velocity * dt);
+	this->setPosition(this->getPosition() + vel * dt);
 	int y = this->getPosition().y;
 	int x = this->getPosition().x;
 	if (y >= Game::_tileMap->getTileSize().height * Game::_tileMap->getMapSize().height|| y <= 0 || 

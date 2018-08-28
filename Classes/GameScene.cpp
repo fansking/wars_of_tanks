@@ -1,13 +1,15 @@
 #include "GameScene.h"
 #include "Gold.h"
 #include "Bullet.h"
+#include "ChoseLevel.h"
 #include "VictoryLayer.h"
 
 USING_NS_CC;
 TMXTiledMap *Game::_tileMap = nullptr;
 TMXLayer * EnemyAI::layer = nullptr;
 Enemy * Game::enemy[10] = { NULL };
-
+Sprite* Game::portal_1 = nullptr;
+Sprite* Game::portal_2 = nullptr;
 int Game::mapSizeHeight = 0;
 int Game::mapSizeWidth = 0;
 int Game::tileSize = 0;
@@ -22,6 +24,7 @@ Size Game::_mapSize = Size(Vec2::ZERO);
 Size Game::_tileSize = Size(Vec2::ZERO);
 
 OurTank * Game::_player = nullptr;
+OurTank * Game::_player2 = nullptr;
 
 Label *Game::lifeTTF = Label::create();
 Label *Game::gradeTTF = Label::create();
@@ -102,7 +105,7 @@ bool Game::init()
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 2)
 		{
-			Game::_player->setHP(Game::_player->getHP() - 1);
+			((OurTank *)spriteA)->setHP(((OurTank *)spriteA)->getHP() - 1);
 			lifeTTF->setString(to_string(Game::_player->getHP()));
 			//changeLifeTTF(Game::_player->getHP());
 			spriteB->removeFromParent();
@@ -116,10 +119,15 @@ bool Game::init()
 				Director::getInstance()->getRunningScene()->addChild(layer, 0);
 				Director::getInstance()->pause();
 			}
+			if (Game::_player2 != nullptr && Game::_player2->getHP() == 0)
+			{
+				_player2->setVisible(false);
+				_player2->getPhysicsBody()->removeFromWorld();
+			}
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 1)
 		{
-			Game::_player->setHP(Game::_player->getHP() - 1);
+			((OurTank *)spriteB)->setHP(((OurTank *)spriteB)->getHP() - 1);
 			lifeTTF->setString(to_string(Game::_player->getHP()));
 			spriteA->removeFromParent();
 			//log("HP: %d", Game::_player->getHP());
@@ -132,12 +140,41 @@ bool Game::init()
 				Director::getInstance()->getRunningScene()->addChild(layer);
 				Director::getInstance()->pause();
 			}
+			if (Game::_player2 != nullptr && Game::_player2->getHP() == 0)
+			{
+				_player2->setVisible(false);
+				_player2->getPhysicsBody()->removeFromWorld();
+			}
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 200 && spriteB->getTag() == 2 && spriteB->isVisible()) {
 			spriteB->removeFromParent();
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 200 && spriteA->isVisible()) {
 			spriteA->removeFromParent();
+		}
+		else if (spriteA && spriteB  && (spriteA->getTag()==3|| spriteA->getTag() == 1)&&spriteB->getTag() == 11 && spriteA->isVisible()) {
+				spriteA->setPosition(portal_2->getPosition()+ ((OurTank *)spriteA)->getVel()*3/10);	
+		}
+		else if (spriteA && spriteB  && spriteA->getTag() == 11 && (spriteB->getTag() == 3 || spriteB->getTag() == 1) &&spriteB->isVisible()) {
+			spriteB->setPosition(portal_2->getPosition() + ((OurTank *)spriteB)->getVel() * 3 / 10);
+		}
+		else if (spriteA && spriteB  && spriteB->getTag() == 12 && (spriteA->getTag() == 3 || spriteA->getTag() ==1) &&spriteA->isVisible()) {
+			spriteA->setPosition(portal_1->getPosition() + ((OurTank *)spriteA)->getVel() * 3 / 10);
+		}
+		else if (spriteA && spriteB  && spriteA->getTag() == 12 && (spriteB->getTag() == 3 || spriteB->getTag() == 1) && spriteB->isVisible()) {
+			spriteB->setPosition(portal_1->getPosition() + ((OurTank *)spriteB)->getVel() *3 / 10);
+		}
+		else if (spriteA && spriteB && (spriteA->getTag() == 2) && spriteB->getTag() == 11 && spriteA->isVisible()) {
+			spriteA->setPosition(portal_2->getPosition() + ((Bullet *)spriteA)->getVel()  / 8.3);
+		}
+		else if (spriteA && spriteB  && spriteA->getTag() == 11 && (spriteB->getTag() == 2) && spriteB->isVisible()) {
+			spriteB->setPosition(portal_2->getPosition() + ((Bullet *)spriteB)->getVel()  / 8.3);
+		}
+		else if (spriteA && spriteB  && spriteB->getTag() == 12 && (spriteA->getTag() == 2 ) && spriteA->isVisible()) {
+			spriteA->setPosition(portal_1->getPosition() + ((Bullet *)spriteA)->getVel()  / 8.3);
+		}
+		else if (spriteA && spriteB  && spriteA->getTag() == 12 && (spriteB->getTag() == 2 ) && spriteB->isVisible()) {
+			spriteB->setPosition(portal_1->getPosition() + ((Bullet *)spriteB)->getVel() /8.3);
 		}
 		//else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 3)
 		//{
@@ -181,6 +218,12 @@ bool Game::init()
 
 	};
 
+	auto listenerForPlayer2 = EventListenerKeyboard::create();
+	listenerForPlayer2->onKeyPressed = Game::controllerForPlayer2;
+	listenerForPlayer2->onKeyReleased = Game::controllerUnschedule;
+
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listenerForPlayer2, 1);
+
 	menuLayer = Layer::create();
 	auto text1 = Label::createWithTTF(MyUtility::gbk_2_utf8("HP£º    »ý·Ö£º"), "fonts/minijtj.ttf", 40);
 	text1->setAnchorPoint(Vec2(0, 0));
@@ -222,6 +265,76 @@ bool Game::init()
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
 
+	/********************************************************************************************/
+	if (ChoseLevel::_PlayerModel == 2)
+	{
+		ValueMap spawnPoint_1 = group->getObject("playerB");
+		int x0B = spawnPoint_1["x"].asInt();
+		int y0B = spawnPoint_1["y"].asInt();
+
+		_player2 = OurTank::createWithImage(3);
+		_player2->setAnchorPoint(Vec2(0.5, 0.5));
+		_player2->setPosition(Vec2(x0B, y0B));
+		addChild(_player2);
+	}
+	/********************************************************************************************/
+	ValueMap spawnPoint_portal_1 = group->getObject("portal_1");
+	ValueMap spawnPoint_portal_2;
+
+	int x1, x2, y1, y2;
+	if (spawnPoint_portal_1 != ValueMap()) {
+		spawnPoint_portal_2 = group->getObject("portal_2");
+		x1=spawnPoint_portal_1 ["x"].asInt();
+		y1= spawnPoint_portal_1["y"].asInt();
+		x2 = spawnPoint_portal_2["x"].asInt();
+		y2 = spawnPoint_portal_2["y"].asInt();
+
+		auto dic = Dictionary::createWithContentsOfFile("animation/portal.plist");
+		auto frameDic = (__Dictionary*)dic->objectForKey("frames");
+		int num = frameDic->allKeys()->count();
+		Vector<SpriteFrame*> sfme = Vector<SpriteFrame*>::Vector();
+		CCSpriteFrameCache * cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+		cache->addSpriteFramesWithFile("animation/portal.plist");
+		for (int i = 0; i < num; i++) {
+			char frame[50];
+			sprintf(frame, "portal%d.png", i + 1);
+			auto frameName = SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(frame);
+			sfme.pushBack(frameName);
+		}
+		auto animation = Animation::createWithSpriteFrames(sfme, 0.1);
+		auto animate = Animate::create(animation);
+		auto forever = RepeatForever::create(animate);
+		auto forever2 = forever->clone();
+
+		auto portal1 = Sprite::create();
+		portal1->runAction(forever);
+		portal1->setPosition(Vec2(x1, y1));
+		this->addChild(portal1);
+		auto portal2 = Sprite::create();
+		portal2->runAction(forever2);
+		portal2->setPosition(Vec2(x2, y2));
+		this->addChild(portal2);
+
+
+		portal_1 = Sprite::create();
+		portal_2 = Sprite::create();
+		portal_1->setPosition(Vec2(x1, y1));
+		portal_2->setPosition(Vec2(x2, y2));
+		portal_1->setTag(11);
+		portal_2->setTag(12);
+		this->addChild(portal_1);
+		this->addChild(portal_2);
+		auto body1 = PhysicsBody::createEdgeBox(portal_1->getContentSize());
+		body1->setCategoryBitmask(0xff);
+		body1->setContactTestBitmask(0xff);
+		body1->setCollisionBitmask(0x00);
+		portal_1->setPhysicsBody(body1);
+		auto body2 = PhysicsBody::createEdgeBox(portal_2->getContentSize());
+		body2->setCategoryBitmask(0xff);
+		body2->setContactTestBitmask(0xff);
+		body2->setCollisionBitmask(0x00);
+		portal_2->setPhysicsBody(body2);
+	}
 
 	int  x0 = spawnPoint_0["x"].asInt();
 	int  y0 = spawnPoint_0["y"].asInt();
@@ -292,7 +405,7 @@ bool Game::init()
 
 	//menuLayer->runAction(MoveTo::create(0.2, -viewPoint));
 	menuLayer->setPosition(Vec2(0, 0));
-	this->addChild(menuLayer);
+	this->addChild(menuLayer, 0);
 	auto itemPause = MenuItemImage::create("UI/menu_pause.png", "UI/menu_pause1.png",
 		CC_CALLBACK_1(Game::menuItemCallbackPause, this));
 	itemPause->setOpacity(200);
@@ -342,8 +455,18 @@ Vec2 Game::tileCoordFromPosition(Vec2 pos) {
 
 void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 {
-	log("%d has been pressed", keyCode);
+	//log("%d has been pressed", keyCode);
 	Vec2 playerPos = _player->getPosition();
+	
+	if ((int)keyCode == 6)
+	{
+		Game::menuItemCallbackPause(this);
+		return;
+	}
+	if((int)keyCode < 59 || (int)keyCode == 164)
+	{
+		return;
+	}
 	if ((int)keyCode == 59)
 	{
 		if (_player->mydt < 0) {
@@ -430,13 +553,49 @@ void Game::keepMoving(float dt)
 
 	_player->runAction(MoveTo::create(0, playerPos));
 
-	//this->setPlayerPosition(playerPos);
+}
 
+void Game::keepMoving2(float dt)
+{
+	//log("dt : %f", dt);
+	//log("getContantSize : %d, %d", _player->getContentSize().width, _player->getContentSize().height);
+	auto playerSize = Size(Vec2(40, 40));
+
+	Vec2 playerPos = _player2->getPosition() + _player2->getVel() * dt;
+	Vec2 forwardLeft = playerPos;
+	Vec2 forwardRight = playerPos;
+
+	switch (_player2->getDirection())
+	{
+	case 28:
+		forwardLeft += Vec2(-playerSize.width / 2, playerSize.height / 2 + 1);
+		forwardRight += Vec2(playerSize.width / 2, playerSize.height / 2 + 1);
+		break;
+	case 29:
+		forwardLeft += Vec2(playerSize.width / 2, -playerSize.height / 2 - 1);
+		forwardRight += Vec2(-playerSize.width / 2, -playerSize.height / 2 - 1);
+		break;
+	case 27:
+		forwardLeft += Vec2(playerSize.width / 2 + 1, playerSize.height / 2);
+		forwardRight += Vec2(playerSize.width / 2 + 1, -playerSize.height / 2);
+		break;
+	case 26:
+		forwardLeft += Vec2(-playerSize.width / 2 - 1, -playerSize.height / 2);
+		forwardRight += Vec2(-playerSize.width / 2 - 1, playerSize.height / 2);
+		break;
+	}
+
+	if (!isMoveable(forwardLeft) || !isMoveable(forwardRight))
+		return;
+
+	_player2->runAction(MoveTo::create(0, playerPos));
 }
 
 void Game::update(float dt)
 {
 	_player->mydt -= dt;
+	if(_player2 != nullptr)
+		_player2->mydt -= dt;
 	if (bVictory)
 	{
 		bVictory = false;
@@ -462,7 +621,7 @@ void Game::menuItemCallbackPause(Ref * pSender)
 		layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
 			Director::getInstance()->getVisibleSize().height / 2));
 		layer->setTag(13);
-		menuLayer->addChild(layer);
+		menuLayer->addChild(layer, 0);
 		isPause = true;
 		Director::getInstance()->pause();
 	}
@@ -596,4 +755,59 @@ void Game::enemyMoving(float dt) {
 	}
 }
 
+void Game::controllerForPlayer2(EventKeyboard::KeyCode keyCode, Event * event)
+{
+	log("%d has been pressed", (int)keyCode);
+	int nTemp = (int)keyCode;
+	if (_player2 == nullptr || _player2->getHP() <= 0) { return; }
+	if (!(nTemp == 164 || nTemp == 28 || nTemp == 29 || nTemp == 26 || nTemp == 27)) { return; }
+
+	Vec2 playerPos = _player2->getPosition();
+
+	if ((int)keyCode == 164)
+	{
+		if (_player2->mydt < 0) {
+			_player2->openFire(true);
+			_player2->mydt = 1;
+		}
+		return;
+	}
+	if ((int)keyCode == 13)
+	{
+		_player2->useSkill();
+		return;
+	}
+	if ((int)keyCode != _player2->getDirection())
+	{
+		switch ((int)keyCode)
+		{
+		case 28:
+			_player2->runAction(RotateTo::create(0.2, 0));
+			_player2->setVel(Vec2(0, _player2->nVel));
+			break;
+		case 29:
+			_player2->runAction(RotateTo::create(0.2, 180));
+			_player2->setVel(Vec2(0, -_player2->nVel));
+			break;
+		case 26:
+			_player2->runAction(RotateTo::create(0.2, 270));
+			_player2->setVel(Vec2(-_player2->nVel, 0));
+			break;
+		case 27:
+			_player2->runAction(RotateTo::create(0.2, 90));
+			_player2->setVel(Vec2(_player2->nVel, 0));
+			break;
+		}
+		_player2->setDirection((int)keyCode);
+	}
+
+
+	Game::_player->getParent()->schedule(schedule_selector(Game::keepMoving2), 1.0 / 60);
+}
+
+void Game::controllerUnschedule(EventKeyboard::KeyCode keyCode, Event * event)
+{
+	if (_player2 != nullptr && (int)keyCode == _player2->getDirection())
+		Game::_player->getParent()->unschedule(schedule_selector(Game::keepMoving2));
+}
 

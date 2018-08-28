@@ -66,7 +66,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_y = 500;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
-			this->setVelocity(Vec2(v_x, v_y));
+			this->setVel(Vec2(v_x, v_y));
 			break;
 		case 2:
 			rotation = 0;
@@ -74,7 +74,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_y = 500;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
-			this->setVelocity(Vec2(v_x, v_y));
+			this->setVel(Vec2(v_x, v_y));
 			break;
 		case 3:
 			rotation = 30;
@@ -82,7 +82,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_y = 500;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
-			this->setVelocity(Vec2(v_x, v_y));
+			this->setVel(Vec2(v_x, v_y));
 			break;
 		}
 		break;
@@ -94,7 +94,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_y = -500;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(0, -tank->getContentSize().height / 2));
-			this->setVelocity(Vec2(v_x, v_y));
+			this->setVel(Vec2(v_x, v_y));
 			break;
 		case 2:
 			rotation = 180;
@@ -102,7 +102,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_y = -500;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(0, -tank->getContentSize().height / 2));
-			this->setVelocity(Vec2(v_x, v_y));
+			this->setVel(Vec2(v_x, v_y));
 			break;
 		case 3:
 			rotation = 210;
@@ -110,7 +110,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_y =-500;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(0, -tank->getContentSize().height / 2));
-			this->setVelocity(Vec2(v_x, v_y));
+			this->setVel(Vec2(v_x, v_y));
 			break;
 		}
 		
@@ -123,7 +123,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_y = 288;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(-tank->getContentSize().width / 2, 0));
-			this->setVelocity(Vec2(v_x, v_y));
+			this->setVel(Vec2(v_x, v_y));
 			break;
 		case 2:
 			rotation = 270;
@@ -131,7 +131,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_y = 0;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(-tank->getContentSize().width / 2, 0));
-			this->setVelocity(Vec2(v_x, v_y));
+			this->setVel(Vec2(v_x, v_y));
 			break;
 		case 3:
 			rotation = 300;
@@ -139,7 +139,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_y = -288;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(-tank->getContentSize().width / 2, 0));
-			this->setVelocity(Vec2(v_x, v_y));
+			this->setVel(Vec2(v_x, v_y));
 			break;
 		}
 		break;
@@ -151,7 +151,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_y = 288;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(tank->getContentSize().width / 2, 0));
-			this->setVelocity(Vec2(v_x, v_y));
+			this->setVel(Vec2(v_x, v_y));
 			break;
 		case 2:
 			rotation = 90;
@@ -159,7 +159,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_y = 0;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(tank->getContentSize().width / 2, 0));
-			this->setVelocity(Vec2(v_x, v_y));
+			this->setVel(Vec2(v_x, v_y));
 			break;
 		case 3:
 			rotation = 120;
@@ -167,7 +167,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 			v_y = -288;
 			this->setRotation(rotation);
 			this->setPosition(tank->getPosition() + Vec2(tank->getContentSize().width / 2, 0));
-			this->setVelocity(Vec2(v_x, v_y));
+			this->setVel(Vec2(v_x, v_y));
 			break;
 		}
 		
@@ -201,7 +201,7 @@ void BulletScatter::update(float dt)
 	}
 	Size screenSize = Size((Vec2(Game::_tileMap->getTileSize().width * Game::_tileMap->getMapSize().width,
 		Game::_tileMap->getTileSize().height * Game::_tileMap->getMapSize().height)));
-	this->setPosition(this->getPosition() + velocity * dt);
+	this->setPosition(this->getPosition() + vel * dt);
 	int y = this->getPosition().y;
 	int x = this->getPosition().x;
 	if (y >= screenSize.height || y <= 0 || x >= screenSize.width || x <= 0)

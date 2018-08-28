@@ -21,13 +21,16 @@ class Game :public Layer
 	
 	
 	TMXLayer *_collidable;
-	Enemy *_enemy_1;
-	Enemy *_enemy_2;
-
+	/*Enemy *_enemy_1;
+	Enemy *_enemy_2;*/
+	
 	static bool bVictory;
 	
 public:
+	static Sprite * portal_1;
+	static Sprite * portal_2;
 	static OurTank *_player;
+	static OurTank *_player2;
 	static Enemy * enemy[10] ;
 	static int nPickup;
 	static EnemyAI * enemyAIs[10];
@@ -49,6 +52,7 @@ public:
 	virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event);
 	virtual void onKeyReleased(EventKeyboard::KeyCode, Event *);
 	void keepMoving(float dt);
+	void keepMoving2(float dt);
 	//static void RestartCallback(Ref * pSender);
 	virtual void update(float dt);
 
@@ -60,6 +64,9 @@ public:
 	void playBoomAnimation(Vec2 position);
 	static Layer * menuLayer;
 	void enemyMoving(float dt);
+
+	static void controllerForPlayer2(EventKeyboard::KeyCode, Event *);
+	static void controllerUnschedule(EventKeyboard::KeyCode keyCode, Event * event);
 
 private:
 	

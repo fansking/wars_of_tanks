@@ -27,6 +27,7 @@
 #include "GameScene.h"
 #include "AboutScene.h"
 #include "ChoseLevel.h"
+#include "Collections.h"
 USING_NS_CC;
 #define USE_SIMPLE_AUDIO_ENGINE 1
 
@@ -169,5 +170,7 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 }
 
 void HelloWorld::menuTtemCollections(cocos2d::Ref *pSender){
-
+	auto sc = Collections::createScene();
+	auto transition = TransitionCrossFade::create(1, sc);
+	Director::getInstance()->pushScene(transition);
 }
