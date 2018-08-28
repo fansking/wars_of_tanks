@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="15">
+=======
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="18">
+>>>>>>> f80139f42dcb9db3968c35e7e94cd00c327d0565
  <tileset firstgid="1" name="bg2" tilewidth="60" tileheight="60" tilecount="252" columns="21">
   <image source="bg2.png" width="1280" height="720"/>
  </tileset>
@@ -63,6 +67,11 @@
   <object id="11" name="enemy6" x="538.667" y="538.667" width="32" height="30.6667"/>
   <object id="12" name="enemy7" x="958.667" y="420" width="32" height="30.6667"/>
   <object id="13" name="enemy8" x="2098.67" y="901.333" width="37.3333" height="34.6667"/>
+<<<<<<< HEAD
   <object id="14" name="playerB" x="689.333" y="809.333"/>
+=======
+  <object id="16" name="portal_1" x="630" y="750" width="28" height="24"/>
+  <object id="17" name="portal_2" x="1410" y="210" width="35" height="34"/>
+>>>>>>> f80139f42dcb9db3968c35e7e94cd00c327d0565
  </objectgroup>
 </map>

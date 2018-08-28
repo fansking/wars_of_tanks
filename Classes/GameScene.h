@@ -21,12 +21,14 @@ class Game :public Layer
 	
 	
 	TMXLayer *_collidable;
-	Enemy *_enemy_1;
-	Enemy *_enemy_2;
-
+	/*Enemy *_enemy_1;
+	Enemy *_enemy_2;*/
+	
 	static bool bVictory;
 	
 public:
+	static Sprite * portal_1;
+	static Sprite * portal_2;
 	static OurTank *_player;
 	static OurTank *_player2;
 	static Enemy * enemy[10] ;
