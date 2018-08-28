@@ -31,10 +31,7 @@ Scene *Game::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-<<<<<<< HEAD
 
-=======
->>>>>>> hbj
 	auto layer = Game::create();
 	scene->addChild(layer);
 	return scene;
@@ -309,6 +306,7 @@ bool Game::init()
 
 
 	log("There are %d enemys ***************************", nEnemy);
+	//this->schedule(schedule_selector(Game::enemyMoving), 0.3);
 
 	//this->setScale(1.2);
 
@@ -544,4 +542,58 @@ void Game::playBoomAnimation(Vec2 position) {
 	_player->getParent()->addChild(sp);
 	//this->addChild(sp);
 }
+
+int nPosition[4][4] = { { 0,0,100,146 },{ 180,0,-100,142 },{ 270,100,0,124 },{ 90,-100 ,0,127 } };
+void Game::enemyMoving(float dt) {
+	for (int i = 0; enemyAIs[i]; i++) {
+		Vec2 enemyPos = enemyAIs[i]->obj->getPosition();
+		switch (enemyAIs[i]->obj->getDirection())
+		{
+		case 146:
+			enemyPos.y += _tileMap->getTileSize().height;
+			break;
+		case 142:
+			enemyPos.y -= _tileMap->getTileSize().height;
+			break;
+		case 124:
+			enemyPos.x -= _tileMap->getTileSize().width;
+			break;
+		case 127:
+			enemyPos.x += _tileMap->getTileSize().width;
+			break;
+		}
+		int nDir[4] = { 146,142,124,127 };
+		if(!isMoveable(enemyPos) ) {
+			int nDirection = rand() % 4;
+			for (int j = 0; j < 4; j++) {
+				enemyPos = enemyAIs[i]->obj->getPosition();
+				switch (nDir[nDirection])
+				{
+				case 146:
+					enemyPos.y += _tileMap->getTileSize().height;
+					break;
+				case 142:
+					enemyPos.y -= _tileMap->getTileSize().height;
+					break;
+				case 124:
+					enemyPos.x -= _tileMap->getTileSize().width;
+					break;
+				case 127:
+					enemyPos.x += _tileMap->getTileSize().width;
+					break;
+				}
+				if (isMoveable(enemyPos)) {
+					enemyAIs[i]->obj->runAction(RotateTo::create(0.3, nPosition[nDirection][0]));
+					enemyAIs[i]->obj->setDirection(nPosition[nDirection][3]);
+					return;
+				}
+				if (nDirection == 3) nDirection = -1;
+				nDirection++;
+				if (j == 3) return;
+			}
+		}
+		enemyAIs[i]->obj->runAction(MoveTo::create(0.3, enemyPos));
+	}
+}
+
 

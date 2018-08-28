@@ -59,6 +59,7 @@ public:
 	static void changeLifeTTF(int lifeNum);
 	void playBoomAnimation(Vec2 position);
 	static Layer * menuLayer;
+	void enemyMoving(float dt);
 
 private:
 	

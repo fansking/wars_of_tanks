@@ -140,8 +140,10 @@ bool HelloWorld::init()
 	auto item3 = MenuItemImage::create("UI/setting.png", "UI/setting1.png", CC_CALLBACK_1(HelloWorld::menuItemSettingCallback, this));
 	item3->setScale(0.5);
 	item3->setPosition(Vec2(30, visibleSize.height - 30));
+	auto item4 = MenuItemImage::create("UI/collections.png", "UI/collections1.png", CC_CALLBACK_1(HelloWorld::menuTtemCollections, this));
+	item4->setPosition(Vec2(120, 120));
 
-	Menu *mn = Menu::create(item1, item2,item3, NULL);
+	Menu *mn = Menu::create(item1, item2,item3,item4, NULL);
 	mn->setPosition(Vec2(0, 0 ));
 	//mn->setAnchorPoint(Vec2(0, 0));
 	this->addChild(mn);
@@ -163,5 +165,9 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
     //EventCustom customEndEvent("game_scene_close_event");
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 
+
+}
+
+void HelloWorld::menuTtemCollections(cocos2d::Ref *pSender){
 
 }
