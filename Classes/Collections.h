@@ -13,6 +13,7 @@ public:
 	static cocos2d::Scene * createScene();
 	bool init();
 	int numOfCollections;
+	static void addCollections(int n);
 
 private:
 	Layer *layer;

@@ -29,6 +29,7 @@ OurTank * Game::_player = nullptr;
 OurTank * Game::_player2 = nullptr;
 
 Label *Game::lifeTTF = Label::create();
+Label *Game::life2TTF = Label::create();
 Label *Game::gradeTTF = Label::create();
 Layer * Game::menuLayer = Layer::create();
 
@@ -41,7 +42,6 @@ Scene *Game::createScene()
 	scene->addChild(layer);
 	return scene;
 }
-
 bool Game::init()
 {
 	if (!Layer::init())
@@ -339,6 +339,7 @@ bool Game::init()
 
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listenerForPlayer2, 1);
 
+	//玩家一的信息界面
 	menuLayer = Layer::create();
 	auto text1 = Label::createWithTTF(MyUtility::gbk_2_utf8("HP:    Score:"), "fonts/minijtj.ttf", 40);
 	text1->setAnchorPoint(Vec2(0, 0));
@@ -355,6 +356,20 @@ bool Game::init()
 	gradeTTF->setPosition(Vec2(300, 10));
 	gradeTTF->setColor(Color3B(255, 255, 255));
 	menuLayer->addChild(gradeTTF);
+	//玩家二的信息界面
+	if (ChoseLevel::_PlayerModel == 2) {
+		auto text2 = Label::createWithTTF(MyUtility::gbk_2_utf8("HP:"), "fonts/minijtj.ttf", 40);
+		text2->setAnchorPoint(Vec2(0, 0));
+		text2->setPosition(Vec2(visibleSize.width - 180, 10));
+		text1->setColor(Color3B(255, 255, 255));
+		menuLayer->addChild(text2);
+		life2TTF = Label::createWithTTF(MyUtility::gbk_2_utf8("0"), "fonts/minijtj.ttf", 40);
+		life2TTF->setAnchorPoint(Vec2(0, 0));
+		life2TTF->setPosition(Vec2(visibleSize.width - 80, 10));
+		life2TTF->setColor(Color3B(255, 255, 255));
+		life2TTF->setString("3");
+		menuLayer->addChild(life2TTF);
+	}
 
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
 
@@ -474,6 +489,7 @@ bool Game::init()
 	/**/
 	_player->addenemy();
 	_player->addpickup();
+	_player->addpickupV();
 	_player->addboss();
 	_player->addpickupV();
 	_player->setTag(1);

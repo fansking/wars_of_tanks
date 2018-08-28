@@ -138,17 +138,30 @@ void Collections::showCollections() {
 			readData >> hasDone;
 			if (hasDone) {
 				Sprite* sp = Sprite::createWithSpriteFrameName("stamp_wancheng.png");
-				sp->setPosition(Vec2(visiblesize.width / 2 + i * spiritwidth+330, visiblesize.height / 2 + mylocation[j]));
+				sp->setPosition(Vec2(visiblesize.width / 2 + i * spiritwidth+350, visiblesize.height / 2 + mylocation[j]));
 				layer->addChild(sp);
 			}
 			else {
 				Sprite* sp = Sprite::createWithSpriteFrameName("stamp_weiwancheng.png");
-				sp->setPosition(Vec2(visiblesize.width / 2 + i * spiritwidth + 330, visiblesize.height / 2 + mylocation[j]));
+				sp->setPosition(Vec2(visiblesize.width / 2 + i * spiritwidth + 350, visiblesize.height / 2 + mylocation[j]));
 				layer->addChild(sp);
 			}
 			mynum++;
 			if (mynum == numOfCollections) return;
 		}
+	}
+}
+
+void Collections::addCollections(int x) {
+	int n, m[10];
+	std::ifstream readData("CollectionData.txt");
+	readData >> n;
+	for (int i = 0; i < n; i++) readData >> m[i];
+	m[x - 1] = 1;
+	std::fstream outData("CollectionData.txt", ios::out | ios::trunc);
+	outData << n << endl;
+	for (int i = 0; i < n; i++) {
+		outData << m[i] << " ";
 	}
 }
 

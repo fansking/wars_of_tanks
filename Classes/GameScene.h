@@ -61,6 +61,7 @@ public:
 
 	static Label *lifeTTF ;
 	static Label *gradeTTF;
+	static Label *life2TTF;
 	static void changeLifeTTF(int lifeNum);
 	void playBoomAnimation(Vec2 position);
 	static Layer * menuLayer;

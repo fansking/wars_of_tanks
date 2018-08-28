@@ -26,6 +26,9 @@ PickupBase * PickupBase::createWithType(PickupTypes type)
 	case Redbullet:
 		path = REDBULLETPATH;
 		break;
+	default:
+		path = HELPPATH;
+		break;
 	}
 	if (item && item->initWithFile(path))
 	{
@@ -81,4 +84,8 @@ void PickupBase::isContact(OurTank * player)
 		player->setWeaponType(WEAPON_2);
 		this->removeFromParent();
 	}
+	else {
+		this->removeFromParent();
+	}
 }
+
