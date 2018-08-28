@@ -6,6 +6,7 @@
 #include "bullet/BulletScatter.h"
 #include "Bullet/BulletPro.h"
 #include <SimpleAudioEngine.h>
+#include "Boss.h"
 
 using namespace CocosDenshion;
 
@@ -23,7 +24,7 @@ OurTank::OurTank(int initialHP)
 	auto body = PhysicsBody::createBox(Size(Vec2(50, 50)),
 		PHYSICSBODY_MATERIAL_DEFAULT, Vec2(25, 25));
 	body->setCategoryBitmask(0x07);
-	body->setContactTestBitmask(0x0A);
+	//body->setContactTestBitmask(0x0A);
 	body->setCollisionBitmask(0xFF);
 	body->getShape(0)->setDensity(0.0f);
 	body->getShape(0)->setRestitution(0.0f);
@@ -198,3 +199,96 @@ void OurTank::useSkill()
 	}
 	return;
 }
+
+void OurTank::addboss()
+{
+	static int x = 0;
+	TMXObjectGroup *group = Game::_tileMap->getObjectGroup("objects");
+	ValueMap spawnPoint_0 = group->getObject("playerA");
+	//Boss* boss_spawn[10] = {};
+	Boss* boss[10] = { NULL };
+	while (spawnPoint_0 != ValueMap()) {
+		char bossname[10] = "boss";
+		char str[10];
+		sprintf(str, "%d", x);
+		strcat(bossname, str);
+		++x;
+
+		//log("%s", pickupname);
+		spawnPoint_0 = group->getObject(bossname);
+		if (spawnPoint_0 == ValueMap()) { break; }
+	}
+	for (int i = 0; i < x - 1; i++) {
+		char bossname[10] = "boss";
+		char str[10];
+		sprintf(str, "%d", i);
+		strcat(bossname, str);
+		spawnPoint_0 = group->getObject(bossname);
+		//if (spawnPoint_0 == ValueMap()) { break; }
+		int  x0 = spawnPoint_0["x"].asInt();
+		int  y0 = spawnPoint_0["y"].asInt();
+		boss[i] = Boss::create();
+		boss[i]->setPosition(Vec2(x0, y0));
+		this->getParent()->addChild(boss[i], 2);
+	}
+	if (boss[0] != nullptr)
+	{
+		boss[0]->setRotation(180);
+		auto enemy0 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
+		enemy0->isFrozen = true;
+		//enemy0->setVisible(false);
+		enemy0->setDirection(142);
+		enemy0->setWeaponType(WEAPON_3);
+		enemy0->setPosition(boss[0]->getPosition() + Vec2(-180, -30));
+		this->getParent()->addChild(enemy0);
+		Game::enemy[0] = enemy0;
+		Game::enemyAIs[0] = EnemyAI::createWithEnemy(enemy0);
+
+		boss[0]->setRotation(180);
+		auto enemy1 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
+		enemy1->isFrozen = true;
+		//enemy0->setVisible(false);
+		enemy1->setDirection(142);
+		enemy1->setWeaponType(WEAPON_3);
+		enemy1->setPosition(boss[0]->getPosition() + Vec2(180, -30));
+		this->getParent()->addChild(enemy1);
+		Game::enemy[1] = enemy1;
+		Game::enemyAIs[1] = EnemyAI::createWithEnemy(enemy1);
+
+		boss[0]->setRotation(180);
+		auto enemy2 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
+		enemy2->isFrozen = true;
+		//enemy0->setVisible(false);
+		enemy2->setDirection(142);
+		enemy2->setWeaponType(WEAPON_3);
+		enemy2->setPosition(boss[0]->getPosition() + Vec2(100, -60));
+		this->getParent()->addChild(enemy2, 0);
+		Game::enemy[2] = enemy2;
+		Game::enemyAIs[2] = EnemyAI::createWithEnemy(enemy2);
+
+		boss[0]->setRotation(180);
+		auto enemy3 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
+		enemy3->isFrozen = true;
+		//enemy0->setVisible(false);
+		enemy3->setDirection(142);
+		enemy3->setWeaponType(WEAPON_3);
+		enemy3->setPosition(boss[0]->getPosition() + Vec2(-100, -60));
+		this->getParent()->addChild(enemy3);
+		Game::enemy[3] = enemy3;
+		Game::enemyAIs[3] = EnemyAI::createWithEnemy(enemy3);
+
+		//Game::enemy[4] = (Enemy *)boss[0];
+		//Game::nEnemy++;
+		/*auto tower0 = Sprite::create("map/boss/tower01.png");
+		tower0->setRotation(180);
+		tower0->setPosition(boss[0]->getPosition() + Vec2(-120, -30));
+		this->getParent()->addChild(tower0);
+		auto tower1 = Sprite::create("map/boss/tower1.png");;
+		tower1->setRotation(180);
+		auto tower2 = Sprite::create("map/boss/tower1.png");
+		tower2->setRotation(180);
+		auto tower3 = Sprite::create("map/boss/tower01.png");
+		tower3->setRotation(180);*/
+
+	}
+};

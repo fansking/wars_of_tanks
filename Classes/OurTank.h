@@ -35,6 +35,7 @@ public:
 	void openFire(bool);
 	void addenemy();
 	void addpickup();
+	void addboss();
 	void useSkill();
 	float mydt;
 
