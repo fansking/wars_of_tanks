@@ -22,6 +22,7 @@ Size Game::_mapSize = Size(Vec2::ZERO);
 Size Game::_tileSize = Size(Vec2::ZERO);
 
 OurTank * Game::_player = nullptr;
+OurTank * Game::_player2 = nullptr;
 
 Label *Game::lifeTTF = Label::create();
 Label *Game::gradeTTF = Label::create();
@@ -31,10 +32,7 @@ Scene *Game::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-<<<<<<< HEAD
 
-=======
->>>>>>> hbj
 	auto layer = Game::create();
 	scene->addChild(layer);
 	return scene;
@@ -105,7 +103,7 @@ bool Game::init()
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 2)
 		{
-			Game::_player->setHP(Game::_player->getHP() - 1);
+			((OurTank *)spriteA)->setHP(((OurTank *)spriteA)->getHP() - 1);
 			lifeTTF->setString(to_string(Game::_player->getHP()));
 			//changeLifeTTF(Game::_player->getHP());
 			spriteB->removeFromParent();
@@ -119,10 +117,15 @@ bool Game::init()
 				Director::getInstance()->getRunningScene()->addChild(layer, 0);
 				Director::getInstance()->pause();
 			}
+			if (Game::_player2->getHP() == 0)
+			{
+				_player2->setVisible(false);
+				_player2->getPhysicsBody()->removeFromWorld();
+			}
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 1)
 		{
-			Game::_player->setHP(Game::_player->getHP() - 1);
+			((OurTank *)spriteB)->setHP(((OurTank *)spriteB)->getHP() - 1);
 			lifeTTF->setString(to_string(Game::_player->getHP()));
 			spriteA->removeFromParent();
 			//log("HP: %d", Game::_player->getHP());
@@ -134,6 +137,11 @@ bool Game::init()
 				layer->setTag(99);
 				Director::getInstance()->getRunningScene()->addChild(layer);
 				Director::getInstance()->pause();
+			}
+			if (Game::_player2->getHP() == 0)
+			{
+				_player2->setVisible(false);
+				_player2->getPhysicsBody()->removeFromWorld();
 			}
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 200 && spriteB->getTag() == 2 && spriteB->isVisible()) {
@@ -184,6 +192,12 @@ bool Game::init()
 
 	};
 
+	auto listenerForPlayer2 = EventListenerKeyboard::create();
+	listenerForPlayer2->onKeyPressed = Game::controllerForPlayer2;
+	listenerForPlayer2->onKeyReleased = Game::controllerUnschedule;
+
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listenerForPlayer2, 1);
+
 	menuLayer = Layer::create();
 	auto text1 = Label::createWithTTF(MyUtility::gbk_2_utf8("HP£º    »ý·Ö£º"), "fonts/minijtj.ttf", 40);
 	text1->setAnchorPoint(Vec2(0, 0));
@@ -225,6 +239,17 @@ bool Game::init()
 	TMXObjectGroup *group = _tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
 
+	/********************************************************************************************/
+	ValueMap spawnPoint_1 = group->getObject("playerB");
+	int x1 = spawnPoint_1["x"].asInt();
+	int y1 = spawnPoint_1["y"].asInt();
+
+	_player2 = OurTank::createWithImage(3);
+	_player2->setAnchorPoint(Vec2(0.5, 0.5));
+	_player2->setPosition(Vec2(x1, y1));
+	addChild(_player2);
+
+	/********************************************************************************************/
 
 	int  x0 = spawnPoint_0["x"].asInt();
 	int  y0 = spawnPoint_0["y"].asInt();
@@ -295,7 +320,7 @@ bool Game::init()
 
 	//menuLayer->runAction(MoveTo::create(0.2, -viewPoint));
 	menuLayer->setPosition(Vec2(0, 0));
-	this->addChild(menuLayer);
+	this->addChild(menuLayer, 0);
 	auto itemPause = MenuItemImage::create("UI/menu_pause.png", "UI/menu_pause1.png",
 		CC_CALLBACK_1(Game::menuItemCallbackPause, this));
 	itemPause->setOpacity(200);
@@ -344,8 +369,18 @@ Vec2 Game::tileCoordFromPosition(Vec2 pos) {
 
 void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 {
-	log("%d has been pressed", keyCode);
+	//log("%d has been pressed", keyCode);
 	Vec2 playerPos = _player->getPosition();
+	
+	if ((int)keyCode == 6)
+	{
+		Game::menuItemCallbackPause(this);
+		return;
+	}
+	if((int)keyCode < 59 || (int)keyCode == 164)
+	{
+		return;
+	}
 	if ((int)keyCode == 59)
 	{
 		if (_player->mydt < 0) {
@@ -432,13 +467,48 @@ void Game::keepMoving(float dt)
 
 	_player->runAction(MoveTo::create(0, playerPos));
 
-	//this->setPlayerPosition(playerPos);
+}
 
+void Game::keepMoving2(float dt)
+{
+	//log("dt : %f", dt);
+	//log("getContantSize : %d, %d", _player->getContentSize().width, _player->getContentSize().height);
+	auto playerSize = Size(Vec2(40, 40));
+
+	Vec2 playerPos = _player2->getPosition() + _player2->getVel() * dt;
+	Vec2 forwardLeft = playerPos;
+	Vec2 forwardRight = playerPos;
+
+	switch (_player2->getDirection())
+	{
+	case 28:
+		forwardLeft += Vec2(-playerSize.width / 2, playerSize.height / 2 + 1);
+		forwardRight += Vec2(playerSize.width / 2, playerSize.height / 2 + 1);
+		break;
+	case 29:
+		forwardLeft += Vec2(playerSize.width / 2, -playerSize.height / 2 - 1);
+		forwardRight += Vec2(-playerSize.width / 2, -playerSize.height / 2 - 1);
+		break;
+	case 27:
+		forwardLeft += Vec2(playerSize.width / 2 + 1, playerSize.height / 2);
+		forwardRight += Vec2(playerSize.width / 2 + 1, -playerSize.height / 2);
+		break;
+	case 26:
+		forwardLeft += Vec2(-playerSize.width / 2 - 1, -playerSize.height / 2);
+		forwardRight += Vec2(-playerSize.width / 2 - 1, playerSize.height / 2);
+		break;
+	}
+
+	if (!isMoveable(forwardLeft) || !isMoveable(forwardRight))
+		return;
+
+	_player2->runAction(MoveTo::create(0, playerPos));
 }
 
 void Game::update(float dt)
 {
 	_player->mydt -= dt;
+	_player2->mydt -= dt;
 	if (bVictory)
 	{
 		bVictory = false;
@@ -464,7 +534,7 @@ void Game::menuItemCallbackPause(Ref * pSender)
 		layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
 			Director::getInstance()->getVisibleSize().height / 2));
 		layer->setTag(13);
-		menuLayer->addChild(layer);
+		menuLayer->addChild(layer, 0);
 		isPause = true;
 		Director::getInstance()->pause();
 	}
@@ -545,3 +615,58 @@ void Game::playBoomAnimation(Vec2 position) {
 	//this->addChild(sp);
 }
 
+void Game::controllerForPlayer2(EventKeyboard::KeyCode keyCode, Event * event)
+{
+	log("%d has been pressed", (int)keyCode);
+	int nTemp = (int)keyCode;
+	if (_player2->getHP() <= 0) { return; }
+	if (!(nTemp == 164 || nTemp == 28 || nTemp == 29 || nTemp == 26 || nTemp == 27)) { return; }
+
+	Vec2 playerPos = _player2->getPosition();
+
+	if ((int)keyCode == 164)
+	{
+		if (_player2->mydt < 0) {
+			_player2->openFire(true);
+			_player2->mydt = 1;
+		}
+		return;
+	}
+	if ((int)keyCode == 13)
+	{
+		_player2->useSkill();
+		return;
+	}
+	if ((int)keyCode != _player2->getDirection())
+	{
+		switch ((int)keyCode)
+		{
+		case 28:
+			_player2->runAction(RotateTo::create(0.2, 0));
+			_player2->setVel(Vec2(0, _player2->nVel));
+			break;
+		case 29:
+			_player2->runAction(RotateTo::create(0.2, 180));
+			_player2->setVel(Vec2(0, -_player2->nVel));
+			break;
+		case 26:
+			_player2->runAction(RotateTo::create(0.2, 270));
+			_player2->setVel(Vec2(-_player2->nVel, 0));
+			break;
+		case 27:
+			_player2->runAction(RotateTo::create(0.2, 90));
+			_player2->setVel(Vec2(_player2->nVel, 0));
+			break;
+		}
+		_player2->setDirection((int)keyCode);
+	}
+
+
+	Game::_player->getParent()->schedule(schedule_selector(Game::keepMoving2), 1.0 / 60);
+}
+
+void Game::controllerUnschedule(EventKeyboard::KeyCode keyCode, Event * event)
+{
+	if ((int)keyCode == _player2->getDirection())
+		Game::_player->getParent()->unschedule(schedule_selector(Game::keepMoving2));
+}

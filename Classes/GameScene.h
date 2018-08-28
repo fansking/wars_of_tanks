@@ -28,6 +28,7 @@ class Game :public Layer
 	
 public:
 	static OurTank *_player;
+	static OurTank *_player2;
 	static Enemy * enemy[10] ;
 	static int nPickup;
 	static EnemyAI * enemyAIs[10];
@@ -49,6 +50,7 @@ public:
 	virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event);
 	virtual void onKeyReleased(EventKeyboard::KeyCode, Event *);
 	void keepMoving(float dt);
+	void keepMoving2(float dt);
 	//static void RestartCallback(Ref * pSender);
 	virtual void update(float dt);
 
@@ -59,6 +61,9 @@ public:
 	static void changeLifeTTF(int lifeNum);
 	void playBoomAnimation(Vec2 position);
 	static Layer * menuLayer;
+
+	static void controllerForPlayer2(EventKeyboard::KeyCode, Event *);
+	static void controllerUnschedule(EventKeyboard::KeyCode keyCode, Event * event);
 
 private:
 	

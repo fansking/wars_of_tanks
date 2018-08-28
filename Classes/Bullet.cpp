@@ -41,21 +41,25 @@ void Bullet::shootBulletFromTank(OurTank * tank)
 	switch (tank->getDirection())
 	{
 	case 146:
+	case 28:
 		this->setRotation(0);
 		this->setPosition(tank->getPosition() + Vec2(0, tank->getContentSize().height / 2));
 		this->setVelocity(Vec2(0,500));
 		break;
 	case 142:
+	case 29:
 		this->setRotation(180);
 		this->setPosition(tank->getPosition() + Vec2(0, -tank->getContentSize().height / 2));
 		this->setVelocity(Vec2(0,-500));
 		break;
 	case 124:
+	case 26:
 		this->setRotation(270);
 		this->setPosition(tank->getPosition() - Vec2(tank->getContentSize().width / 2, 0));
 		this->setVelocity(Vec2(-500,0));
 		break;
 	case 127:
+	case 27:
 		this->setRotation(90);
 		this->setPosition(tank->getPosition() + Vec2(tank->getContentSize().width / 2, 0));
 		this->setVelocity(Vec2(500,0));
