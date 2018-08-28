@@ -8,6 +8,7 @@ TMXLayer *Bullet::_breakable1 = nullptr;
 Bullet * Bullet::createWithImage(bool isFriendly)
 {
 	Bullet * bullet = new Bullet();
+	bullet->akt = 1;
 	bullet->isFriendly = isFriendly;
 	if (bullet && bullet->initWithFile("bullet7.png"))
 	{

@@ -75,8 +75,8 @@ bool Game::init()
 		}
 		if (spriteA && spriteB && spriteA->getTag() == 3 && spriteB->getTag() == 2 && spriteA->isVisible())
 		{
-			((Enemy *)spriteA)->setHP(((Enemy *)spriteA)->getHP() - 1);
-			if (((Enemy *)spriteA)->getHP() == 0)
+			((Enemy *)spriteA)->setHP(((Enemy *)spriteA)->getHP() - ((Bullet*)spriteB)->getAKT());
+			if (((Enemy *)spriteA)->getHP() <= 0)
 			{
 				spriteA->setVisible(false);
 				spriteA->getPhysicsBody()->removeFromWorld();
@@ -91,8 +91,8 @@ bool Game::init()
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 3 && spriteB->isVisible())
 		{
-			((Enemy *)spriteB)->setHP(((Enemy *)spriteB)->getHP() - 1);
-			if (((Enemy *)spriteB)->getHP() == 0)
+			((Enemy *)spriteB)->setHP(((Enemy *)spriteB)->getHP() - ((Bullet*)spriteB)->getAKT());
+			if (((Enemy *)spriteB)->getHP() <= 0)
 			{
 				spriteB->setVisible(false);
 				spriteB->getPhysicsBody()->removeFromWorld();
@@ -460,7 +460,7 @@ bool Game::init()
 	int  y0 = spawnPoint_0["y"].asInt();
 	EnemyAI::layer = _collidable;
 
-	_player = OurTank::createWithImage(3);
+	_player = OurTank::createWithImage(4);
 	string slife = to_string(3);
 	lifeTTF->setString(slife);
 	_player->setAnchorPoint(Vec2(0.5, 0.5));

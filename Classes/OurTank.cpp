@@ -15,7 +15,7 @@ OurTank::OurTank(int initialHP)
 	nVel = 200;
 
 	this->nHP = initialHP;
-	this->weaponType = WEAPON_1;
+	this->weaponType = WEAPON_0;
 	this->setVel(Vec2(0, nVel));
 	this->setDirection(146);
 
