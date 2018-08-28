@@ -107,7 +107,6 @@ void OurTank::addenemy() {
 
 	TMXObjectGroup *group = Game::_tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
-	ValueMap enemy_spawn[10] = {};
 	while (spawnPoint_0 != ValueMap()) {
 		char enemyname[10] = "enemy";
 		char str[10];
@@ -147,8 +146,7 @@ void OurTank::addpickup() {
 	static int x = 0;
 	TMXObjectGroup *group = Game::_tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
-	ValueMap pickup_spawn[10] = {};
-	PickupBase* pickup[10] = {NULL};
+	
 	while (spawnPoint_0 != ValueMap()) {
 		char pickupname[10] = "pickup";
 		char str[10];
@@ -170,11 +168,48 @@ void OurTank::addpickup() {
 		int  x0 = spawnPoint_0["x"].asInt();
 		int  y0 = spawnPoint_0["y"].asInt();
 		int tooltype = spawnPoint_0["ToolType"].asInt();
-		pickup[i] = PickupBase::createWithType((PickupTypes)tooltype);
-		pickup[i]->setPosition(Vec2(x0, y0));
-		this->getParent()->addChild(pickup[i], 2);
+		Game::pickup[i] = PickupBase::createWithType((PickupTypes)tooltype);
+		Game::pickup[i]->setAnchorPoint(Vec2(0.5,0.5f));
+		Game::pickup[i]->setPosition(Vec2(x0, y0));
+		Game::pickup[i]->setVisible(false);
+		this->getParent()->addChild(Game::pickup[i], 2);
 	}
 
+
+}
+void OurTank::addpickupV() {
+	static int x = 0;
+	TMXObjectGroup *group = Game::_tileMap->getObjectGroup("objects");
+	ValueMap spawnPoint_0 = group->getObject("playerA");
+	PickupBase * pickupV[10] = { NULL };
+
+
+	while (spawnPoint_0 != ValueMap()) {
+		char pickupname[10] = "pickupV";
+		char str[10];
+		sprintf(str, "%d", x);
+		strcat(pickupname, str);
+		++x;
+
+		//log("%s", pickupname);
+		spawnPoint_0 = group->getObject(pickupname);
+		if (spawnPoint_0 == ValueMap()) { break; }
+	}
+	for (int i = 0; i < x - 1; i++) {
+		char pickupname[10] = "pickupV";
+		char str[10];
+		sprintf(str, "%d", i);
+		strcat(pickupname, str);
+		spawnPoint_0 = group->getObject(pickupname);
+		if (spawnPoint_0 == ValueMap()) { break; }
+		int  x0 = spawnPoint_0["x"].asInt();
+		int  y0 = spawnPoint_0["y"].asInt();
+		int tooltype = spawnPoint_0["ToolType"].asInt();
+		pickupV[i] = PickupBase::createWithType((PickupTypes)tooltype);
+		pickupV[i]->setAnchorPoint(Vec2(0.5, 0.5f));
+		pickupV[i]->setPosition(Vec2(x0, y0));
+		this->getParent()->addChild(pickupV[i], 2);
+	}
 }
 
 void OurTank::useSkill()

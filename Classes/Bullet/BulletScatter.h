@@ -1,6 +1,6 @@
 #pragma once
 #include"Bullet.h"
-
+#include "GameScene.h"
 class BulletScatter :public Bullet {
 	int rotation;
 	int flag;
@@ -59,6 +59,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 	switch (tank->getDirection())
 	{
 	case 146:
+	case 28:
 		switch (flag) {
 		case 1:
 			rotation = -30;
@@ -87,6 +88,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 		}
 		break;
 	case 142:
+	case 29:
 		switch (flag) {
 		case 1:
 			rotation = 150;
@@ -116,6 +118,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 		
 		break;
 	case 124:
+	case 26:
 		switch (flag) {
 		case 1:
 			rotation = 240;
@@ -144,6 +147,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 		}
 		break;
 	case 127:
+	case 27:
 		switch (flag) {
 		case 1:
 			rotation = 60;

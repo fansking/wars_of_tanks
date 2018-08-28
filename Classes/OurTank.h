@@ -36,6 +36,7 @@ public:
 	void addenemy();
 	void addpickup();
 	void addboss();
+	void addpickupV();
 	void useSkill();
 	float mydt;
 

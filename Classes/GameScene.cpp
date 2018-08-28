@@ -9,6 +9,7 @@ USING_NS_CC;
 TMXTiledMap *Game::_tileMap = nullptr;
 TMXLayer * EnemyAI::layer = nullptr;
 Enemy * Game::enemy[10] = { NULL };
+PickupBase *Game::pickup[10] = {NULL};
 Sprite* Game::portal_1 = nullptr;
 Sprite* Game::portal_2 = nullptr;
 int Game::mapSizeHeight = 0;
@@ -35,7 +36,6 @@ Scene *Game::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-
 
 	auto layer = Game::create();
 	scene->addChild(layer);
@@ -97,11 +97,11 @@ bool Game::init()
 			spriteA->removeFromParent();
 			//log("%d", nEnemy);
 		}
-		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 6)
+		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 6 &&spriteB->isVisible())
 		{
 			((PickupBase *)spriteB)->isContact((OurTank *)spriteA);
 		}
-		else if (spriteA && spriteB && spriteA->getTag() == 6 && spriteB->getTag() == 1)
+		else if (spriteA && spriteB && spriteA->getTag() == 6 && spriteB->getTag() == 1 &&spriteA->isVisible())
 		{
 			((PickupBase *)spriteA)->isContact((OurTank *)spriteB);
 		}
@@ -167,17 +167,90 @@ bool Game::init()
 		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 200 && spriteA->isVisible()) {
 			spriteA->removeFromParent();
 		}
-		else if (spriteA && spriteB && (spriteA->getTag() == 3 || spriteA->getTag() == 1) && spriteB->getTag() == 11 && spriteA->isVisible()) {
-			spriteA->setPosition(portal_2->getPosition() + ((OurTank *)spriteA)->getVel() * 3 / 10);
+
+		else if (spriteA && spriteB  && (spriteA->getTag()==3|| spriteA->getTag() == 1)&&spriteB->getTag() == 11 && spriteA->isVisible()) {
+			switch (((OurTank *)spriteA)->getDirection())
+			{
+			case 146:
+			case 28:
+				spriteA->setPosition(portal_2->getPosition() + Vec2(0, 60));
+				break;
+			case 142:
+			case 29:
+				spriteA->setPosition(portal_2->getPosition() + Vec2(0, -60));
+				break;
+			case 124:
+			case 26:
+				spriteA->setPosition(portal_2->getPosition() + Vec2(-60, 0));
+				break;
+			case 127:
+			case 27:
+				spriteA->setPosition(portal_2->getPosition() + Vec2(60, 0));
+				break;
+			}
 		}
-		else if (spriteA && spriteB  && spriteA->getTag() == 11 && (spriteB->getTag() == 3 || spriteB->getTag() == 1) && spriteB->isVisible()) {
-			spriteB->setPosition(portal_2->getPosition() + ((OurTank *)spriteB)->getVel() * 3 / 10);
+		else if (spriteA && spriteB  && spriteA->getTag() == 11 && (spriteB->getTag() == 3 || spriteB->getTag() == 1) &&spriteB->isVisible()) {
+		switch (((OurTank *)spriteB)->getDirection())
+		{
+		case 146:
+		case 28:
+			spriteB->setPosition(portal_2->getPosition() + Vec2(0, 60));
+			break;
+		case 142:
+		case 29:
+			spriteB->setPosition(portal_2->getPosition() + Vec2(0, -60));
+			break;
+		case 124:
+		case 26:
+			spriteB->setPosition(portal_2->getPosition() + Vec2(-60, 0));
+			break;
+		case 127:
+		case 27:
+			spriteB->setPosition(portal_2->getPosition() + Vec2(60, 0));
+			break;
 		}
-		else if (spriteA && spriteB  && spriteB->getTag() == 12 && (spriteA->getTag() == 3 || spriteA->getTag() == 1) && spriteA->isVisible()) {
-			spriteA->setPosition(portal_1->getPosition() + ((OurTank *)spriteA)->getVel() * 3 / 10);
+		}
+		else if (spriteA && spriteB  && spriteB->getTag() == 12 && (spriteA->getTag() == 3 || spriteA->getTag() ==1) &&spriteA->isVisible()) {
+		switch (((OurTank *)spriteA)->getDirection())
+		{
+		case 146:
+		case 28:
+			spriteA->setPosition(portal_1->getPosition() + Vec2(0, 60));
+			break;
+		case 142:
+		case 29:
+			spriteA->setPosition(portal_1->getPosition() + Vec2(0, -60));
+			break;
+		case 124:
+		case 26:
+			spriteA->setPosition(portal_1->getPosition() + Vec2(-60, 0));
+			break;
+		case 127:
+		case 27:
+			spriteA->setPosition(portal_1->getPosition() + Vec2(60, 0));
+			break;
+		}
 		}
 		else if (spriteA && spriteB  && spriteA->getTag() == 12 && (spriteB->getTag() == 3 || spriteB->getTag() == 1) && spriteB->isVisible()) {
-			spriteB->setPosition(portal_1->getPosition() + ((OurTank *)spriteB)->getVel() * 3 / 10);
+		switch (((OurTank *)spriteB)->getDirection())
+		{
+		case 146:
+		case 28:
+			spriteB->setPosition(portal_1->getPosition() + Vec2(0, 60));
+			break;
+		case 142:
+		case 29:
+			spriteB->setPosition(portal_1->getPosition() + Vec2(0, -60));
+			break;
+		case 124:
+		case 26:
+			spriteB->setPosition(portal_1->getPosition() + Vec2(-60, 0));
+			break;
+		case 127:
+		case 27:
+			spriteB->setPosition(portal_1->getPosition() + Vec2(60, 0));
+			break;
+		}
 		}
 		else if (spriteA && spriteB && (spriteA->getTag() == 2) && spriteB->getTag() == 11 && spriteA->isVisible()) {
 			spriteA->setPosition(portal_2->getPosition() + ((Bullet *)spriteA)->getVel() / 8.3);
@@ -262,7 +335,7 @@ bool Game::init()
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listenerForPlayer2, 1);
 
 	menuLayer = Layer::create();
-	auto text1 = Label::createWithTTF(MyUtility::gbk_2_utf8("HP£º    »ý·Ö£º"), "fonts/minijtj.ttf", 40);
+	auto text1 = Label::createWithTTF(MyUtility::gbk_2_utf8("HP??    ???Ö£?"), "fonts/minijtj.ttf", 40);
 	text1->setAnchorPoint(Vec2(0, 0));
 	text1->setPosition(Vec2(10, 10));
 	text1->setColor(Color3B(255, 255, 255));
@@ -326,8 +399,39 @@ bool Game::init()
 		y1 = spawnPoint_portal_1["y"].asInt();
 		x2 = spawnPoint_portal_2["x"].asInt();
 		y2 = spawnPoint_portal_2["y"].asInt();
-		portal_1 = Sprite::create("Door.png");
-		portal_2 = Sprite::create("Door.png");
+
+		auto dic = Dictionary::createWithContentsOfFile("animation/portal.plist");
+		auto frameDic = (__Dictionary*)dic->objectForKey("frames");
+		int num = frameDic->allKeys()->count();
+		Vector<SpriteFrame*> sfme = Vector<SpriteFrame*>::Vector();
+		CCSpriteFrameCache * cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+		cache->addSpriteFramesWithFile("animation/portal.plist");
+		for (int i = 0; i < num; i++) {
+			char frame[50];
+			sprintf(frame, "portal%d.png", i + 1);
+			auto frameName = SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(frame);
+			sfme.pushBack(frameName);
+		}
+		auto animation = Animation::createWithSpriteFrames(sfme, 0.1);
+		auto animate = Animate::create(animation);
+		auto forever = RepeatForever::create(animate);
+		auto forever2 = forever->clone();
+
+
+		auto portal1 = Sprite::create();
+		portal1->runAction(forever);
+		portal1->setPosition(Vec2(x1, y1));
+		this->addChild(portal1);
+		auto portal2 = Sprite::create();
+		portal2->runAction(forever2);
+		portal2->setPosition(Vec2(x2, y2));
+		this->addChild(portal2);
+
+
+		portal_1 = Sprite::create("Door1.png");
+		portal_2 = Sprite::create("Door1.png");
+		portal_1->setVisible(false);
+		portal_2->setVisible(false);
 		portal_1->setPosition(Vec2(x1, y1));
 		portal_2->setPosition(Vec2(x2, y2));
 		portal_1->setTag(11);
@@ -365,6 +469,7 @@ bool Game::init()
 	_player->addenemy();
 	_player->addpickup();
 	_player->addboss();
+	_player->addpickupV();
 	_player->setTag(1);
 
 	if (levelNum == 5)
@@ -438,6 +543,7 @@ bool Game::init()
 
 
 	log("There are %d enemys ***************************", nEnemy);
+	//this->schedule(schedule_selector(Game::enemyMoving), 0.3);
 
 	//this->setScale(1.2);
 
@@ -731,6 +837,59 @@ void Game::playBoomAnimation(Vec2 position) {
 	//this->addChild(sp);
 }
 
+int nPosition[4][4] = { { 0,0,100,146 },{ 180,0,-100,142 },{ 270,100,0,124 },{ 90,-100 ,0,127 } };
+void Game::enemyMoving(float dt) {
+	for (int i = 0; enemyAIs[i]; i++) {
+		Vec2 enemyPos = enemyAIs[i]->obj->getPosition();
+		switch (enemyAIs[i]->obj->getDirection())
+		{
+		case 146:
+			enemyPos.y += _tileMap->getTileSize().height;
+			break;
+		case 142:
+			enemyPos.y -= _tileMap->getTileSize().height;
+			break;
+		case 124:
+			enemyPos.x -= _tileMap->getTileSize().width;
+			break;
+		case 127:
+			enemyPos.x += _tileMap->getTileSize().width;
+			break;
+		}
+		int nDir[4] = { 146,142,124,127 };
+		if(!isMoveable(enemyPos) ) {
+			int nDirection = rand() % 4;
+			for (int j = 0; j < 4; j++) {
+				enemyPos = enemyAIs[i]->obj->getPosition();
+				switch (nDir[nDirection])
+				{
+				case 146:
+					enemyPos.y += _tileMap->getTileSize().height;
+					break;
+				case 142:
+					enemyPos.y -= _tileMap->getTileSize().height;
+					break;
+				case 124:
+					enemyPos.x -= _tileMap->getTileSize().width;
+					break;
+				case 127:
+					enemyPos.x += _tileMap->getTileSize().width;
+					break;
+				}
+				if (isMoveable(enemyPos)) {
+					enemyAIs[i]->obj->runAction(RotateTo::create(0.3, nPosition[nDirection][0]));
+					enemyAIs[i]->obj->setDirection(nPosition[nDirection][3]);
+					return;
+				}
+				if (nDirection == 3) nDirection = -1;
+				nDirection++;
+				if (j == 3) return;
+			}
+		}
+		enemyAIs[i]->obj->runAction(MoveTo::create(0.3, enemyPos));
+	}
+}
+
 void Game::controllerForPlayer2(EventKeyboard::KeyCode keyCode, Event * event)
 {
 	log("%d has been pressed", (int)keyCode);
@@ -790,3 +949,4 @@ void Game::controllerUnschedule(EventKeyboard::KeyCode keyCode, Event * event)
 	if (_player2 != nullptr && (int)keyCode == _player2->getDirection())
 		Game::_player->getParent()->unschedule(schedule_selector(Game::keepMoving2));
 }
+

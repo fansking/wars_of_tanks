@@ -32,6 +32,7 @@ public:
 	static OurTank *_player;
 	static OurTank *_player2;
 	static Enemy * enemy[10] ;
+	static PickupBase * pickup[10];
 	static int nPickup;
 	static EnemyAI * enemyAIs[10];
 	static TMXTiledMap *_tileMap;
@@ -63,6 +64,7 @@ public:
 	static void changeLifeTTF(int lifeNum);
 	void playBoomAnimation(Vec2 position);
 	static Layer * menuLayer;
+	void enemyMoving(float dt);
 
 	static void controllerForPlayer2(EventKeyboard::KeyCode, Event *);
 	static void controllerUnschedule(EventKeyboard::KeyCode keyCode, Event * event);
