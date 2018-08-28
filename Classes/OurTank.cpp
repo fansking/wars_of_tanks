@@ -174,6 +174,7 @@ void OurTank::addpickup() {
 		this->getParent()->addChild(pickup[i], 2);
 	}
 
+
 }
 
 void OurTank::useSkill()

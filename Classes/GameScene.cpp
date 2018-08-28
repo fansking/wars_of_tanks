@@ -306,6 +306,7 @@ bool Game::init()
 		auto forever = RepeatForever::create(animate);
 		auto forever2 = forever->clone();
 
+
 		auto portal1 = Sprite::create();
 		portal1->runAction(forever);
 		portal1->setPosition(Vec2(x1, y1));
@@ -316,8 +317,10 @@ bool Game::init()
 		this->addChild(portal2);
 
 
-		portal_1 = Sprite::create();
-		portal_2 = Sprite::create();
+		portal_1 = Sprite::create("Door1.png");
+		portal_2 = Sprite::create("Door1.png");
+		portal_1->setVisible(false);
+		portal_2->setVisible(false);
 		portal_1->setPosition(Vec2(x1, y1));
 		portal_2->setPosition(Vec2(x2, y2));
 		portal_1->setTag(11);
