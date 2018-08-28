@@ -335,7 +335,7 @@ bool Game::init()
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listenerForPlayer2, 1);
 
 	menuLayer = Layer::create();
-	auto text1 = Label::createWithTTF(MyUtility::gbk_2_utf8("HP??    ???֣?"), "fonts/minijtj.ttf", 40);
+	auto text1 = Label::createWithTTF(MyUtility::gbk_2_utf8("HP:    Score:"), "fonts/minijtj.ttf", 40);
 	text1->setAnchorPoint(Vec2(0, 0));
 	text1->setPosition(Vec2(10, 10));
 	text1->setColor(Color3B(255, 255, 255));

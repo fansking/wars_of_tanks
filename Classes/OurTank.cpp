@@ -24,7 +24,7 @@ OurTank::OurTank(int initialHP)
 	auto body = PhysicsBody::createBox(Size(Vec2(50, 50)),
 		PHYSICSBODY_MATERIAL_DEFAULT, Vec2(25, 25));
 	body->setCategoryBitmask(0x07);
-	//body->setContactTestBitmask(0x0A);
+	body->setContactTestBitmask(0x0A);
 	body->setCollisionBitmask(0xFF);
 	body->getShape(0)->setDensity(0.0f);
 	body->getShape(0)->setRestitution(0.0f);
@@ -238,6 +238,7 @@ void OurTank::useSkill()
 void OurTank::addboss()
 {
 	static int x = 0;
+	x = 0;
 	TMXObjectGroup *group = Game::_tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
 	//Boss* boss_spawn[10] = {};
@@ -266,8 +267,9 @@ void OurTank::addboss()
 		boss[i]->setPosition(Vec2(x0, y0));
 		this->getParent()->addChild(boss[i], 2);
 	}
-	if (boss[0] != nullptr)
+	if (x > 1)
 	{
+		log("There are some boss!!!!!!!!!!!!!!!!!!!!!");
 		boss[0]->setRotation(180);
 		auto enemy0 = Enemy::createWithEnemyTypes(EnemyTypeEnemy1);
 		enemy0->isFrozen = true;
@@ -311,19 +313,6 @@ void OurTank::addboss()
 		this->getParent()->addChild(enemy3);
 		Game::enemy[3] = enemy3;
 		Game::enemyAIs[3] = EnemyAI::createWithEnemy(enemy3);
-
-		//Game::enemy[4] = (Enemy *)boss[0];
-		//Game::nEnemy++;
-		/*auto tower0 = Sprite::create("map/boss/tower01.png");
-		tower0->setRotation(180);
-		tower0->setPosition(boss[0]->getPosition() + Vec2(-120, -30));
-		this->getParent()->addChild(tower0);
-		auto tower1 = Sprite::create("map/boss/tower1.png");;
-		tower1->setRotation(180);
-		auto tower2 = Sprite::create("map/boss/tower1.png");
-		tower2->setRotation(180);
-		auto tower3 = Sprite::create("map/boss/tower01.png");
-		tower3->setRotation(180);*/
 
 	}
 };
