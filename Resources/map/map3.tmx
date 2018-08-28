@@ -75,12 +75,12 @@
  <objectgroup name="helps">
   <object name="help0" x="1053" y="575" width="31" height="26">
    <properties>
-    <property name="HelpNum" value="21"/>
+    <property name="HelpNum" value="20"/>
    </properties>
   </object>
   <object name="help1" x="1489" y="702" width="46" height="41">
    <properties>
-    <property name="HelpNum" value="22"/>
+    <property name="HelpNum" value="21"/>
    </properties>
   </object>
  </objectgroup>

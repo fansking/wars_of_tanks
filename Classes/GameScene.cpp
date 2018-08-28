@@ -545,12 +545,13 @@ bool Game::init()
 
 	//menuLayer->runAction(MoveTo::create(0.2, -viewPoint));
 	menuLayer->setPosition(Vec2(0, 0));
-	this->addChild(menuLayer, 0);
+	this->addChild(menuLayer, 50);
 	auto itemPause = MenuItemImage::create("UI/menu_pause.png", "UI/menu_pause1.png",
 		CC_CALLBACK_1(Game::menuItemCallbackPause, this));
 	itemPause->setOpacity(200);
-	itemPause->setAnchorPoint(Vec2(0, 0));
-	itemPause->setPosition(Vec2(0, visibleSize.height - itemPause->getContentSize().height));
+	itemPause->setScale(0.7);
+	itemPause->setAnchorPoint(Vec2(0, 1));
+	itemPause->setPosition(Vec2(10, visibleSize.height-10));
 	auto menu = Menu::create(itemPause, NULL);
 	menu->setPosition(Vec2::ZERO);
 	menuLayer->addChild(menu);
@@ -965,4 +966,10 @@ void Game::controllerUnschedule(EventKeyboard::KeyCode keyCode, Event * event)
 	if (_player2 != nullptr && (int)keyCode == _player2->getDirection())
 		Game::_player->getParent()->unschedule(schedule_selector(Game::keepMoving2));
 }
+
+
+
+
+
+
 
