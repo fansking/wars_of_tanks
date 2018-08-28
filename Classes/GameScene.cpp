@@ -8,6 +8,7 @@ USING_NS_CC;
 TMXTiledMap *Game::_tileMap = nullptr;
 TMXLayer * EnemyAI::layer = nullptr;
 Enemy * Game::enemy[10] = { NULL };
+PickupBase *Game::pickup[10] = {NULL};
 Sprite* Game::portal_1 = nullptr;
 Sprite* Game::portal_2 = nullptr;
 int Game::mapSizeHeight = 0;
@@ -96,11 +97,11 @@ bool Game::init()
 			spriteA->removeFromParent();
 			//log("%d", nEnemy);
 		}
-		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 6)
+		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 6 &&spriteB->isVisible())
 		{
 			((PickupBase *)spriteB)->isContact((OurTank *)spriteA);
 		}
-		else if (spriteA && spriteB && spriteA->getTag() == 6 && spriteB->getTag() == 1)
+		else if (spriteA && spriteB && spriteA->getTag() == 6 && spriteB->getTag() == 1 &&spriteA->isVisible())
 		{
 			((PickupBase *)spriteA)->isContact((OurTank *)spriteB);
 		}
@@ -327,6 +328,7 @@ bool Game::init()
 	/**/
 	_player->addenemy();
 	_player->addpickup();
+	_player->addpickupV();
 	_player->setTag(1);
 
 	if (levelNum == 5)

@@ -59,6 +59,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 	switch (tank->getDirection())
 	{
 	case 146:
+	case 28:
 		switch (flag) {
 		case 1:
 			rotation = -30;
@@ -87,6 +88,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 		}
 		break;
 	case 142:
+	case 29:
 		switch (flag) {
 		case 1:
 			rotation = 150;
@@ -116,6 +118,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 		
 		break;
 	case 124:
+	case 26:
 		switch (flag) {
 		case 1:
 			rotation = 240;
@@ -144,6 +147,7 @@ void BulletScatter::shootBulletFromTank(OurTank * tank)
 		}
 		break;
 	case 127:
+	case 27:
 		switch (flag) {
 		case 1:
 			rotation = 60;
@@ -189,6 +193,12 @@ void BulletScatter::update(float dt)
 	if (mytile0 != nullptr && mytile0->isVisible() && this->isVisible() && mycoll) {
 		mytile0->setVisible(false);
 		mycoll->removeFromParent();
+		for (int i = 0; i < Game::nPickup; i++) {
+			//log("%f,%f,>>>>>>>>>", Game::pickup[i]->getPosition().x, Game::pickup[i]->getPosition().y);
+			if (Game::pickup[i] && abs(Game::pickup[i]->getPosition().x - mytile0->getPosition().x) == 30 && abs(Game::pickup[i]->getPosition().y - mytile0->getPosition().y == 30)) {
+				Game::pickup[i]->setVisible(true);
+			}
+		}
 		this->setVisible(false);
 		this->removeFromParent();
 		return;

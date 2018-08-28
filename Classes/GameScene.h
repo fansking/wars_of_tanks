@@ -32,6 +32,7 @@ public:
 	static OurTank *_player;
 	static OurTank *_player2;
 	static Enemy * enemy[10] ;
+	static PickupBase * pickup[10];
 	static int nPickup;
 	static EnemyAI * enemyAIs[10];
 	static TMXTiledMap *_tileMap;
