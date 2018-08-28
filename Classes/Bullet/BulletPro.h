@@ -58,12 +58,6 @@ void BulletPro::update(float dt)
 	if (mytile0 != nullptr && mytile0->isVisible() && this->isVisible() && mycoll) {
 		mytile0->setVisible(false);
 		mycoll->removeFromParent();
-		for (int i = 0; i < Game::nPickup; i++) {
-			//log("%f,%f,>>>>>>>>>", Game::pickup[i]->getPosition().x, Game::pickup[i]->getPosition().y);
-			if (Game::pickup[i] && abs(Game::pickup[i]->getPosition().x - mytile0->getPosition().x) == 30 && abs(Game::pickup[i]->getPosition().y - mytile0->getPosition().y == 30)) {
-				Game::pickup[i]->setVisible(true);
-			}
-		}
 		this->setVisible(false);
 		this->removeFromParent();
 		return;
@@ -71,12 +65,6 @@ void BulletPro::update(float dt)
 	Sprite *mytile1 = _breakable1->getTileAt(Vec2(X, Y));
 	if (mytile1 && mytile1->isVisible() && this->isVisible() && mycoll) {
 		mytile1->setVisible(false);
-		for (int i = 0; i < Game::nPickup; i++) {
-			//log("%f,%f,>>>>>>>>>", Game::pickup[i]->getPosition().x, Game::pickup[i]->getPosition().y);
-			if (Game::pickup[i] && abs(Game::pickup[i]->getPosition().x - mytile1->getPosition().x) == 30 && abs(Game::pickup[i]->getPosition().y - mytile1->getPosition().y == 30)) {
-				Game::pickup[i]->setVisible(true);
-			}
-		}
 		mycoll->removeFromParent();
 		this->setVisible(false);
 		this->removeFromParent();

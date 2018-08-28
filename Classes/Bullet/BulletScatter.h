@@ -1,6 +1,6 @@
 #pragma once
 #include"Bullet.h"
-
+#include "GameScene.h"
 class BulletScatter :public Bullet {
 	int rotation;
 	int flag;
@@ -193,12 +193,6 @@ void BulletScatter::update(float dt)
 	if (mytile0 != nullptr && mytile0->isVisible() && this->isVisible() && mycoll) {
 		mytile0->setVisible(false);
 		mycoll->removeFromParent();
-		for (int i = 0; i < Game::nPickup; i++) {
-			//log("%f,%f,>>>>>>>>>", Game::pickup[i]->getPosition().x, Game::pickup[i]->getPosition().y);
-			if (Game::pickup[i] && abs(Game::pickup[i]->getPosition().x - mytile0->getPosition().x) == 30 && abs(Game::pickup[i]->getPosition().y - mytile0->getPosition().y == 30)) {
-				Game::pickup[i]->setVisible(true);
-			}
-		}
 		this->setVisible(false);
 		this->removeFromParent();
 		return;

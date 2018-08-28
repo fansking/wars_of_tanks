@@ -58,12 +58,6 @@ void BulletFire::update(float dt)
 	Sprite *mycoll = coll->getTileAt(Vec2(X, Y));
 	if (mytile0 != nullptr && mytile0->isVisible() && this->isVisible() && mycoll) {
 		mytile0->setVisible(false);
-		for (int i = 0; i < Game::nPickup; i++) {
-			//log("%f,%f,>>>>>>>>>", Game::pickup[i]->getPosition().x, Game::pickup[i]->getPosition().y);
-			if (Game::pickup[i] && abs(Game::pickup[i]->getPosition().x - mytile0->getPosition().x) == 30 && abs(Game::pickup[i]->getPosition().y - mytile0->getPosition().y == 30)) {
-				Game::pickup[i]->setVisible(true);
-			}
-		}
 		mycoll->removeFromParent();
 		return;
 	}

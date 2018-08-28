@@ -56,15 +56,10 @@ void BulletPlus::update(float dt)
 		/ Game::_tileMap->getTileSize().width;
 	Sprite *mytile0 = _breakable0->getTileAt(Vec2(X, Y));
 	Sprite *mycoll = coll->getTileAt(Vec2(X, Y));
-	if (mytile0 != nullptr && mytile0->isVisible() && this->isVisible() && mycoll) {
+	if (mytile0 != nullptr && mytile0->isVisible() && this->isVisible() && mycoll)
+	{
 		mytile0->setVisible(false);
 		mycoll->removeFromParent();
-		for (int i = 0; i < Game::nPickup; i++) {
-			//log("%f,%f,>>>>>>>>>", Game::pickup[i]->getPosition().x, Game::pickup[i]->getPosition().y);
-			if (Game::pickup[i] && abs(Game::pickup[i]->getPosition().x - mytile0->getPosition().x) == 30 && abs(Game::pickup[i]->getPosition().y - mytile0->getPosition().y == 30)) {
-				Game::pickup[i]->setVisible(true);
-			}
-		}
 		return;
 	}
 	Sprite *mytile1 = _breakable1->getTileAt(Vec2(X, Y));
