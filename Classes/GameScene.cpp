@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "Gold.h"
 #include "Bullet.h"
+#include "ChoseLevel.h"
 #include "VictoryLayer.h"
 
 USING_NS_CC;
@@ -119,7 +120,7 @@ bool Game::init()
 				Director::getInstance()->getRunningScene()->addChild(layer, 0);
 				Director::getInstance()->pause();
 			}
-			if (Game::_player2->getHP() == 0)
+			if (Game::_player2 != nullptr && Game::_player2->getHP() == 0)
 			{
 				_player2->setVisible(false);
 				_player2->getPhysicsBody()->removeFromWorld();
@@ -140,7 +141,7 @@ bool Game::init()
 				Director::getInstance()->getRunningScene()->addChild(layer);
 				Director::getInstance()->pause();
 			}
-			if (Game::_player2->getHP() == 0)
+			if (Game::_player2 != nullptr && Game::_player2->getHP() == 0)
 			{
 				_player2->setVisible(false);
 				_player2->getPhysicsBody()->removeFromWorld();
@@ -266,15 +267,17 @@ bool Game::init()
 	ValueMap spawnPoint_0 = group->getObject("playerA");
 
 	/********************************************************************************************/
-	ValueMap spawnPoint_1 = group->getObject("playerB");
-	int x1 = spawnPoint_1["x"].asInt();
-	int y1 = spawnPoint_1["y"].asInt();
+	if (ChoseLevel::_PlayerModel == 2)
+	{
+		ValueMap spawnPoint_1 = group->getObject("playerB");
+		int x0B = spawnPoint_1["x"].asInt();
+		int y0B = spawnPoint_1["y"].asInt();
 
-	_player2 = OurTank::createWithImage(3);
-	_player2->setAnchorPoint(Vec2(0.5, 0.5));
-	_player2->setPosition(Vec2(x1, y1));
-	addChild(_player2);
-
+		_player2 = OurTank::createWithImage(3);
+		_player2->setAnchorPoint(Vec2(0.5, 0.5));
+		_player2->setPosition(Vec2(x0B, y0B));
+		addChild(_player2);
+	}
 	/********************************************************************************************/
 	ValueMap spawnPoint_portal_1 = group->getObject("portal_1");
 	ValueMap spawnPoint_portal_2;
@@ -563,7 +566,8 @@ void Game::keepMoving2(float dt)
 void Game::update(float dt)
 {
 	_player->mydt -= dt;
-	_player2->mydt -= dt;
+	if(_player2 != nullptr)
+		_player2->mydt -= dt;
 	if (bVictory)
 	{
 		bVictory = false;
@@ -674,7 +678,7 @@ void Game::controllerForPlayer2(EventKeyboard::KeyCode keyCode, Event * event)
 {
 	log("%d has been pressed", (int)keyCode);
 	int nTemp = (int)keyCode;
-	if (_player2->getHP() <= 0) { return; }
+	if (_player2 == nullptr || _player2->getHP() <= 0) { return; }
 	if (!(nTemp == 164 || nTemp == 28 || nTemp == 29 || nTemp == 26 || nTemp == 27)) { return; }
 
 	Vec2 playerPos = _player2->getPosition();
@@ -722,6 +726,6 @@ void Game::controllerForPlayer2(EventKeyboard::KeyCode keyCode, Event * event)
 
 void Game::controllerUnschedule(EventKeyboard::KeyCode keyCode, Event * event)
 {
-	if ((int)keyCode == _player2->getDirection())
+	if (_player2 != nullptr && (int)keyCode == _player2->getDirection())
 		Game::_player->getParent()->unschedule(schedule_selector(Game::keepMoving2));
 }
