@@ -9,7 +9,7 @@ using namespace cocos2d;
 #define BLUEBULLETPATH "Bluebullet.png"
 #define REDBULLETPATH "Redbullet.png"
 #define SHIELDPATH "BeatlessTank.png"
-
+#define HELPPATH "myHelp.png"
 typedef enum
 {
 	Gold,
