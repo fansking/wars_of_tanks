@@ -32,10 +32,9 @@ Scene *Game::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-<<<<<<< HEAD
 
-=======
->>>>>>> hbj
+
+
 	auto layer = Game::create();
 	scene->addChild(layer);
 	return scene;
