@@ -174,6 +174,7 @@ void OurTank::addpickup() {
 		this->getParent()->addChild(Game::pickup[i], 2);
 	}
 
+
 }
 void OurTank::addpickupV() {
 	static int x = 0;

@@ -64,6 +64,7 @@ public:
 	static void changeLifeTTF(int lifeNum);
 	void playBoomAnimation(Vec2 position);
 	static Layer * menuLayer;
+	void enemyMoving(float dt);
 
 	static void controllerForPlayer2(EventKeyboard::KeyCode, Event *);
 	static void controllerUnschedule(EventKeyboard::KeyCode keyCode, Event * event);
