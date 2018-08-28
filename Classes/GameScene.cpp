@@ -52,10 +52,12 @@ bool Game::init()
 	for (int i = 0; i < 10; ++i)
 	{
 		enemyAIs[i] = nullptr;
+		pickup[i] = nullptr;
 	}
 	nEnemy = 0;
 
 	//gamescene = this;
+	_player2 = nullptr;
 
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -80,6 +82,9 @@ bool Game::init()
 				spriteA->getPhysicsBody()->removeFromWorld();
 				playBoomAnimation(spriteA->getPosition());
 				nEnemy--;
+				Bullet::score += 100;
+				Game::gradeTTF->setString(to_string(Bullet::score));
+
 			}
 			spriteB->removeFromParent();
 			//log("%d", nEnemy);
@@ -386,6 +391,7 @@ bool Game::init()
 		_player2->setAnchorPoint(Vec2(0.5, 0.5));
 		_player2->setPosition(Vec2(x0B, y0B));
 		_player2->setColor(Color3B::RED);
+		//Game::lifeTTF->setString(to_string(_player2->getHP()));
 		addChild(_player2);
 	}
 	/********************************************************************************************/
@@ -529,7 +535,7 @@ bool Game::init()
 
 	//menuLayer->runAction(MoveTo::create(0.2, -viewPoint));
 	menuLayer->setPosition(Vec2(0, 0));
-	this->addChild(menuLayer, 0);
+	this->addChild(menuLayer, 50);
 	auto itemPause = MenuItemImage::create("UI/menu_pause.png", "UI/menu_pause1.png",
 		CC_CALLBACK_1(Game::menuItemCallbackPause, this));
 	itemPause->setOpacity(200);
@@ -756,7 +762,8 @@ void Game::menuItemCallbackPause(Ref * pSender)
 		layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
 			Director::getInstance()->getVisibleSize().height / 2));
 		layer->setTag(13);
-		menuLayer->addChild(layer, 0);
+		menuLayer->addChild(layer);
+
 		isPause = true;
 		Director::getInstance()->pause();
 	}

@@ -99,6 +99,7 @@ void Bullet::update(float dt)
 		 
 		 score++;
 		 //log("%d", score);
+		 Game::gradeTTF->setString(to_string(score));
 		 this->setVisible(false);
 		 this->removeFromParent();
 		 return;
