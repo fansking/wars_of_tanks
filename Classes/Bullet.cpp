@@ -98,9 +98,9 @@ void Bullet::update(float dt)
 			 mycoll->removeFromParent();
 	}
 		 
-		 score++;
-		 //log("%d", score);
-		 Game::gradeTTF->setString(to_string(score));
+		 //score++;
+		 ////log("%d", score);
+		 //Game::gradeTTF->setString(to_string(score));
 		 this->setVisible(false);
 		 this->removeFromParent();
 		 return;

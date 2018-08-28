@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" infinite="0" nextobjectid="18">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" infinite="0" nextobjectid="23">
  <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="60" tileheight="60" tilecount="40" columns="8">
   <image source="tmw_desert_spacing1.png" width="480" height="300"/>
   <tile id="30">
@@ -47,25 +47,30 @@
   <object id="2" name="enemy0" x="900" y="60" width="60" height="60"/>
   <object id="3" name="enemy1" x="540" y="60" width="60" height="60"/>
   <object id="4" name="playerA" x="570" y="630" width="60" height="60"/>
-  <object id="16" name="pickup0" x="570" y="330" width="48" height="60">
+  <object id="16" name="pickupV0" x="570" y="330" width="48" height="60">
    <properties>
-    <property name="ToolType" type="int" value="1"/>
+    <property name="ToolType" type="int" value="7"/>
    </properties>
   </object>
- </objectgroup>
- <objectgroup name="roadPoints" visible="0">
-  <object id="9" name="p1" x="182" y="360" width="60" height="60"/>
-  <object id="10" name="p2" x="420" y="360" width="60" height="60"/>
-  <object id="11" name="p3" x="420" y="540" width="60" height="60"/>
-  <object id="12" name="p4" x="1020" y="540" width="60" height="60"/>
- </objectgroup>
- <objectgroup name="bossPoint" visible="0">
-  <object id="13" name="boss1" x="240" y="60" width="60" height="60"/>
- </objectgroup>
- <objectgroup name="buildingPoint" visible="0">
-  <object id="14" name="building1" x="240" y="60" width="60" height="60"/>
- </objectgroup>
- <objectgroup name="endPoint" visible="0">
-  <object id="15" name="endpoint" x="660" y="420" width="60" height="60"/>
+  <object id="18" name="pickupV1" x="784" y="485.333" width="42.6667" height="41.3333">
+   <properties>
+    <property name="ToolType" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="20" name="pickupV2" x="877.333" y="589.333" width="30.6667" height="30.6667">
+   <properties>
+    <property name="ToolType" type="int" value="6"/>
+   </properties>
+  </object>
+  <object id="21" name="pickupV3" x="958" y="363" width="30" height="29">
+   <properties>
+    <property name="ToolType" type="int" value="5"/>
+   </properties>
+  </object>
+  <object id="22" name="pickupV4" x="62" y="389" width="30" height="31">
+   <properties>
+    <property name="ToolType" type="int" value="4"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

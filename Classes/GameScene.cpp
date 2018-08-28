@@ -114,6 +114,8 @@ bool Game::init()
 		{
 			((OurTank *)spriteA)->setHP(((OurTank *)spriteA)->getHP() - 1);
 			lifeTTF->setString(to_string(Game::_player->getHP()));
+			if(_player2 != nullptr)
+				life2TTF->setString(to_string(Game::_player2->getHP()));
 			//changeLifeTTF(Game::_player->getHP());
 			spriteB->removeFromParent();
 			//log("HP: %d", Game::_player->getHP());
@@ -142,6 +144,8 @@ bool Game::init()
 		{
 			((OurTank *)spriteB)->setHP(((OurTank *)spriteB)->getHP() - 1);
 			lifeTTF->setString(to_string(Game::_player->getHP()));
+			if(_player2 != nullptr)
+				life2TTF->setString(to_string(Game::_player2->getHP()));
 			spriteA->removeFromParent();
 			//log("HP: %d", Game::_player->getHP());
 			if (_player->getHP() <= 0 && (_player2 == nullptr || _player2->getHP() <= 0))
