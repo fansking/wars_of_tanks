@@ -4,11 +4,11 @@
 class BulletPlus :public Bullet {
 public:
 	virtual void update(float dt);
-	static BulletPlus * createWithImage();
+	static BulletPlus * createWithImage(bool );
 };
 
 
-BulletPlus * BulletPlus::createWithImage()
+BulletPlus * BulletPlus::createWithImage(bool isFriendly)
 {
 	BulletPlus * bullet = new BulletPlus();
 	if (bullet && bullet->initWithFile("bullet17.png"))
@@ -26,8 +26,17 @@ BulletPlus * BulletPlus::createWithImage()
 		//bullet->setPhysicsBody(body);
 		auto body = PhysicsBody::createEdgeBox(Size(16, 16),
 			PHYSICSBODY_MATERIAL_DEFAULT, 2.0f, Vec2(0, 0));
-		body->setCategoryBitmask(0x04);
-		body->setContactTestBitmask(0x08);
+		if (isFriendly)
+		{
+			body->setCategoryBitmask(0x04);
+			body->setContactTestBitmask(0x08);
+		}
+		else
+		{
+			body->setCategoryBitmask(0x02);
+			body->setContactTestBitmask(0x01);
+			bullet->setColor(Color3B::GREEN);
+		}
 		body->setCollisionBitmask(0x00);
 		bullet->setPhysicsBody(body);
 		bullet->setTag(2);

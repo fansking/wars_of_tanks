@@ -8,12 +8,12 @@ class BulletScatter :public Bullet {
 	int v_y;
 public:
 	virtual void update(float dt);
-	static BulletScatter * createWithImage(int flag);
+	static BulletScatter * createWithImage(int flag, bool isFriendly);
 	void shootBulletFromTank(OurTank * tank);
 
 };
 
-BulletScatter * BulletScatter::createWithImage(int flag)
+BulletScatter * BulletScatter::createWithImage(int flag, bool isFriendly)
 {
 	
 	BulletScatter * bullet = new BulletScatter();
@@ -33,8 +33,17 @@ BulletScatter * BulletScatter::createWithImage(int flag)
 		//bullet->setPhysicsBody(body);
 		auto body = PhysicsBody::createEdgeBox(Size(16, 16),
 			PHYSICSBODY_MATERIAL_DEFAULT, 2.0f, Vec2(0, 0));
-		body->setCategoryBitmask(0x04);
-		body->setContactTestBitmask(0x08);
+		if (isFriendly)
+		{
+			body->setCategoryBitmask(0x04);
+			body->setContactTestBitmask(0x08);
+		}
+		else
+		{
+			body->setCategoryBitmask(0x02);
+			body->setContactTestBitmask(0x01);
+			bullet->setColor(Color3B::GREEN);
+		}
 		body->setCollisionBitmask(0x00);
 		bullet->setPhysicsBody(body);
 		bullet->setTag(2);

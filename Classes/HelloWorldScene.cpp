@@ -145,6 +145,7 @@ bool HelloWorld::init()
 	mn->setPosition(Vec2(0, 0 ));
 	//mn->setAnchorPoint(Vec2(0, 0));
 	this->addChild(mn);
+	Director::getInstance()->setDisplayStats(false);
     return true;
 }
 
