@@ -283,7 +283,10 @@ bool Game::init()
 			spriteA->removeFromParent();
 			if (((Boss *)spriteB)->getHP() <= 0)
 			{
-			Game:bVictory = true;
+				SimpleAudioEngine::getInstance()->playEffect("sound/sfx_explosion.mp3");
+
+				Game::nEnemy = 0;
+				Game:bVictory = true;
 			}
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 38 && spriteB->getTag() == 2)
@@ -293,8 +296,11 @@ bool Game::init()
 			spriteB->removeFromParent();
 			if (((Boss *)spriteA)->getHP() <= 0)
 			{
+				SimpleAudioEngine::getInstance()->playEffect("sound/sfx_explosion.mp3");
+
 				Game::nEnemy = 0;
 				Game::bVictory = true;
+
 			}
 		}
 		//else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 3)
@@ -427,7 +433,7 @@ bool Game::init()
 			_player2->getPhysicsBody()->setContactTestBitmask(0x06);
 		}
 		//Game::lifeTTF->setString(to_string(_player2->getHP()));
-		addChild(_player2);
+		addChild(_player2, 3);
 	}
 	/********************************************************************************************/
 	ValueMap spawnPoint_portal_1 = group->getObject("portal_1");
@@ -505,7 +511,7 @@ bool Game::init()
 		_player->getPhysicsBody()->setCategoryBitmask(0x05);
 		_player->getPhysicsBody()->setContactTestBitmask(0x0A);
 	}
-	addChild(_player);
+	addChild(_player, 3);
 	this->setViewpointCenter(Vec2(x0, y0));
 	//log("%f,%f", viewPoint.x, viewPoint.y);
 	//this->setPosition(Vec2(200, 200));
@@ -900,7 +906,31 @@ void Game::playBoomAnimation(Vec2 position) {
 	auto sp = Sprite::create();
 	sp->setPosition(Vec2(position.x, position.y));
 	sp->runAction(animate);
-	_player->getParent()->addChild(sp);
+	_player->getParent()->addChild(sp, 0);
+	//this->addChild(sp);
+}
+
+void Game::playBoomAnimationBoss(Vec2 position) {
+	SimpleAudioEngine::getInstance()->playEffect("sound/sfx_explosion.mp3");
+	auto dic = Dictionary::createWithContentsOfFile("animation/bossboom.plist");
+	auto frameDic = (__Dictionary*)dic->objectForKey("frames");
+	int num = frameDic->allKeys()->count();
+	Vector<SpriteFrame*> sfme = Vector<SpriteFrame*>::Vector();
+	CCSpriteFrameCache * cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	cache->addSpriteFramesWithFile("animation/bossboom.plist");
+	for (int i = 0; i < num; i++) {
+		char frame[50];
+		sprintf(frame, "bossboom%d.png", i + 1);
+		auto frameName = SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(frame);
+		sfme.pushBack(frameName);
+	}
+	auto animation = Animation::createWithSpriteFrames(sfme, 0.1);
+	auto animate = Animate::create(animation);
+	auto sp = Sprite::create();
+	sp->setScale(2);
+	sp->setPosition(Vec2(position.x, position.y));
+	sp->runAction(animate);
+	_player->getParent()->addChild(sp, 0);
 	//this->addChild(sp);
 }
 

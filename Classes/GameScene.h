@@ -72,6 +72,7 @@ public:
 	static Label *life2TTF;
 	static void changeLifeTTF(int lifeNum);
 	void playBoomAnimation(Vec2 position);
+	void playBoomAnimationBoss(Vec2);
 	static Layer * menuLayer;
 	void enemyMoving(float dt);
 
