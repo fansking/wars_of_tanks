@@ -7,7 +7,7 @@ Enemy::Enemy(EnemyTypes enemyType) : OurTank(2){
 Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 	++Game::nEnemy;
 	Enemy *enemy = new Enemy(enemyType);
-	enemy->nHP = 3;
+	enemy->nHP = 2;
 	enemy->weaponType = WEAPON_0;
 	enemy->isFrozen = false;
 
@@ -15,11 +15,11 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 	switch (enemyType) {
 	case EnemyTypeEnemy1:
 		enemyFrameName = Enemy_1;
-		enemy->nHP = 3;
+		enemy->nHP = 2;
 		break;
 	case EnemyTypeEnemy2:
 		enemyFrameName = Enemy_2;
-		enemy->nHP = 5;
+		enemy->nHP = 2;
 		break;
 	}
 	if (enemy && enemy->initWithFile(Enemy_1)) {  //check if enemy is created

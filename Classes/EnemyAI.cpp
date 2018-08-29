@@ -125,6 +125,10 @@ void EnemyAI::update(float dt)
 				obj->setColor(Color3B::WHITE);
 			}
 			obj->openFire(false);
+			if (obj->getWeaponType() == WEAPON_3)
+			{
+				//SimpleAudioEngine::getInstance()->playEffect("empty.mp3");
+			}
 			obj->mydt = 1;
 		}
 		obj->mydt -= dt;

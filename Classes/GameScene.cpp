@@ -312,7 +312,7 @@ bool Game::init()
 		//{
 		//	spriteB->pause();
 		//}
-		if (nEnemy == 0) {
+		if (nEnemy == 0 && Game::mode != MULTI) {
 			Game::nEnemy = 0;
 			Game::bVictory = true;
 		}
@@ -622,7 +622,7 @@ void Game::setPlayerPosition(Vec2 position)
 		ValueMap propValueMap = prop.asValueMap();
 		std::string collision = propValueMap["collidable"].asString();
 		if (collision == "true") {
-			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("empty.mp3");
+			//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("empty.mp3");
 			return;
 		}
 
@@ -875,7 +875,7 @@ bool Game::isMoveable(Vec2 position) {
 		ValueMap propValueMap = prop.asValueMap();
 		std::string collision = propValueMap["collidable"].asString();
 		if (collision == "true") {
-			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("empty.mp3");
+			//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("empty.mp3");
 			return false;
 		}
 	}

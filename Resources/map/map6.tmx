@@ -45,7 +45,7 @@
    eJxjYEAFsgzEAVki1Y6qG1VHK3XEgKHgD0rUAQC5NwU3
   </data>
  </layer>
- <layer name="collidable" width="20" height="12" opacity="0.25">
+ <layer name="collidable" width="20" height="12" opacity="0">
   <properties>
    <property name="collidable" value="true"/>
   </properties>

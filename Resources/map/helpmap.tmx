@@ -35,7 +35,7 @@
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="1" name="playerA" x="210" y="2670"/>
+  <object id="1" name="playerA" x="222" y="2659.33" width="22.6667" height="20"/>
   <object id="2" name="enemy0" x="2432" y="1828"/>
   <object id="3" name="pickupV0" x="1526" y="1948">
    <properties>
@@ -103,7 +103,7 @@
   <object id="22" name="enemy7" x="930" y="208"/>
  </objectgroup>
  <objectgroup name="helps">
-  <object id="23" name="help0" x="211" y="2670">
+  <object id="23" name="help0" x="203" y="2660.66" width="12.6667" height="16.6667">
    <properties>
     <property name="HelpNum" value="20"/>
    </properties>
