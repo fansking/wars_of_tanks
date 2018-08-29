@@ -89,6 +89,8 @@ void Bullet::update(float dt)
 			 for (int i = 0; i < Game::nPickup; i++) {
 				 //log("%f,%f,>>>>>>>>>", Game::pickup[i]->getPosition().x, Game::pickup[i]->getPosition().y);
 				 if (Game::pickup[i]) {
+					 Game::pickup[i]->getPosition();
+					 mytile0->getPosition();
 					 if (abs(Game::pickup[i]->getPosition().x - mytile0->getPosition().x)<= 30 && abs(Game::pickup[i]->getPosition().y - mytile0->getPosition().y) <= 30) {
 						 Game::pickup[i]->setVisible(true);
 					 }

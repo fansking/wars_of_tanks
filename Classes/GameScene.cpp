@@ -21,6 +21,7 @@ EnemyAI * Game::enemyAIs[10] = { nullptr };
 int Game::nEnemy = 0;
 
 int Game::nPickup = 0;
+int Game::nPickupV = 0;
 
 Size Game::_mapSize = Size(Vec2::ZERO);
 Size Game::_tileSize = Size(Vec2::ZERO);
@@ -581,6 +582,7 @@ bool Game::init()
 	itemPause->setScale(0.7);
 	itemPause->setAnchorPoint(Vec2(0, 1));
 	itemPause->setPosition(Vec2(10, visibleSize.height-10));
+	itemPause->setTag(20);
 	auto menu = Menu::create(itemPause, NULL);
 	menu->setPosition(Vec2::ZERO);
 	menuLayer->addChild(menu);

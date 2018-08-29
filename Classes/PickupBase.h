@@ -33,8 +33,8 @@ typedef enum
 	Help4,
 	Help5,
 	Help6,
-	Help7
-
+	Help7,
+	Help8
 }PickupTypes;
 
 class PickupBase : public Sprite
