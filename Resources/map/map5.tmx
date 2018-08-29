@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="23">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="26">
  <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="60" tileheight="60" tilecount="40" columns="8">
   <image source="tmw_desert_spacing1.png" width="480" height="300"/>
   <tile id="30">
@@ -26,12 +26,12 @@
  </layer>
  <layer name="breakable0" width="40" height="24">
   <data encoding="base64" compression="zlib">
-   eJztzrEJADAMA0Fv4S77j5kVDClkwh2o1ndV9WApye8JfW+29wEAkHPSAXznApP6AWE=
+   eJztzsEJACAMBMFUYX72X6YtBBUiMgN5htuMiCxcl87tCn1nXu8DAKDP3PwbVyv4yQLCYgF3
   </data>
  </layer>
  <layer name="breakable1" width="40" height="24">
   <data encoding="base64" compression="zlib">
-   eJy918EKwjAQBNBAixe1Nz0pnsT//0MNNDBMZ7IbKy4sSEzrY5NtbCm5uK95MnmEPK95GMgWyycfkCM2DvRhnCEzgU40ZXzOxkYVzjh/8iLGq29J+u4ltkVR7+9qeClb41LGfRjzmk9zzWtNjGiN0Zj1ubo125PGZrDVnIzvGvhOO32qbmhrMeJD40LjPR8bZjPX+ZqRfb0aZnxuXXu2Urb7bjKflbH52LPXp/oh8tVgY7Z+vb7I+HBez9eMGR/urd46Op+b9ysf3tc53POO5//Dp4xujK9TPuzlyHegOexzRuVz+45NU9n2q+tfd/6yKaph1BeqXzO+h/FljN/61Nqykc9g5WOjWmc8YzO2X/v493rnWtZ3NcY9vmgvjvrUmfutzxnVs0T1rXKoGjofRu//aWZt0RXVjr9nnzJG7x+uTsrl+kCFW3OO7PsbrykmG6Nstlsiq+8NNFMUkQ==
+   eJy910GLwjAQBeBAi5fV3vS04kn2///DNdDA4/W9makVBwYkpvVjkmlsa7W4r3k2+QN5WfO0I0csr3xA7rFxoA/jAlkJdKKp4nM2NqpwxvmVVzHefUvRd2+5LYt+f1fDa9sal7bfhzGv+TTX/K2Jka0xGqs+V7dhe9LYDLaek/HdEt/5oE/VDW0j9vjQuNB45GPDbOY63zCyL6phxefWNbK1tt13k/msjMPHnqM+1Q+Zrwcbq/WL+qLiw3mRbxgrPtxb0To6n5v3KR/e1znc847nf8OnjG6Mr1M+7OXMd6I57HNG5XP7jk1T2/ar6193/rIpq2HWF6pfK76H8VWM7/rU2rKRz2DlY6NaZzxjK7ZP+/j3onOt6rsZ4xFfthf3+tSZ+67PGdWzRPWtc0Q9o/5LRz5ljGJqee34e/YpY/b+4eqkXK4PVLg156i+v/GaYrIxy2H7LWT3/QMF6xR7
   </data>
  </layer>
  <layer name="collidable" width="40" height="24" opacity="0">
@@ -44,7 +44,7 @@
   <object id="2" name="enemy0" x="1592.97" y="157.576" width="60" height="60"/>
   <object id="3" name="enemy1" x="1666.27" y="1082.27" width="60" height="60"/>
   <object id="4" name="playerA" x="126.424" y="336.242" width="60" height="60"/>
-  <object id="5" name="pickup0" x="723.576" y="698.727" width="60" height="60">
+  <object id="5" name="pickupV0" x="723.576" y="698.727" width="60" height="60">
    <properties>
     <property name="ToolType" type="int" value="1"/>
    </properties>
@@ -56,6 +56,12 @@
   <object id="19" name="enemy7" x="2245.45" y="430.303" width="57.5758" height="60.6061"/>
   <object id="20" name="enemy8" x="1836.36" y="412.121" width="57.5758" height="54.5455"/>
   <object id="21" x="933.333" y="-339.394"/>
-  <object id="22" name="playerB" x="208" y="207"/>
+  <object id="22" name="pickup0" x="690" y="1230"/>
+  <object id="24" name="pickup1" x="1530" y="1230">
+   <properties>
+    <property name="ToolType" type="int" value="4"/>
+   </properties>
+  </object>
+  <object id="25" name="playerB" x="180.667" y="181.333" width="60" height="60"/>
  </objectgroup>
 </map>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="20">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="21">
  <tileset firstgid="1" name="bg2" tilewidth="60" tileheight="60" tilecount="252" columns="21">
   <image source="bg2.png" width="1280" height="720"/>
  </tileset>
@@ -71,5 +71,6 @@
     <property name="ToolType" type="int" value="4"/>
    </properties>
   </object>
+  <object id="20" name="playerB" x="990" y="870" width="60" height="60"/>
  </objectgroup>
 </map>

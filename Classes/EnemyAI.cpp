@@ -15,7 +15,6 @@ EnemyAI * EnemyAI::createWithEnemy(Enemy * obj)
 	enemyAI->obj = obj;
 	enemyAI->vel = Vec2(0, 100);
 	enemyAI->isFrozen = false;
-	obj->setVel(enemyAI->vel);
 
 	return enemyAI;
 }
@@ -56,7 +55,7 @@ void EnemyAI::update(float dt)
 
 	target = obj->getPosition() + vel * dt;
 	Size screenSize = Size((Vec2(Game::mapSizeWidth * Game::tileSize,
-		Game::mapSizeHeight * Game::tileSize)));
+		Game:: mapSizeHeight * Game::tileSize)));
 	int objContantSizeOfHalf = obj->getContentSize().height / 2;
 	if (target.y + objContantSizeOfHalf >= screenSize.height || target.y - objContantSizeOfHalf <= 0 ||
 		target.x + objContantSizeOfHalf >= screenSize.width || target.x - objContantSizeOfHalf <= 0)
@@ -89,8 +88,6 @@ void EnemyAI::update(float dt)
 			obj->runAction(RotateTo::create(0, 270));
 			vel = Vec2(-100, 0); break;
 		}
-		obj->setVel(vel);
-
 		return;
 	}
 	Vec2 coordTarget = tileCoordFromPosition(target + Vec2(vel.x / 100 * 16,
@@ -126,6 +123,5 @@ void EnemyAI::update(float dt)
 		obj->mydt = 1;
 	}
 	obj->mydt -= dt;
-	if (!obj->isFrozen)
-		obj->runAction(MoveTo::create(0, target));
+	obj->runAction(MoveTo::create(0, target));
 }

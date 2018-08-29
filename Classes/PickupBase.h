@@ -9,6 +9,8 @@ using namespace cocos2d;
 #define BLUEBULLETPATH "Bluebullet.png"
 #define REDBULLETPATH "Redbullet.png"
 #define SHIELDPATH "BeatlessTank.png"
+#define SPEEDUPPATH "map/Speedup.png"
+#define ADDBLOODPATH "map/blood.png"
 
 typedef enum
 {
@@ -17,7 +19,9 @@ typedef enum
 	Bluebullet,
 	Redbullet,
 	Skill_Shield,
-	ProBullet
+	ProBullet,
+	Speedup,
+	Addblood
 }PickupTypes;
 
 class PickupBase : public Sprite

@@ -11,7 +11,6 @@ public:
 BulletPro * BulletPro::createWithImage(bool isFriendly)
 {
 	BulletPro * bullet = new BulletPro();
-	bullet->akt = 2;
 	if (bullet && bullet->initWithFile("bullet8.png"))
 	{
 		bullet->autorelease();

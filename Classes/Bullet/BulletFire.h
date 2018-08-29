@@ -12,7 +12,6 @@ public:
 BulletFire * BulletFire::createWithImage(bool isFriendly)
 {
 	BulletFire * bullet = new BulletFire();
-	bullet->akt = 3;
 	if (bullet && bullet->initWithFile("bullet13.png"))
 	{
 		bullet->autorelease();

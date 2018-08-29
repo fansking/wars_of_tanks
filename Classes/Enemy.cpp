@@ -9,7 +9,6 @@ Enemy *Enemy::createWithEnemyTypes(EnemyTypes enemyType) {
 	Enemy *enemy = new Enemy(enemyType);
 	enemy->nHP = 3;
 	enemy->weaponType = WEAPON_0;
-	enemy->isFrozen = false;
 
 	const char * enemyFrameName = Enemy_1;
 	switch (enemyType) {
