@@ -158,6 +158,12 @@ bool HelloWorld::init()
 	//mn->setAnchorPoint(Vec2(0, 0));
 	this->addChild(mn);
 	Director::getInstance()->setDisplayStats(false);
+
+	auto versionLabel = Label::createWithTTF("v0.9.9", "fonts/minijtj.ttf", 30);
+	versionLabel->setPosition(Vec2(visibleSize.width - versionLabel->getContentSize().width / 2,
+		versionLabel->getContentSize().height / 2));
+	this->addChild(versionLabel);
+
     return true;
 }
 
