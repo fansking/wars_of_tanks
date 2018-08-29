@@ -133,8 +133,7 @@ bool HelloWorld::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-	auto item1 = MenuItemImage::create("UI/gameStart.png", "UI/gameStart1.png", CC_CALLBACK_1(HelloWorld::menuItemStartCallback, this));
-	item1->setScale(0.7);
+	auto item1 = MenuItemImage::create("UI/Eplorebig.png", "UI/Eploresmall.png", CC_CALLBACK_1(HelloWorld::menuItemStartCallback, this));
 	item1->setPosition(Vec2(visibleSize.width/2,
 		visibleSize.height/2));
 	auto item2 = MenuItemImage::create("UI/about.png", "UI/about1.png", CC_CALLBACK_1(HelloWorld::menuItem2Callback, this));
@@ -148,9 +147,13 @@ bool HelloWorld::init()
 
 	auto item5 = MenuItemImage::create("UI/Mutibig.png", "UI/Mutismall.png", CC_CALLBACK_1(HelloWorld::menuItemMulti, this));
 	item5->setPosition(Vec2(visibleSize.width / 2,
-		visibleSize.height / 2 - item1->getContentSize().height));
+		visibleSize.height / 2 - item1->getContentSize().height - 30));
 
-	Menu *mn = Menu::create(item1, item2,item3,item4, item5, NULL);
+	auto item6 = MenuItemImage::create("UI/teachbig.png", "UI/teachsmall.png", CC_CALLBACK_1(HelloWorld::menuItemTutorial, this));
+	item6->setPosition(Vec2(visibleSize.width / 2,
+		visibleSize.height / 2 + item1->getContentSize().height + 30));
+
+	Menu *mn = Menu::create(item1, item2,item3,item4, item5, item6, NULL);
 	mn->setPosition(Vec2(0, 0 ));
 	//mn->setAnchorPoint(Vec2(0, 0));
 	this->addChild(mn);
@@ -187,4 +190,9 @@ void HelloWorld::menuItemMulti(Ref *pSender)
 	ChoseLevel::_PlayerModel = 2;
 	auto scene = Game::createScene();
 	Director::getInstance()->pushScene(scene);
+}
+
+void HelloWorld::menuItemTutorial(Ref *pSender)
+{
+	return;
 }

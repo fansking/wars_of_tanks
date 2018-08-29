@@ -21,6 +21,11 @@ bool PauseLayer::init()
 	auto itemHomePage = MenuItemImage::create("UI/homePageNormal.png", "UI/homePagePressed.png", 
 		CC_CALLBACK_1(PauseLayer::menuItemHomePageCallback, this));
 	auto menuPause = Menu::create(itemRestart, itemChooseStage, itemHomePage, NULL);
+	if (Game::mode == MULTI)
+	{
+		itemChooseStage->setEnabled(false);
+		itemChooseStage->setColor(Color3B::GRAY);
+	}
 	menuPause->alignItemsVertically();
 	menuPause->setPosition(this->getPosition());
 

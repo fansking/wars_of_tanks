@@ -27,6 +27,13 @@ bool VictoryLayer::init()
 		"UI/gameover/button_nextlv_1.png",
 		CC_CALLBACK_1(VictoryLayer::menuItemNextLevelCallback, this));
 	auto menuPause = Menu::create(itemRestart, itemChooseStage, itemHomePage, itemNextLevel, NULL);
+	if (Game::mode == MULTI)
+	{
+		itemChooseStage->setEnabled(false);
+		itemNextLevel->setEnabled(false);
+		itemChooseStage->setColor(Color3B::GRAY);
+		itemNextLevel->setColor(Color3B::GRAY);
+	}
 
 	menuPause->alignItemsHorizontally();
 	menuPause->setPosition(Vec2(this->getPosition().x, 
@@ -66,10 +73,6 @@ void VictoryLayer::menuItemRestartCallback(Ref * pSender)
 }
 void VictoryLayer::menuItemChooseStageCallback(Ref * pSender)
 {
-	if (Game::mode == MULTI)
-	{
-		return;
-	}
 	Director::getInstance()->resume();
 	log("ChooseStage");
 	Director::getInstance()->resume();
@@ -84,10 +87,6 @@ void VictoryLayer::menuItemHomePageCallback(Ref * pSender)
 }
 void VictoryLayer::menuItemNextLevelCallback(Ref * pSender)
 {
-	if (Game::mode == MULTI)
-	{
-		return;
-	}
 	Director::getInstance()->resume();
 	++Game::levelNum;
 	Director::getInstance()->resume();
