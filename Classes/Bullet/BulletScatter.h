@@ -17,6 +17,7 @@ BulletScatter * BulletScatter::createWithImage(int flag, bool isFriendly)
 {
 	
 	BulletScatter * bullet = new BulletScatter();
+	bullet->akt = 1;
 	bullet->flag = flag;
 	if (bullet && bullet->initWithFile("bullet7.png"))
 	{

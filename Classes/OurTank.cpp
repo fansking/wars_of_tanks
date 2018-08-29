@@ -57,6 +57,19 @@ void OurTank::openFire(bool isFriendly)
 	SimpleAudioEngine::getInstance()->playEffect("sound/sfx_fire1.mp3");
 	if (weaponType == WEAPON_0) {
 		Bullet * bullet = Bullet::createWithImage(isFriendly);
+		if (Game::mode == MULTI)
+		{
+			if (this == Game::_player)
+			{
+				bullet->getPhysicsBody()->setCategoryBitmask(0x04);
+				bullet->getPhysicsBody()->setContactTestBitmask(0x08);
+			}
+			else
+			{
+				bullet->getPhysicsBody()->setCategoryBitmask(0x08);
+				bullet->getPhysicsBody()->setContactTestBitmask(0x04);
+			}
+		}
 		this->getParent()->addChild(bullet, 5);
 		bullet->shootBulletFromTank(this);
 	}

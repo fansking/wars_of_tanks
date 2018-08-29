@@ -16,6 +16,13 @@
 
 using namespace cocos2d;
 
+typedef enum
+{
+	TUTORIAL = 0,
+	CLASSIC,
+	MULTI,
+}Mode;
+
 class Game :public Layer
 {
 	
@@ -72,6 +79,8 @@ public:
 	void setViewpointCenter(Point position);
 	void showHelp(int helpNum);
 	void closeHelpLayerCallback(Ref * pSender);
+
+	static Mode mode;
 
 private:
 	

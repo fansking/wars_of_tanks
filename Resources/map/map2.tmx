@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="18">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="19">
  <tileset firstgid="1" name="0" tilewidth="60" tileheight="60" tilecount="40" columns="8">
   <image source="0.png" width="480" height="300"/>
  </tileset>
@@ -21,41 +21,42 @@
  </layer>
  <layer name="breakable0" width="40" height="24">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIKBBzID7YBRMKIAMwF5ViimVA0he0bBKAAB4YF2wCgYBUiAWuUfIflRMAoGCgAAq9YAYw==
+   eJxjYBgFo2DkAeGBdsAowAAyA+0AKgB6pSt89pDrhuGeJ9D9x0yGHmLlkcXR7Rnu4TwYwFDMH8SYP5p2RgG1ATXKOHxyrKQ5ZxSMAroBAPH6AZE=
   </data>
  </layer>
  <layer name="breakable1" width="40" height="24">
   <data encoding="base64" compression="zlib">
-   eJzNVkEOwCAII/z/0bsbBlSqlsQsS2pxXUt0M3PhFZUvz7+qcCyebM8Ux+KJsIr6rZiq9+47imNwdPVE+2XYbu8bPIhHEV4UM/nH1d5sbnV4GBnJtM/672YoKuQ7GRiGt5RKWT9l/ynnV3n+MeY+Uz/kjIj/JphT95dX+VWema/nH5Lj2/47eX+ZYqIzK68Py3sB2w==
+   eJztl8EKwDAIQ6XH/v8H7ySUHhLdLGZQobAZnA9XLR1mNoTXavs78zN9ghikZTk6+VA9WX6mf+Hr/r9vvqdUvwo/0y8f9nuefT/78wQc0f5AczGisR5Y+fe46FxeuTN+z8/4snFsP6maev0U+VT7o+p8OzVfKvxMV5jPSL98PfaH+lWceyf5KvxMP3H/UFsPTRUDnw==
   </data>
  </layer>
- <layer name="collidable" width="40" height="24" opacity="0.09">
+ <layer name="collidable" width="40" height="24" opacity="0">
   <data encoding="base64" compression="zlib">
-   eJztllEOwCAIQ70O97/gfheDQKW6fozELGbPwhgQbYxhwsszm54ryziWTnSmy7F0PFYxfzOT+d7doxxDo5pP1F/EVn3f0GHUOoPp/OPsbDS3KjqMHolyH/nf7SHPkO9kMEhsmeb7PYtBTTl/yvWn3L/K848x95n5Q2JE6q/DnLq/fNW///xb+0H6+Hb9nby/dBkvZuX1AO6rKAs=
+   eJztVEkKADEI8zv9/wfnOpROlyzFAQseqiRGS9MioiWO9+nvqzyDQ2oZ9c32ucM1qzP66n1LX59XznVrf6cepuJEPVTV62Qm9J3UnF9+49bH+lzW/TFcKs6s/2PEjfify18UeQZX+jjcn/Q5/Q/FrWqqv+bSp+qD4m76szMeMpIvQA==
   </data>
  </layer>
  <objectgroup name="objects">
   <object id="1" name="playerA" x="357.879" y="351.818" width="60" height="60"/>
-  <object id="2" name="enemy0" x="1135.64" y="606.121" width="50" height="58"/>
-  <object id="3" name="enemy1" x="1279.58" y="608.424" width="52" height="50"/>
-  <object id="4" name="pickupV0" x="1215" y="643" width="33" height="29">
+  <object id="2" name="enemy0" x="1091.64" y="598.121" width="50" height="58"/>
+  <object id="3" name="enemy1" x="1317.58" y="602.424" width="52" height="50"/>
+  <object id="4" name="pickupV0" x="1213" y="703" width="33" height="29">
    <properties>
     <property name="ToolType" type="int" value="1"/>
    </properties>
   </object>
-  <object id="5" name="enemy2" x="1224" y="715" width="46" height="47"/>
-  <object id="6" name="enemy3" x="408" y="942.667" width="46.6667" height="44"/>
+  <object id="5" name="enemy2" x="1204" y="787" width="46" height="47"/>
+  <object id="6" name="enemy3" x="422" y="1030.67" width="46.6667" height="44"/>
   <object id="7" name="enemy4" x="662.667" y="1160" width="48" height="45.3333"/>
   <object id="8" name="enemy5" x="670.667" y="668" width="62.6667" height="56"/>
-  <object id="9" name="enemy6" x="926.667" y="400" width="56" height="52"/>
-  <object id="10" name="enemy7" x="1465.33" y="380" width="57.3333" height="58.6667"/>
-  <object id="11" name="enemy8" x="1476" y="950.667" width="52" height="61.3333"/>
-  <object id="14" name="pickup0" x="450" y="690">
+  <object id="9" name="enemy6" x="842.667" y="418" width="56" height="52"/>
+  <object id="10" name="enemy7" x="1559.33" y="310" width="57.3333" height="58.6667"/>
+  <object id="11" name="enemy8" x="1564" y="1016.67" width="52" height="61.3333"/>
+  <object id="14" name="pickup0" x="390" y="570">
    <properties>
     <property name="ToolType" type="int" value="3"/>
    </properties>
   </object>
-  <object id="16" name="portal_1" x="511" y="452" width="21" height="22"/>
-  <object id="17" name="portal_2" x="1755" y="672" width="23" height="24"/>
+  <object id="16" name="portal_1" x="411" y="164" width="21" height="22"/>
+  <object id="17" name="portal_2" x="1681" y="706" width="23" height="24"/>
+  <object id="18" name="playerB" x="716" y="174" width="60" height="60"/>
  </objectgroup>
 </map>
