@@ -133,7 +133,7 @@ bool HelloWorld::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-	auto item1 = MenuItemImage::create("UI/Eplorebig.png", "UI/Eploresmall.png", CC_CALLBACK_1(HelloWorld::menuItemStartCallback, this));
+	auto item1 = MenuItemImage::create("UI/Eplorebig.png", "UI/Exploresmall.png", CC_CALLBACK_1(HelloWorld::menuItemStartCallback, this));
 	item1->setPosition(Vec2(visibleSize.width/2,
 		visibleSize.height/2));
 	auto item2 = MenuItemImage::create("UI/about.png", "UI/about1.png", CC_CALLBACK_1(HelloWorld::menuItem2Callback, this));

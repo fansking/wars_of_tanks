@@ -533,6 +533,10 @@ bool Game::init()
 		for (int i = 0; i < nEnemy; ++i)
 		{
 			int nType = rand() % 5;
+			if (levelNum == 6)
+			{
+				nType = 3;
+			}
 			switch (nType)
 			{
 			case 0:
