@@ -17,7 +17,16 @@ typedef enum
 	Bluebullet,
 	Redbullet,
 	Skill_Shield,
-	ProBullet
+	ProBullet,
+
+	Help0 = 20,
+	Help1,
+	Help2,
+	Help3,
+	Help4,
+	Help5,
+	Help6,
+	Help7
 }PickupTypes;
 
 class PickupBase : public Sprite
@@ -27,4 +36,6 @@ public:
 	static PickupBase * createWithImage(const char *);
 	static PickupBase * createWithType(PickupTypes );
 	virtual void isContact(OurTank *);
+	void showHelp(int helpNum);
+	void closeHelpLayerCallback(Ref* pSender);
 };
