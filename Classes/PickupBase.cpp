@@ -31,10 +31,9 @@ PickupBase * PickupBase::createWithType(PickupTypes type)
 		break;
 	case Speedup:
 		path = SPEEDUPPATH;
-
+		break;
 	default:
 		path = HELPPATH;
-
 		break;
 	}
 	if (item && item->initWithFile(path))

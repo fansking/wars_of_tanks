@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="42" height="48" tilewidth="60" tileheight="60">
- <tileset firstgid="1" name="bg2b" tilewidth="60" tileheight="60">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="42" height="48" tilewidth="60" tileheight="60" infinite="0" nextobjectid="32">
+ <tileset firstgid="1" name="bg2b" tilewidth="60" tileheight="60" tilecount="1008" columns="42">
   <image source="bg2b.png" width="2520" height="1440"/>
  </tileset>
- <tileset firstgid="1009" name="collidable" tilewidth="60" tileheight="60">
+ <tileset firstgid="1009" name="collidable" tilewidth="60" tileheight="60" tilecount="1" columns="1">
   <image source="collidable.png" width="60" height="60"/>
   <tile id="0">
    <properties>
@@ -11,7 +11,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="1010" name="0" tilewidth="60" tileheight="60">
+ <tileset firstgid="1010" name="0" tilewidth="60" tileheight="60" tilecount="40" columns="8">
   <image source="0.png" width="480" height="300"/>
  </tileset>
  <layer name="ground" width="42" height="48">
@@ -35,115 +35,115 @@
   </data>
  </layer>
  <objectgroup name="objects">
-  <object name="playerA" x="210" y="2670"/>
-  <object name="enemy0" x="2432" y="1828"/>
-  <object name="pickupV0" x="1526" y="1948">
+  <object id="1" name="playerA" x="210" y="2670"/>
+  <object id="2" name="enemy0" x="2432" y="1828"/>
+  <object id="3" name="pickupV0" x="1526" y="1948">
    <properties>
     <property name="ToolType" value="4"/>
    </properties>
   </object>
-  <object name="pickupV1" x="1530" y="2010">
+  <object id="4" name="pickupV1" x="1530" y="2010">
    <properties>
     <property name="ToolType" value="4"/>
    </properties>
   </object>
-  <object name="pickupV2" x="1530" y="2070">
+  <object id="5" name="pickupV2" x="1530" y="2070">
    <properties>
     <property name="ToolType" value="4"/>
    </properties>
   </object>
-  <object name="portal_1" x="332" y="2012"/>
-  <object name="portal_2" x="390" y="1170"/>
-  <object name="pickup0" x="748" y="1050">
+  <object id="6" name="portal_1" x="332" y="2012"/>
+  <object id="7" name="portal_2" x="390" y="1170"/>
+  <object id="8" name="pickupV4" x="748" y="1050">
    <properties>
     <property name="ToolType" value="1"/>
    </properties>
   </object>
-  <object name="pickup1" x="1054" y="1410">
+  <object id="9" name="pickupV3" x="1054" y="1410">
    <properties>
-    <property name="ToolType" value="5"/>
+    <property name="ToolType" value="6"/>
    </properties>
   </object>
-  <object name="pickup2" x="1532" y="932">
+  <object id="10" name="pickupV5" x="1532" y="932">
    <properties>
     <property name="ToolType" value="3"/>
    </properties>
   </object>
-  <object name="pickup3" x="274" y="874">
+  <object id="11" name="pickupV6" x="274" y="874">
    <properties>
-    <property name="ToolType" value="5"/>
+    <property name="ToolType" value="7"/>
    </properties>
   </object>
-  <object name="enemy1" x="1232" y="926"/>
-  <object name="enemy2" x="1946" y="1292"/>
-  <object name="enemy3" x="2254" y="870"/>
-  <object name="enemy4" x="1476" y="1166"/>
-  <object name="enemy5" x="750" y="570"/>
-  <object name="pickupV3" x="1166" y="1108">
+  <object id="12" name="enemy1" x="1232" y="926"/>
+  <object id="13" name="enemy2" x="1946" y="1292"/>
+  <object id="14" name="enemy3" x="2254" y="870"/>
+  <object id="15" name="enemy4" x="1476" y="1166"/>
+  <object id="16" name="enemy5" x="750" y="570"/>
+  <object id="17" name="pickup1" x="1166" y="1108">
    <properties>
     <property name="ToolType" value="1"/>
    </properties>
   </object>
-  <object name="pickupV4" x="2074" y="992">
+  <object id="18" name="pickup2" x="2070" y="990">
    <properties>
     <property name="ToolType" value="3"/>
    </properties>
   </object>
-  <object name="pickupV5" x="572" y="986">
+  <object id="19" name="pickup0" x="572" y="986">
    <properties>
     <property name="ToolType" value="2"/>
    </properties>
   </object>
-  <object name="pickupV6" x="1774" y="1414">
+  <object id="20" name="pickup6" x="1774" y="1414">
    <properties>
     <property name="ToolType" value="4"/>
    </properties>
   </object>
-  <object name="enemy6" x="1770" y="266"/>
-  <object name="enemy7" x="930" y="208"/>
+  <object id="21" name="enemy6" x="1770" y="266"/>
+  <object id="22" name="enemy7" x="930" y="208"/>
  </objectgroup>
  <objectgroup name="helps">
-  <object name="help0" x="211" y="2670">
+  <object id="23" name="help0" x="211" y="2670">
    <properties>
     <property name="HelpNum" value="20"/>
    </properties>
   </object>
-  <object name="help1" x="990" y="2550">
+  <object id="24" name="help1" x="990" y="2550">
    <properties>
     <property name="HelpNum" value="21"/>
    </properties>
   </object>
-  <object name="help2" x="1710" y="2790">
+  <object id="25" name="help2" x="1710" y="2790">
    <properties>
     <property name="HelpNum" value="22"/>
    </properties>
   </object>
-  <object name="help3" x="2430" y="2790">
+  <object id="26" name="help3" x="2430" y="2790">
    <properties>
     <property name="HelpNum" value="23"/>
    </properties>
   </object>
-  <object name="help4" x="2070" y="2250">
+  <object id="27" name="help4" x="2070" y="2250">
    <properties>
     <property name="HelpNum" value="24"/>
    </properties>
   </object>
-  <object name="help5" x="1650" y="2010">
+  <object id="28" name="help5" x="1650" y="2010">
    <properties>
     <property name="HelpNum" value="25"/>
    </properties>
   </object>
-  <object name="help6" x="750" y="2010">
+  <object id="29" name="help6" x="750" y="2010">
    <properties>
     <property name="HelpNum" value="26"/>
    </properties>
   </object>
-  <object name="help7" x="514" y="1170">
+  <object id="30" name="help7" x="514" y="1170">
    <properties>
     <property name="HelpNum" value="27"/>
    </properties>
   </object>
-  <object name="help8" x="1262" y="554">
+  <object id="31" name="help8" x="1262" y="554">
    <properties>
     <property name="HelpNum" value="28"/>
    </properties>

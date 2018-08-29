@@ -195,4 +195,6 @@ void HelloWorld::menuItemMulti(Ref *pSender)
 void HelloWorld::menuItemTutorial(Ref *pSender)
 {
 	Game::mode = TUTORIAL;
+	auto scene = Game::createScene();
+	Director::getInstance()->pushScene(scene);
 }

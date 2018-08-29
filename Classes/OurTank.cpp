@@ -201,6 +201,7 @@ void OurTank::addpickup() {
 }
 void OurTank::addpickupV() {
 	static int x = 0;
+	x = 0;
 	TMXObjectGroup *group = Game::_tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
 	PickupBase * pickupV[20] = { NULL };
