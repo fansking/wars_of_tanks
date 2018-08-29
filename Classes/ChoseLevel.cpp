@@ -71,6 +71,7 @@ void ChoseLevel::init2() {
 }
 
 void ChoseLevel::menuCloseCallback(cocos2d::Ref* pSender) {
+	auto scene = HelloWorld::createScene();
 	Director::getInstance()->popScene();
 }
 
@@ -92,7 +93,7 @@ void ChoseLevel::menuEnterGameCallback(cocos2d::Ref* pSender) {
 		Game::levelNum = nmitem->getTag();
 		auto sc = Game::createScene();
 		auto transition = TransitionFade::create(1, sc);
-		Director::getInstance()->pushScene(transition);
+		Director::getInstance()->replaceScene(transition);
 	}
 }
 

@@ -8,6 +8,7 @@ TMXLayer *Bullet::_breakable1 = nullptr;
 Bullet * Bullet::createWithImage(bool isFriendly)
 {
 	Bullet * bullet = new Bullet();
+	bullet->akt = 1;
 	bullet->isFriendly = isFriendly;
 	if (bullet && bullet->initWithFile("bullet7.png"))
 	{
@@ -99,8 +100,9 @@ void Bullet::update(float dt)
 			 mycoll->removeFromParent();
 	}
 		 
-		 score++;
-		 //log("%d", score);
+		 //score++;
+		 ////log("%d", score);
+		 //Game::gradeTTF->setString(to_string(score));
 		 this->setVisible(false);
 		 this->removeFromParent();
 		 return;
