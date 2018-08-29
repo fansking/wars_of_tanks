@@ -11,7 +11,7 @@ public:
 BulletPlus * BulletPlus::createWithImage(bool isFriendly)
 {
 	BulletPlus * bullet = new BulletPlus();
-	bullet->akt = 2;
+	bullet->akt = 3;
 	if (bullet && bullet->initWithFile("bullet17.png"))
 	{
 		bullet->autorelease();

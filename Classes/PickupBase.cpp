@@ -26,16 +26,8 @@ PickupBase * PickupBase::createWithType(PickupTypes type)
 	case Redbullet:
 		path = REDBULLETPATH;
 		break;
-
-	case Addblood:
-		path = ADDBLOODPATH;
-		break;
-	case Speedup:
-		path = SPEEDUPPATH;
-
 	default:
 		path = HELPPATH;
-
 		break;
 	}
 	if (item && item->initWithFile(path))
@@ -75,7 +67,9 @@ void PickupBase::isContact(OurTank * player)
 		shield->ShowWithTank(player);
 		this->removeFromParent();
 	}else if (this->getPickupType() == Gold) {
+		player->setHP(player->getHP()+1);
 		player->setWeaponType(WEAPON_4);
+		log("HP: %d", player->getHP());
 		this->removeFromParent();
 	}
 	else if (this->getPickupType() == Bulletscatter) {
@@ -90,17 +84,6 @@ void PickupBase::isContact(OurTank * player)
 		player->setWeaponType(WEAPON_2);
 		this->removeFromParent();
 	}
-
-	else if (this->getPickupType() == Addblood) {
-		player->setHP(player->getHP() + 1);
-		Game::lifeTTF->setString(to_string(player->getHP()));
-		this->removeFromParent();
-	}
-	else if (this->getPickupType() == Speedup) {
-		player->setVel(player->getVel() * 2);
-		this->removeFromParent();
-	}
-}
 	else {
 		
 		showHelp((int)this->getPickupType());
@@ -138,7 +121,6 @@ void PickupBase::closeHelpLayerCallback(Ref* pSender) {
 	Game::menuLayer->removeChildByTag(15);
 	Director::getInstance()->resume();
 }
-
 
 
 

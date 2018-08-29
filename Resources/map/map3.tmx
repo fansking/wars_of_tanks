@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="21">
- <tileset firstgid="1" name="bg2" tilewidth="60" tileheight="60" tilecount="252" columns="21">
-=======
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60">
  <tileset firstgid="1" name="bg2" tilewidth="60" tileheight="60">
->>>>>>> 060d2c84911029f1949556203724a524fdcfda6d
   <image source="bg2.png" width="1280" height="720"/>
  </tileset>
  <tileset firstgid="253" name="0" tilewidth="60" tileheight="60">
@@ -88,6 +83,5 @@
     <property name="HelpNum" value="21"/>
    </properties>
   </object>
-  <object id="20" name="playerB" x="990" y="870" width="60" height="60"/>
  </objectgroup>
 </map>

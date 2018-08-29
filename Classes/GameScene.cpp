@@ -114,7 +114,6 @@ bool Game::init()
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 2)
 		{
-			log("%d,=================", ((Bullet*)spriteB)->getAKT());
 			((OurTank *)spriteA)->setHP(((OurTank *)spriteA)->getHP() - 1);
 			lifeTTF->setString(to_string(Game::_player->getHP()));
 			if(_player2 != nullptr)
