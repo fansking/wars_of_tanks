@@ -194,5 +194,5 @@ void HelloWorld::menuItemMulti(Ref *pSender)
 
 void HelloWorld::menuItemTutorial(Ref *pSender)
 {
-	return;
+	Game::mode = TUTORIAL;
 }

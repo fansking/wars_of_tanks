@@ -384,6 +384,10 @@ bool Game::init()
 	{
 		s2 = "map/mapdouble0.tmx";
 	}
+	else if (Game::mode == TUTORIAL)
+	{
+		s2 = "map/helpmap.tmx";
+	}
 	_tileMap = TMXTiledMap::create(s2);
 	_mapSize = _tileMap->getMapSize();
 	_tileSize = _tileMap->getTileSize();
