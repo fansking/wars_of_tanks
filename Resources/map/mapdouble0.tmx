@@ -48,7 +48,7 @@
   <object id="3" name="enemy0" x="529" y="346" width="37" height="36"/>
   <object id="4" name="enemy1" x="713" y="343" width="42" height="42"/>
   <object id="5" name="enemy2" x="124" y="326" width="33" height="33"/>
-  <object id="6" name="enemy3" x="1143" y="14" width="40" height="33"/>
+  <object id="6" name="enemy3" x="800.333" y="426" width="40" height="33"/>
   <object id="7" name="enemy4" x="150" y="149" width="50" height="48"/>
   <object id="8" name="enemy5" x="155" y="524" width="46" height="44"/>
   <object id="9" name="enemy6" x="1008" y="152" width="32" height="32"/>
