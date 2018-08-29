@@ -70,7 +70,8 @@ public:
 	static void controllerForPlayer2(EventKeyboard::KeyCode, Event *);
 	static void controllerUnschedule(EventKeyboard::KeyCode keyCode, Event * event);
 	void setViewpointCenter(Point position);
-
+	void showHelp(int helpNum);
+	void closeHelpLayerCallback(Ref * pSender);
 
 private:
 	

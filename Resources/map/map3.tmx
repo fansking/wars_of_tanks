@@ -68,7 +68,23 @@
   <object id="18" name="playerB" x="749.333" y="870.667"/>
   <object id="19" name="pickupV0" x="870" y="630">
    <properties>
+<<<<<<< HEAD
     <property name="ToolType" type="int" value="4"/>
+=======
+    <property name="ToolType" value="4"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="helps">
+  <object name="help0" x="1053" y="575" width="31" height="26">
+   <properties>
+    <property name="HelpNum" value="20"/>
+   </properties>
+  </object>
+  <object name="help1" x="1489" y="702" width="46" height="41">
+   <properties>
+    <property name="HelpNum" value="21"/>
+>>>>>>> hbj
    </properties>
   </object>
  </objectgroup>
