@@ -15,7 +15,7 @@
   </tile>
  </tileset>
  <tileset firstgid="294" name="bg2b" tilewidth="60" tileheight="60">
-  <image source="bg2b.png" width="2560" height="1440"/>
+  <image source="bg2b.png" width="2520" height="1440"/>
  </tileset>
  <layer name="ground" width="40" height="24">
   <data encoding="base64" compression="zlib">
@@ -32,55 +32,50 @@
    eJzt0LEJADAMxEDvP7RxkxUCKu7ge/EzAB37VlXvq6j/VO8DAP44L+cH8Q==
   </data>
  </layer>
- <layer name="collidable" width="40" height="24" opacity="0.17">
+ <layer name="collidable" width="40" height="24" opacity="0.09">
   <data encoding="base64" compression="zlib">
    eJzNlVEOwCAIQ91hvP8V97sY0RbKoAkfizCfYnU+Y8zm0VUIX+WamLkqGLv011ozypd9rr18kV4qzsOpjh27sUT2lWHz8nk4T3zZUvCt40q/M3dvlM/r3ygfKiXft9brD4TxlHP7vvHtchWyfM/kWznsO2ONM/Mz+8Pcbai8/kBqFH3P4FtroxHhU/uD/e/f/kWEvldVbOj9V6UdX+d4AZJIKps=
   </data>
  </layer>
- <objectgroup name="objects">
-  <object name="playerA" x="870" y="870" width="56" height="54"/>
-  <object name="enemy0" x="272" y="1294" width="50" height="58"/>
-  <object name="enemy1" x="1522" y="566" width="52" height="50"/>
-  <object name="pickup0" x="750" y="630">
+ <objectgroup name="objects" visible="0">
+  <object name="playerA" x="870" y="870" width="56" height="54" visible="0"/>
+  <object name="enemy0" x="272" y="1294" width="50" height="58" visible="0"/>
+  <object name="enemy1" x="1522" y="566" width="52" height="50" visible="0"/>
+  <object name="pickup0" x="750" y="630" visible="0">
    <properties>
     <property name="ToolType" value="1"/>
    </properties>
   </object>
-  <object name="pickup1" x="1410" y="380">
+  <object name="pickup1" x="1410" y="380" visible="0">
    <properties>
     <property name="ToolType" value="1"/>
    </properties>
   </object>
-  <object name="pickup2" x="1350" y="690">
+  <object name="pickup2" x="1350" y="690" visible="0">
    <properties>
     <property name="ToolType" value="3"/>
    </properties>
   </object>
-  <object name="enemy2" x="1804" y="56" width="44" height="46"/>
-  <object name="enemy3" x="1854.55" y="1260.61" width="48.4848" height="39.3939"/>
-  <object name="enemy4" x="122" y="181" width="31" height="27"/>
-  <object name="enemy5" x="1742" y="898" width="31" height="31"/>
-  <object name="enemy6" x="538.667" y="538.667" width="32" height="30.6667"/>
-  <object name="enemy7" x="958.667" y="420" width="32" height="30.6667"/>
-  <object name="enemy8" x="2098.67" y="901.333" width="37.3333" height="34.6667"/>
-  <object name="portal_1" x="630" y="750" width="28" height="24"/>
-  <object name="portal_2" x="1410" y="210" width="35" height="34"/>
-  <object name="playerB" x="749.333" y="870.667"/>
-  <object name="pickupV0" x="870" y="630">
+  <object name="enemy2" x="1804" y="56" width="44" height="46" visible="0"/>
+  <object name="enemy3" x="1854.55" y="1260.61" width="48.4848" height="39.3939" visible="0"/>
+  <object name="enemy4" x="122" y="181" width="31" height="27" visible="0"/>
+  <object name="enemy5" x="1742" y="898" width="31" height="31" visible="0"/>
+  <object name="enemy6" x="538.667" y="538.667" width="32" height="30.6667" visible="0"/>
+  <object name="enemy7" x="958.667" y="420" width="32" height="30.6667" visible="0"/>
+  <object name="enemy8" x="2098.67" y="901.333" width="37.3333" height="34.6667" visible="0"/>
+  <object name="portal_1" x="630" y="750" width="28" height="24" visible="0"/>
+  <object name="portal_2" x="1410" y="210" width="35" height="34" visible="0"/>
+  <object name="playerB" x="749.333" y="870.667" visible="0"/>
+  <object name="pickupV0" x="870" y="630" visible="0">
    <properties>
     <property name="ToolType" value="4"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="helps">
-  <object name="help0" x="1053" y="575" width="31" height="26">
+ <objectgroup name="helps" visible="0">
+  <object name="help0" x="1053" y="575" width="31" height="26" visible="0">
    <properties>
     <property name="HelpNum" value="20"/>
-   </properties>
-  </object>
-  <object name="help1" x="1489" y="702" width="46" height="41">
-   <properties>
-    <property name="HelpNum" value="21"/>
    </properties>
   </object>
  </objectgroup>

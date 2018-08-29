@@ -157,6 +157,7 @@ void OurTank::addpickup() {
 		//log("%s", pickupname);
 		spawnPoint_0 = group->getObject(pickupname);
 		if (spawnPoint_0 == ValueMap()) { break; }
+		++Game::nPickup;
 		int  x0 = spawnPoint_0["x"].asInt();
 		int  y0 = spawnPoint_0["y"].asInt();
 		int tooltype = spawnPoint_0["ToolType"].asInt();
@@ -202,6 +203,7 @@ void OurTank::addpickupV() {
 		//log("%s", pickupname);
 		spawnPoint_0 = group->getObject(pickupname);
 		if (spawnPoint_0 == ValueMap()) { break; }
+		++Game::nPickupV;
 	}
 	for (int i = 0; i < x - 1; i++) {
 		char pickupname[10] = "pickupV";

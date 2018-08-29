@@ -34,6 +34,7 @@ public:
 	static Enemy * enemy[10] ;
 	static PickupBase * pickup[10];
 	static int nPickup;
+	static int nPickupV;
 	static EnemyAI * enemyAIs[10];
 	static TMXTiledMap *_tileMap;
 	static int mapSizeHeight;

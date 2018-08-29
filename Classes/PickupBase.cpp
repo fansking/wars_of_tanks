@@ -5,7 +5,6 @@
 
 PickupBase * PickupBase::createWithType(PickupTypes type)
 {
-	++Game::nPickup;
 	auto item = new PickupBase();
 	std::string path;
 	item->setPickupType(type);
@@ -109,6 +108,7 @@ void PickupBase::showHelp(int helpNum) {
 	menu->setPosition(Vec2::ZERO);
 	menu->setTag(15);
 	Game::menuLayer->addChild(menu,20);
+	Game::menuLayer->removeChildByTag(20);
 
 	Director::getInstance()->pause();
 
