@@ -51,5 +51,5 @@ void GameoverLayer::menuItemHomePageCallback(Ref * pSender)
 	Director::getInstance()->resume();
 	log("HomePage");
 	Director::getInstance()->resume();
-	Director::getInstance()->replaceScene(HelloWorld::createScene());
+	Director::getInstance()->popScene();
 }

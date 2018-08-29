@@ -11,6 +11,7 @@ using namespace cocos2d;
 #define SHIELDPATH "BeatlessTank.png"
 #define SPEEDUPPATH "map/Speedup.png"
 #define ADDBLOODPATH "map/blood.png"
+#define HELPPATH "myHelp.png"
 
 typedef enum
 {
@@ -20,8 +21,20 @@ typedef enum
 	Redbullet,
 	Skill_Shield,
 	ProBullet,
+
 	Speedup,
 	Addblood
+
+
+	Help0 = 20,
+	Help1,
+	Help2,
+	Help3,
+	Help4,
+	Help5,
+	Help6,
+	Help7
+
 }PickupTypes;
 
 class PickupBase : public Sprite
@@ -31,4 +44,6 @@ public:
 	static PickupBase * createWithImage(const char *);
 	static PickupBase * createWithType(PickupTypes );
 	virtual void isContact(OurTank *);
+	void showHelp(int helpNum);
+	void closeHelpLayerCallback(Ref* pSender);
 };

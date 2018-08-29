@@ -57,6 +57,19 @@ void OurTank::openFire(bool isFriendly)
 	SimpleAudioEngine::getInstance()->playEffect("sound/sfx_fire1.mp3");
 	if (weaponType == WEAPON_0) {
 		Bullet * bullet = Bullet::createWithImage(isFriendly);
+		if (Game::mode == MULTI)
+		{
+			if (this == Game::_player)
+			{
+				bullet->getPhysicsBody()->setCategoryBitmask(0x04);
+				bullet->getPhysicsBody()->setContactTestBitmask(0x08);
+			}
+			else
+			{
+				bullet->getPhysicsBody()->setCategoryBitmask(0x08);
+				bullet->getPhysicsBody()->setContactTestBitmask(0x04);
+			}
+		}
 		this->getParent()->addChild(bullet, 5);
 		bullet->shootBulletFromTank(this);
 	}
@@ -157,23 +170,31 @@ void OurTank::addpickup() {
 		//log("%s", pickupname);
 		spawnPoint_0 = group->getObject(pickupname);
 		if (spawnPoint_0 == ValueMap()) { break; }
-	}
-	for (int i = 0; i < x-1; i++) {
-		char pickupname[10] = "pickup";
-		char str[10];
-		sprintf(str, "%d", i);
-		strcat(pickupname, str);
-		spawnPoint_0 = group->getObject(pickupname);
-		if (spawnPoint_0 == ValueMap()) { break; }
 		int  x0 = spawnPoint_0["x"].asInt();
 		int  y0 = spawnPoint_0["y"].asInt();
 		int tooltype = spawnPoint_0["ToolType"].asInt();
-		Game::pickup[i] = PickupBase::createWithType((PickupTypes)tooltype);
-		Game::pickup[i]->setAnchorPoint(Vec2(0.5,0.5f));
-		Game::pickup[i]->setPosition(Vec2(x0, y0));
-		Game::pickup[i]->setVisible(false);
-		this->getParent()->addChild(Game::pickup[i], 2);
+		Game::pickup[x-1] = PickupBase::createWithType((PickupTypes)tooltype);
+		Game::pickup[x - 1]->setAnchorPoint(Vec2(0.5, 0.5f));
+		Game::pickup[x - 1]->setPosition(Vec2(x0, y0));
+		Game::pickup[x - 1]->setVisible(false);
+		this->getParent()->addChild(Game::pickup[x - 1], 2);
 	}
+	//for (int i = 0; i < x-1; i++) {
+	//	char pickupname[10] = "pickup";
+	//	char str[10];
+	//	sprintf(str, "%d", i);
+	//	strcat(pickupname, str);
+	//	spawnPoint_0 = group->getObject(pickupname);
+	//	if (spawnPoint_0 == ValueMap()) { break; }
+	//	int  x0 = spawnPoint_0["x"].asInt();
+	//	int  y0 = spawnPoint_0["y"].asInt();
+	//	int tooltype = spawnPoint_0["ToolType"].asInt();
+	//	Game::pickup[i] = PickupBase::createWithType((PickupTypes)tooltype);
+	//	Game::pickup[i]->setAnchorPoint(Vec2(0.5,0.5f));
+	//	Game::pickup[i]->setPosition(Vec2(x0, y0));
+	//	Game::pickup[i]->setVisible(false);
+	//	this->getParent()->addChild(Game::pickup[i], 2);
+	//}
 
 
 }
@@ -181,7 +202,7 @@ void OurTank::addpickupV() {
 	static int x = 0;
 	TMXObjectGroup *group = Game::_tileMap->getObjectGroup("objects");
 	ValueMap spawnPoint_0 = group->getObject("playerA");
-	PickupBase * pickupV[10] = { NULL };
+	PickupBase * pickupV[20] = { NULL };
 
 
 	while (spawnPoint_0 != ValueMap()) {
@@ -210,6 +231,29 @@ void OurTank::addpickupV() {
 		pickupV[i]->setPosition(Vec2(x0, y0));
 		this->getParent()->addChild(pickupV[i], 2);
 	}
+	x--;
+	TMXObjectGroup *group1 = Game::_tileMap->getObjectGroup("helps");
+	if (group1!=nullptr) {
+		ValueMap spawnPoint_0 = group1->getObject("help0");
+		int xx = 0;
+		while (spawnPoint_0 != ValueMap()) {
+			x++;
+			int  x0 = spawnPoint_0["x"].asInt();
+			int  y0 = spawnPoint_0["y"].asInt();
+			int HelpNum = spawnPoint_0["HelpNum"].asInt();
+			pickupV[x - 1] = PickupBase::createWithType((PickupTypes)HelpNum);
+			pickupV[x - 1]->setAnchorPoint(Vec2(0.5, 0.5f));
+			pickupV[x - 1]->setPosition(Vec2(x0, y0));
+			this->getParent()->addChild(pickupV[x - 1], 2);
+			xx++;
+			char pickupname[10] = "help";
+			char str[10];
+			sprintf(str, "%d", xx);
+			strcat(pickupname, str);
+			spawnPoint_0 = group1->getObject(pickupname);
+		}
+	}
+
 }
 
 void OurTank::useSkill()

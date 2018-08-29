@@ -16,6 +16,13 @@
 
 using namespace cocos2d;
 
+typedef enum
+{
+	TUTORIAL = 0,
+	CLASSIC,
+	MULTI,
+}Mode;
+
 class Game :public Layer
 {
 	
@@ -61,6 +68,7 @@ public:
 
 	static Label *lifeTTF ;
 	static Label *gradeTTF;
+	static Label *life2TTF;
 	static void changeLifeTTF(int lifeNum);
 	void playBoomAnimation(Vec2 position);
 	static Layer * menuLayer;
@@ -69,7 +77,10 @@ public:
 	static void controllerForPlayer2(EventKeyboard::KeyCode, Event *);
 	static void controllerUnschedule(EventKeyboard::KeyCode keyCode, Event * event);
 	void setViewpointCenter(Point position);
+	void showHelp(int helpNum);
+	void closeHelpLayerCallback(Ref * pSender);
 
+	static Mode mode;
 
 private:
 	

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="24">
+=======
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="60" tileheight="60" infinite="0" nextobjectid="23">
+>>>>>>> 060d2c84911029f1949556203724a524fdcfda6d
  <tileset firstgid="1" name="bg6" tilewidth="60" tileheight="60" tilecount="252" columns="21">
   <image source="bg6.png" width="1280" height="720"/>
  </tileset>
@@ -63,6 +67,9 @@
     <property name="ToolType" type="int" value="7"/>
    </properties>
   </object>
+<<<<<<< HEAD
   <object id="23" name="playerB" x="1110" y="1350" width="60" height="60"/>
+=======
+>>>>>>> 060d2c84911029f1949556203724a524fdcfda6d
  </objectgroup>
 </map>

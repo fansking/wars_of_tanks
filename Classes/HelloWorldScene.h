@@ -39,6 +39,7 @@ public:
 	void menuItemSettingCallback(cocos2d::Ref *pSender);
 	void menuItemStartCallback(cocos2d::Ref *pSender);
 	void menuTtemCollections(cocos2d::Ref *pSender);
+	void menuItemMulti(cocos2d::Ref *pSender);
 	
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
