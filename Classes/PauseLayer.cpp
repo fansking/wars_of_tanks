@@ -43,5 +43,5 @@ void PauseLayer::menuItemHomePageCallback(Ref * pSender)
 {
 	log("HomePage");
 	Director::getInstance()->resume();
-	Director::getInstance()->replaceScene(HelloWorld::createScene());
+	Director::getInstance()->popScene();
 }

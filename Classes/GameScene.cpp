@@ -29,8 +29,11 @@ OurTank * Game::_player = nullptr;
 OurTank * Game::_player2 = nullptr;
 
 Label *Game::lifeTTF = Label::create();
+Label *Game::life2TTF = Label::create();
 Label *Game::gradeTTF = Label::create();
 Layer * Game::menuLayer = Layer::create();
+
+Mode Game::mode = CLASSIC;
 
 Scene *Game::createScene()
 {
@@ -41,7 +44,6 @@ Scene *Game::createScene()
 	scene->addChild(layer);
 	return scene;
 }
-
 bool Game::init()
 {
 	if (!Layer::init())
@@ -114,6 +116,8 @@ bool Game::init()
 		{
 			((OurTank *)spriteA)->setHP(((OurTank *)spriteA)->getHP() - 1);
 			lifeTTF->setString(to_string(Game::_player->getHP()));
+			if(_player2 != nullptr)
+				life2TTF->setString(to_string(Game::_player2->getHP()));
 			//changeLifeTTF(Game::_player->getHP());
 			spriteB->removeFromParent();
 			//log("HP: %d", Game::_player->getHP());
@@ -142,6 +146,8 @@ bool Game::init()
 		{
 			((OurTank *)spriteB)->setHP(((OurTank *)spriteB)->getHP() - 1);
 			lifeTTF->setString(to_string(Game::_player->getHP()));
+			if(_player2 != nullptr)
+				life2TTF->setString(to_string(Game::_player2->getHP()));
 			spriteA->removeFromParent();
 			//log("HP: %d", Game::_player->getHP());
 			if (_player->getHP() <= 0 && (_player2 == nullptr || _player2->getHP() <= 0))
@@ -339,6 +345,7 @@ bool Game::init()
 
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listenerForPlayer2, 1);
 
+	//玩家一的信息界面
 	menuLayer = Layer::create();
 	auto text1 = Label::createWithTTF(MyUtility::gbk_2_utf8("HP:    Score:"), "fonts/minijtj.ttf", 40);
 	text1->setAnchorPoint(Vec2(0, 0));
@@ -355,10 +362,28 @@ bool Game::init()
 	gradeTTF->setPosition(Vec2(300, 10));
 	gradeTTF->setColor(Color3B(255, 255, 255));
 	menuLayer->addChild(gradeTTF);
+	//玩家二的信息界面
+	if (ChoseLevel::_PlayerModel == 2) {
+		auto text2 = Label::createWithTTF(MyUtility::gbk_2_utf8("HP:"), "fonts/minijtj.ttf", 40);
+		text2->setAnchorPoint(Vec2(0, 0));
+		text2->setPosition(Vec2(visibleSize.width - 180, 10));
+		text1->setColor(Color3B(255, 255, 255));
+		menuLayer->addChild(text2);
+		life2TTF = Label::createWithTTF(MyUtility::gbk_2_utf8("0"), "fonts/minijtj.ttf", 40);
+		life2TTF->setAnchorPoint(Vec2(0, 0));
+		life2TTF->setPosition(Vec2(visibleSize.width - 80, 10));
+		life2TTF->setColor(Color3B(255, 255, 255));
+		life2TTF->setString("3");
+		menuLayer->addChild(life2TTF);
+	}
 
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
 
 	string s1 = to_string(levelNum), s2 = "map/map" + s1 + ".tmx";
+	if (Game::mode == MULTI)
+	{
+		s2 = "map/mapdouble0.tmx";
+	}
 	_tileMap = TMXTiledMap::create(s2);
 	_mapSize = _tileMap->getMapSize();
 	_tileSize = _tileMap->getTileSize();
@@ -391,6 +416,11 @@ bool Game::init()
 		_player2->setAnchorPoint(Vec2(0.5, 0.5));
 		_player2->setPosition(Vec2(x0B, y0B));
 		_player2->setColor(Color3B::RED);
+		if (Game::mode == MULTI)
+		{
+			_player2->getPhysicsBody()->setCategoryBitmask(0x09);
+			_player2->getPhysicsBody()->setContactTestBitmask(0x06);
+		}
 		//Game::lifeTTF->setString(to_string(_player2->getHP()));
 		addChild(_player2);
 	}
@@ -465,6 +495,11 @@ bool Game::init()
 	lifeTTF->setString(slife);
 	_player->setAnchorPoint(Vec2(0.5, 0.5));
 	_player->setPosition(Vec2(x0, y0));
+	if (Game::mode == MULTI)
+	{
+		_player->getPhysicsBody()->setCategoryBitmask(0x05);
+		_player->getPhysicsBody()->setContactTestBitmask(0x0A);
+	}
 	addChild(_player);
 	this->setViewpointCenter(Vec2(x0, y0));
 	//log("%f,%f", viewPoint.x, viewPoint.y);
@@ -474,8 +509,8 @@ bool Game::init()
 	/**/
 	_player->addenemy();
 	_player->addpickup();
-	_player->addboss();
 	_player->addpickupV();
+	_player->addboss();
 	_player->setTag(1);
 
 	if (levelNum == 5)
@@ -539,8 +574,9 @@ bool Game::init()
 	auto itemPause = MenuItemImage::create("UI/menu_pause.png", "UI/menu_pause1.png",
 		CC_CALLBACK_1(Game::menuItemCallbackPause, this));
 	itemPause->setOpacity(200);
-	itemPause->setAnchorPoint(Vec2(0, 0));
-	itemPause->setPosition(Vec2(0, visibleSize.height - itemPause->getContentSize().height));
+	itemPause->setScale(0.7);
+	itemPause->setAnchorPoint(Vec2(0, 1));
+	itemPause->setPosition(Vec2(10, visibleSize.height-10));
 	auto menu = Menu::create(itemPause, NULL);
 	menu->setPosition(Vec2::ZERO);
 	menuLayer->addChild(menu);
@@ -751,6 +787,18 @@ void Game::update(float dt)
 	{
 		enemyAIs[i]->update(dt);
 	}
+	if (Game::mode == MULTI)
+	{
+		if (_player->getHP() <= 0 || _player2->getHP() <= 0)
+		{
+			auto layer = VictoryLayer::create();
+			layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
+				Director::getInstance()->getVisibleSize().height / 2));
+			layer->setTag(99);
+			menuLayer->addChild(layer, 5);
+			Director::getInstance()->pause();
+		}
+	}
 }
 
 void Game::menuItemCallbackPause(Ref * pSender)
@@ -789,8 +837,8 @@ void Game::setViewpointCenter(Point position) {
 	auto actualPoint = Point(x, y);
 	viewPoint = centerPoint - actualPoint;
 
-
-	this->runAction(MoveTo::create(0, viewPoint));
+	if(Game::mode != MULTI)
+		this->runAction(MoveTo::create(0, viewPoint));
 	//log("%f,%f", this->getPosition().x, this->getPosition().y);
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	menuLayer->runAction(MoveTo::create(0, -viewPoint));
@@ -956,4 +1004,10 @@ void Game::controllerUnschedule(EventKeyboard::KeyCode keyCode, Event * event)
 	if (_player2 != nullptr && (int)keyCode == _player2->getDirection())
 		Game::_player->getParent()->unschedule(schedule_selector(Game::keepMoving2));
 }
+
+
+
+
+
+
 

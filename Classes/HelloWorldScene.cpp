@@ -76,6 +76,7 @@ void HelloWorld::menuItemStartCallback(cocos2d::Ref *pSender)
 	//auto sc = Game::createScene();
 	//auto transition = TransitionFade::create(1, sc);
 	//Director::getInstance()->pushScene(transition);
+	Game::mode = CLASSIC;
 	auto sc = ChoseLevel::createScene();
 	auto transition = TransitionFade::create(1, sc);
 	Director::getInstance()->pushScene(transition);
@@ -134,7 +135,8 @@ bool HelloWorld::init()
     // create and initialize a label
 	auto item1 = MenuItemImage::create("UI/gameStart.png", "UI/gameStart1.png", CC_CALLBACK_1(HelloWorld::menuItemStartCallback, this));
 	item1->setScale(0.7);
-	item1->setPosition(Vec2(visibleSize.width/2,visibleSize.height/2));
+	item1->setPosition(Vec2(visibleSize.width/2,
+		visibleSize.height/2));
 	auto item2 = MenuItemImage::create("UI/about.png", "UI/about1.png", CC_CALLBACK_1(HelloWorld::menuItem2Callback, this));
 	item2->setScale(0.5);
 	item2->setPosition(Vec2( 80, visibleSize.height - 30));
@@ -144,7 +146,11 @@ bool HelloWorld::init()
 	auto item4 = MenuItemImage::create("UI/collections.png", "UI/collections1.png", CC_CALLBACK_1(HelloWorld::menuTtemCollections, this));
 	item4->setPosition(Vec2(120, 120));
 
-	Menu *mn = Menu::create(item1, item2,item3,item4, NULL);
+	auto item5 = MenuItemImage::create("UI/Mutibig.png", "UI/Mutismall.png", CC_CALLBACK_1(HelloWorld::menuItemMulti, this));
+	item5->setPosition(Vec2(visibleSize.width / 2,
+		visibleSize.height / 2 - item1->getContentSize().height));
+
+	Menu *mn = Menu::create(item1, item2,item3,item4, item5, NULL);
 	mn->setPosition(Vec2(0, 0 ));
 	//mn->setAnchorPoint(Vec2(0, 0));
 	this->addChild(mn);
@@ -173,4 +179,12 @@ void HelloWorld::menuTtemCollections(cocos2d::Ref *pSender){
 	auto sc = Collections::createScene();
 	auto transition = TransitionCrossFade::create(1, sc);
 	Director::getInstance()->pushScene(transition);
+}
+
+void HelloWorld::menuItemMulti(Ref *pSender)
+{
+	Game::mode = MULTI;
+	ChoseLevel::_PlayerModel = 2;
+	auto scene = Game::createScene();
+	Director::getInstance()->pushScene(scene);
 }

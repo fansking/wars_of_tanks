@@ -27,9 +27,32 @@ bool VictoryLayer::init()
 		"UI/gameover/button_nextlv_1.png",
 		CC_CALLBACK_1(VictoryLayer::menuItemNextLevelCallback, this));
 	auto menuPause = Menu::create(itemRestart, itemChooseStage, itemHomePage, itemNextLevel, NULL);
+
 	menuPause->alignItemsHorizontally();
 	menuPause->setPosition(Vec2(this->getPosition().x, 
 		this->getPosition().y - bgPause->getContentSize().height / 3 - 15));
+
+	if (Game::mode == MULTI)
+	{
+		if (Game::_player->getHP() <= 0)
+		{
+			auto label = Label::createWithTTF("PlayerB Win!!!", 
+				"fonts/minijtj.ttf",
+				36);
+			label->setPosition(bgPause->getPosition());
+			Game::_player->setHP(3);
+			this->addChild(label);
+		}
+		else
+		{
+			auto label = Label::createWithTTF("PlayerA Win!!!",
+				"fonts/minijtj.ttf",
+				36);
+			label->setPosition(bgPause->getPosition());
+			Game::_player2->setHP(3);
+			this->addChild(label);
+		}
+	}
 
 	this->addChild(menuPause);
 }
@@ -43,6 +66,10 @@ void VictoryLayer::menuItemRestartCallback(Ref * pSender)
 }
 void VictoryLayer::menuItemChooseStageCallback(Ref * pSender)
 {
+	if (Game::mode == MULTI)
+	{
+		return;
+	}
 	Director::getInstance()->resume();
 	log("ChooseStage");
 	Director::getInstance()->resume();
@@ -53,10 +80,14 @@ void VictoryLayer::menuItemHomePageCallback(Ref * pSender)
 	Director::getInstance()->resume();
 	log("HomePage");
 	Director::getInstance()->resume();
-	Director::getInstance()->replaceScene(HelloWorld::createScene());
+	Director::getInstance()->popScene();
 }
 void VictoryLayer::menuItemNextLevelCallback(Ref * pSender)
 {
+	if (Game::mode == MULTI)
+	{
+		return;
+	}
 	Director::getInstance()->resume();
 	++Game::levelNum;
 	Director::getInstance()->resume();

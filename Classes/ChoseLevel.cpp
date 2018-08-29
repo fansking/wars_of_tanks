@@ -40,12 +40,13 @@ bool ChoseLevel::init() {
 }
 
 int myPosition[20][2] = { {178,408},{340,284},{544,403},{727,565},{855,425},{737,271},{818,108},{1056,226} };
-int num = 8, now = 5;
+int num = 8, now = 6;
 void ChoseLevel::init2() {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	auto item1 = MenuItemImage::create("UI/ReturBig.png", "UI/ReturnSmall.png", CC_CALLBACK_1(ChoseLevel::menuCloseCallback, this));
 	item1->setScale(0.6);
-	item1->setPosition(Vec2(item1->getContentSize().width / 2 * 0.6, visibleSize.height - item1->getContentSize().height / 2 * 0.6));
+	item1->setAnchorPoint(Vec2(0, 1));
+	item1->setPosition(Vec2(5,visibleSize.height-5));
 	auto menu = Menu::create(item1,NULL);
 	for (int i = 0; i < now; i++) {
 		auto item = MenuItemImage::create("UI/stageGoldBig.png", "UI/stageGoldSmall.png", CC_CALLBACK_1(ChoseLevel::menuEnterGameCallback, this));
@@ -70,6 +71,7 @@ void ChoseLevel::init2() {
 }
 
 void ChoseLevel::menuCloseCallback(cocos2d::Ref* pSender) {
+	auto scene = HelloWorld::createScene();
 	Director::getInstance()->popScene();
 }
 
@@ -91,7 +93,7 @@ void ChoseLevel::menuEnterGameCallback(cocos2d::Ref* pSender) {
 		Game::levelNum = nmitem->getTag();
 		auto sc = Game::createScene();
 		auto transition = TransitionFade::create(1, sc);
-		Director::getInstance()->pushScene(transition);
+		Director::getInstance()->replaceScene(transition);
 	}
 }
 
