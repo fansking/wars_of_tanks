@@ -27,7 +27,7 @@ bool VictoryLayer::init()
 		"UI/gameover/button_nextlv_1.png",
 		CC_CALLBACK_1(VictoryLayer::menuItemNextLevelCallback, this));
 	auto menuPause = Menu::create(itemRestart, itemChooseStage, itemHomePage, itemNextLevel, NULL);
-	if (Game::mode == MULTI)
+	if (Game::mode == MULTI || Game::mode == TUTORIAL)
 	{
 		itemChooseStage->setEnabled(false);
 		itemNextLevel->setEnabled(false);

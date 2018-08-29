@@ -117,15 +117,18 @@ void EnemyAI::update(float dt)
 			}
 		}
 	}
-	if (obj->mydt < 0 && obj->isVisible()) {
-		if (obj->getColor() == Color3B::GRAY)
-		{
-			obj->setColor(Color3B::WHITE);
+	if (Game::mode != TUTORIAL)
+	{
+		if (obj->mydt < 0 && obj->isVisible()) {
+			if (obj->getColor() == Color3B::GRAY)
+			{
+				obj->setColor(Color3B::WHITE);
+			}
+			obj->openFire(false);
+			obj->mydt = 1;
 		}
-		obj->openFire(false);
-		obj->mydt = 1;
+		obj->mydt -= dt;
 	}
-	obj->mydt -= dt;
 	if (!obj->isFrozen)
 		obj->runAction(MoveTo::create(0, target));
 }
