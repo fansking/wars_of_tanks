@@ -646,6 +646,7 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 		if (_player->mydt < 0) {
 			_player->openFire(true);
 			_player->mydt = 1;
+			SimpleAudioEngine::getInstance()->playEffect("sound/sfx_fire1.mp3");
 		}
 		return;
 	}
@@ -877,15 +878,16 @@ void Game::changeLifeTTF(int lifeNum) {
 }
 
 void Game::playBoomAnimation(Vec2 position) {
-	auto dic = Dictionary::createWithContentsOfFile("animation/boom.plist");
+	SimpleAudioEngine::getInstance()->playEffect("sound/sfx_explosion.mp3");
+	auto dic = Dictionary::createWithContentsOfFile("animation/enemytankboom.plist");
 	auto frameDic = (__Dictionary*)dic->objectForKey("frames");
 	int num = frameDic->allKeys()->count();
 	Vector<SpriteFrame*> sfme = Vector<SpriteFrame*>::Vector();
 	CCSpriteFrameCache * cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	cache->addSpriteFramesWithFile("animation/boom.plist");
+	cache->addSpriteFramesWithFile("animation/enemytankboom.plist");
 	for (int i = 0; i < num; i++) {
 		char frame[50];
-		sprintf(frame, "%d.png", i + 1);
+		sprintf(frame, "kp%d.png", i + 1);
 		auto frameName = SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(frame);
 		sfme.pushBack(frameName);
 	}

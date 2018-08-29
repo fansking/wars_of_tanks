@@ -54,7 +54,7 @@ OurTank * OurTank::createWithImage(int initialHP)
 
 void OurTank::openFire(bool isFriendly)
 {
-	SimpleAudioEngine::getInstance()->playEffect("sound/sfx_fire1.mp3");
+	//SimpleAudioEngine::getInstance()->playEffect("sound/sfx_fire1.mp3");
 	if (weaponType == WEAPON_0) {
 		Bullet * bullet = Bullet::createWithImage(isFriendly);
 		if (Game::mode == MULTI)
