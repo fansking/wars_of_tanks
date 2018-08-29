@@ -1,5 +1,6 @@
 #include "AboutScene.h"
 #include<vector>
+#include<string>
 USING_NS_CC;
 #define ADJUST_ANIM_VELOCITY 3;
 Scene *About::createScene()
@@ -9,7 +10,7 @@ Scene *About::createScene()
 	scene->addChild(layer);
 	return scene;
 }
-const int nCount = 3;
+const int nCount = 2;
 bool About::init()
 {
 	if (!Layer::init())
@@ -27,7 +28,7 @@ bool About::init()
 	//ÉèÖÃÈİÆ÷¼°¾«Áé
 	auto layer = Layer::create();
 	for (int i = 0; i < nCount; i++) {
-		auto sprite = Sprite::create("menu/pause_bg2.png");
+		auto sprite = Sprite::create("menu/About"+std::to_string(i+1)+".png");
 		sprite->setPosition(Vec2(visibleSize.width / 2 + i * (sprite->getContentSize().width+10), visibleSize.height / 2));
 		layer->addChild(sprite);
 		spiritwidth = sprite->getContentSize().width;
