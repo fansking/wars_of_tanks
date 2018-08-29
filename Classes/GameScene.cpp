@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "ChoseLevel.h"
 #include "VictoryLayer.h"
+#include "Boss.h"
 
 USING_NS_CC;
 TMXTiledMap *Game::_tileMap = nullptr;
@@ -72,8 +73,8 @@ bool Game::init()
 		}
 		if (spriteA && spriteB && spriteA->getTag() == 3 && spriteB->getTag() == 2 && spriteA->isVisible())
 		{
-			((Enemy *)spriteA)->setHP(((Enemy *)spriteA)->getHP() - 1);
-			if (((Enemy *)spriteA)->getHP() == 0)
+			((Enemy *)spriteA)->setHP(((Enemy *)spriteA)->getHP() - ((Bullet*)spriteB)->getAKT());
+			if (((Enemy *)spriteA)->getHP() <= 0)
 			{
 				spriteA->setVisible(false);
 				spriteA->getPhysicsBody()->removeFromWorld();
@@ -85,8 +86,8 @@ bool Game::init()
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 3 && spriteB->isVisible())
 		{
-			((Enemy *)spriteB)->setHP(((Enemy *)spriteB)->getHP() - 1);
-			if (((Enemy *)spriteB)->getHP() == 0)
+			((Enemy *)spriteB)->setHP(((Enemy *)spriteB)->getHP() - ((Bullet*)spriteB)->getAKT());
+			if (((Enemy *)spriteB)->getHP() <= 0)
 			{
 				spriteB->setVisible(false);
 				spriteB->getPhysicsBody()->removeFromWorld();
@@ -106,12 +107,13 @@ bool Game::init()
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 2)
 		{
+			log("%d,=================", ((Bullet*)spriteB)->getAKT());
 			((OurTank *)spriteA)->setHP(((OurTank *)spriteA)->getHP() - 1);
 			lifeTTF->setString(to_string(Game::_player->getHP()));
 			//changeLifeTTF(Game::_player->getHP());
 			spriteB->removeFromParent();
 			//log("HP: %d", Game::_player->getHP());
-			if (Game::_player->getHP() == 0)
+			if (_player->getHP() <= 0 && (_player2 == nullptr || _player2->getHP() <= 0))
 			{
 				auto layer = GameoverLayer::create();
 				layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
@@ -120,11 +122,17 @@ bool Game::init()
 				Director::getInstance()->getRunningScene()->addChild(layer, 0);
 				Director::getInstance()->pause();
 			}
-			if (Game::_player2 != nullptr && Game::_player2->getHP() == 0)
+			if (Game::_player->getHP() <= 0 && _player2 != nullptr && _player2->getHP() > 0)
+			{
+				_player->setVisible(false);
+				_player->getPhysicsBody()->removeFromWorld();
+			}
+			if (Game::_player2 != nullptr && Game::_player2->getHP() <= 0)
 			{
 				_player2->setVisible(false);
 				_player2->getPhysicsBody()->removeFromWorld();
 			}
+
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 1)
 		{
@@ -132,20 +140,27 @@ bool Game::init()
 			lifeTTF->setString(to_string(Game::_player->getHP()));
 			spriteA->removeFromParent();
 			//log("HP: %d", Game::_player->getHP());
-			if (Game::_player->getHP() == 0)
+			if (_player->getHP() <= 0 && (_player2 == nullptr || _player2->getHP() <= 0))
 			{
 				auto layer = GameoverLayer::create();
 				layer->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
 					Director::getInstance()->getVisibleSize().height / 2));
 				layer->setTag(99);
-				Director::getInstance()->getRunningScene()->addChild(layer);
+				Director::getInstance()->getRunningScene()->addChild(layer, 0);
 				Director::getInstance()->pause();
 			}
-			if (Game::_player2 != nullptr && Game::_player2->getHP() == 0)
+			if (Game::_player->getHP() <= 0 && _player2 != nullptr && _player2->getHP() > 0)
+			{
+				_player->setVisible(false);
+				_player->getPhysicsBody()->removeFromWorld();
+				this->setViewpointCenter(_player2->getPosition());
+			}
+			if (Game::_player2 != nullptr && Game::_player2->getHP() <= 0)
 			{
 				_player2->setVisible(false);
 				_player2->getPhysicsBody()->removeFromWorld();
 			}
+
 		}
 		else if (spriteA && spriteB && spriteA->getTag() == 200 && spriteB->getTag() == 2 && spriteB->isVisible()) {
 			spriteB->removeFromParent();
@@ -153,6 +168,7 @@ bool Game::init()
 		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 200 && spriteA->isVisible()) {
 			spriteA->removeFromParent();
 		}
+
 		else if (spriteA && spriteB  && (spriteA->getTag()==3|| spriteA->getTag() == 1)&&spriteB->getTag() == 11 && spriteA->isVisible()) {
 			switch (((OurTank *)spriteA)->getDirection())
 			{
@@ -238,16 +254,37 @@ bool Game::init()
 		}
 		}
 		else if (spriteA && spriteB && (spriteA->getTag() == 2) && spriteB->getTag() == 11 && spriteA->isVisible()) {
-			spriteA->setPosition(portal_2->getPosition() + ((Bullet *)spriteA)->getVel()  / 8.3);
+			spriteA->setPosition(portal_2->getPosition() + ((Bullet *)spriteA)->getVel() / 8.3);
 		}
 		else if (spriteA && spriteB  && spriteA->getTag() == 11 && (spriteB->getTag() == 2) && spriteB->isVisible()) {
-			spriteB->setPosition(portal_2->getPosition() + ((Bullet *)spriteB)->getVel()  / 8.3);
+			spriteB->setPosition(portal_2->getPosition() + ((Bullet *)spriteB)->getVel() / 8.3);
 		}
-		else if (spriteA && spriteB  && spriteB->getTag() == 12 && (spriteA->getTag() == 2 ) && spriteA->isVisible()) {
-			spriteA->setPosition(portal_1->getPosition() + ((Bullet *)spriteA)->getVel()  / 8.3);
+		else if (spriteA && spriteB  && spriteB->getTag() == 12 && (spriteA->getTag() == 2) && spriteA->isVisible()) {
+			spriteA->setPosition(portal_1->getPosition() + ((Bullet *)spriteA)->getVel() / 8.3);
 		}
-		else if (spriteA && spriteB  && spriteA->getTag() == 12 && (spriteB->getTag() == 2 ) && spriteB->isVisible()) {
-			spriteB->setPosition(portal_1->getPosition() + ((Bullet *)spriteB)->getVel() /8.3);
+		else if (spriteA && spriteB  && spriteA->getTag() == 12 && (spriteB->getTag() == 2) && spriteB->isVisible()) {
+			spriteB->setPosition(portal_1->getPosition() + ((Bullet *)spriteB)->getVel() / 8.3);
+		}
+		else if (spriteA && spriteB && spriteA->getTag() == 2 && spriteB->getTag() == 38)
+		{
+			log("boss: %d", spriteB->getTag());
+			((Boss *)spriteB)->setHP(((Boss *)spriteB)->getHP() - 1);
+			spriteA->removeFromParent();
+			if (((Boss *)spriteB)->getHP() <= 0)
+			{
+			Game:bVictory = true;
+			}
+		}
+		else if (spriteA && spriteB && spriteA->getTag() == 38 && spriteB->getTag() == 2)
+		{
+			log("boss: %d", spriteA->getTag());
+			((Boss *)spriteA)->setHP(((Boss *)spriteA)->getHP() - 1);
+			spriteB->removeFromParent();
+			if (((Boss *)spriteA)->getHP() <= 0)
+			{
+				Game::nEnemy = 0;
+				Game::bVictory = true;
+			}
 		}
 		//else if (spriteA && spriteB && spriteA->getTag() == 1 && spriteB->getTag() == 3)
 		//{
@@ -259,6 +296,7 @@ bool Game::init()
 		//	spriteB->pause();
 		//}
 		if (nEnemy == 0) {
+			Game::nEnemy = 0;
 			Game::bVictory = true;
 		}
 
@@ -298,7 +336,7 @@ bool Game::init()
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listenerForPlayer2, 1);
 
 	menuLayer = Layer::create();
-	auto text1 = Label::createWithTTF(MyUtility::gbk_2_utf8("HP£º    »ý·Ö£º"), "fonts/minijtj.ttf", 40);
+	auto text1 = Label::createWithTTF(MyUtility::gbk_2_utf8("HP:    Score:"), "fonts/minijtj.ttf", 40);
 	text1->setAnchorPoint(Vec2(0, 0));
 	text1->setPosition(Vec2(10, 10));
 	text1->setColor(Color3B(255, 255, 255));
@@ -348,6 +386,7 @@ bool Game::init()
 		_player2 = OurTank::createWithImage(3);
 		_player2->setAnchorPoint(Vec2(0.5, 0.5));
 		_player2->setPosition(Vec2(x0B, y0B));
+		_player2->setColor(Color3B::RED);
 		addChild(_player2);
 	}
 	/********************************************************************************************/
@@ -357,8 +396,8 @@ bool Game::init()
 	int x1, x2, y1, y2;
 	if (spawnPoint_portal_1 != ValueMap()) {
 		spawnPoint_portal_2 = group->getObject("portal_2");
-		x1=spawnPoint_portal_1 ["x"].asInt();
-		y1= spawnPoint_portal_1["y"].asInt();
+		x1 = spawnPoint_portal_1["x"].asInt();
+		y1 = spawnPoint_portal_1["y"].asInt();
 		x2 = spawnPoint_portal_2["x"].asInt();
 		y2 = spawnPoint_portal_2["y"].asInt();
 
@@ -430,6 +469,7 @@ bool Game::init()
 	/**/
 	_player->addenemy();
 	_player->addpickup();
+	_player->addboss();
 	_player->addpickupV();
 	_player->setTag(1);
 
@@ -444,26 +484,34 @@ bool Game::init()
 			}
 		}
 	}
-	for (int i = 0; i < nEnemy; ++i)
-	{
-		int nType = rand() % 5;
-		switch (nType)
+	if (levelNum != 1)
+		for (int i = 0; i < nEnemy; ++i)
 		{
-		case 0:
-			enemy[i]->setWeaponType(WEAPON_0);
-			break;
-		case 1:
-			enemy[i]->setWeaponType(WEAPON_1);
-			break;
-		case 2:
-			enemy[i]->setWeaponType(WEAPON_2);
-			break;
-		case 3:
+			int nType = rand() % 5;
+			switch (nType)
+			{
+			case 0:
+				enemy[i]->setWeaponType(WEAPON_0);
+				break;
+			case 1:
+				enemy[i]->setWeaponType(WEAPON_1);
+				break;
+			case 2:
+				enemy[i]->setWeaponType(WEAPON_2);
+				break;
+			case 3:
+				enemy[i]->setWeaponType(WEAPON_3);
+				break;
+			case 4:
+				enemy[i]->setWeaponType(WEAPON_4);
+				break;
+			}
+		}
+	else
+	{
+		for (int i = 0; i < nEnemy; ++i)
+		{
 			enemy[i]->setWeaponType(WEAPON_3);
-			break;
-		case 4:
-			enemy[i]->setWeaponType(WEAPON_4);
-			break;
 		}
 	}
 	/*enemy[0]->scheduleUpdate();*/
@@ -533,14 +581,16 @@ Vec2 Game::tileCoordFromPosition(Vec2 pos) {
 void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 {
 	//log("%d has been pressed", keyCode);
+	if (!_player->isVisible())
+		return;
 	Vec2 playerPos = _player->getPosition();
-	
+
 	if ((int)keyCode == 6)
 	{
 		Game::menuItemCallbackPause(this);
 		return;
 	}
-	if((int)keyCode < 59 || (int)keyCode == 164)
+	if ((int)keyCode < 59 || (int)keyCode == 164)
 	{
 		return;
 	}
@@ -584,12 +634,12 @@ void Game::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 	if (!isMoveable(playerPos)) return;
 	this->setViewpointCenter(playerPos);
 
-	this->schedule(schedule_selector(Game::keepMoving), 1.0/60);
+	this->schedule(schedule_selector(Game::keepMoving), 1.0 / 60);
 }
 
 void Game::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
 {
-	if ((int)keyCode == _player->getDirection())
+	if (_player->isVisible() && (int)keyCode == _player->getDirection())
 		this->unschedule(schedule_selector(Game::keepMoving));
 }
 
@@ -597,6 +647,10 @@ void Game::keepMoving(float dt)
 {
 	//log("dt : %f", dt);
 	//log("getContantSize : %d, %d", _player->getContentSize().width, _player->getContentSize().height);
+	if (!_player->isVisible())
+	{
+		return;
+	}
 	auto playerSize = Size(Vec2(40, 40));
 
 	Vec2 playerPos = _player->getPosition() + _player->getVel() * dt;
@@ -665,13 +719,18 @@ void Game::keepMoving2(float dt)
 	if (!isMoveable(forwardLeft) || !isMoveable(forwardRight))
 		return;
 
+	if (!Game::_player->isVisible())
+	{
+		this->setViewpointCenter(_player2->getPosition());
+	}
+
 	_player2->runAction(MoveTo::create(0, playerPos));
 }
 
 void Game::update(float dt)
 {
 	_player->mydt -= dt;
-	if(_player2 != nullptr)
+	if (_player2 != nullptr)
 		_player2->mydt -= dt;
 	if (bVictory)
 	{
@@ -878,6 +937,10 @@ void Game::controllerForPlayer2(EventKeyboard::KeyCode keyCode, Event * event)
 		_player2->setDirection((int)keyCode);
 	}
 
+	if (!Game::_player->isVisible())
+	{
+		((Game *)_player->getParent())->setViewpointCenter(_player2->getPosition());
+	}
 
 	Game::_player->getParent()->schedule(schedule_selector(Game::keepMoving2), 1.0 / 60);
 }

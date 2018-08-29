@@ -70,9 +70,7 @@ void PickupBase::isContact(OurTank * player)
 		shield->ShowWithTank(player);
 		this->removeFromParent();
 	}else if (this->getPickupType() == Gold) {
-		player->setHP(player->getHP()+1);
 		player->setWeaponType(WEAPON_4);
-		log("HP: %d", player->getHP());
 		this->removeFromParent();
 	}
 	else if (this->getPickupType() == Bulletscatter) {

@@ -68,13 +68,14 @@ public:
 
 	static void controllerForPlayer2(EventKeyboard::KeyCode, Event *);
 	static void controllerUnschedule(EventKeyboard::KeyCode keyCode, Event * event);
+	void setViewpointCenter(Point position);
+
 
 private:
 	
 	int tileX, tileY, mapX, mapY;
 	Vec2 viewPoint;
 
-	void setViewpointCenter(Point position);
 	bool isMoveable(Vec2 position);
 	CREATE_FUNC(Game);
 

@@ -4,7 +4,7 @@
 
 using namespace cocos2d;
 
-#define GOLDPATH "map/stageGold1.png"
+#define GOLDPATH "BulletPro.png"
 #define BULLETSCATTERPATH "bulletscatter.png"
 #define BLUEBULLETPATH "Bluebullet.png"
 #define REDBULLETPATH "Redbullet.png"

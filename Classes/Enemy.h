@@ -17,4 +17,5 @@ public:
 	virtual void update(float dt);
 	static Enemy * createWithEnemyTypes(EnemyTypes enemyType);
 
+	bool isFrozen;
 };
