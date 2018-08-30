@@ -93,7 +93,7 @@ bool HelloWorld::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	SimpleAudioEngine::getInstance()->playBackgroundMusic("sound/background.mp3", true);
-	SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5);
+	SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(1.0);
 
 	Director::getInstance()->setDisplayStats(false);
 

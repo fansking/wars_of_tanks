@@ -1000,6 +1000,7 @@ void Game::controllerForPlayer2(EventKeyboard::KeyCode keyCode, Event * event)
 	{
 		if (_player2->mydt < 0) {
 			_player2->openFire(true);
+			SimpleAudioEngine::getInstance()->playEffect("sound/sfx_fire1.mp3");
 			_player2->mydt = 1;
 		}
 		return;

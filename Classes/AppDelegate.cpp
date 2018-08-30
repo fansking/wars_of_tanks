@@ -85,9 +85,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	if (!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-		glview = GLViewImpl::createWithRect("HelloWorld", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+		glview = GLViewImpl::createWithRect("New Battle City",
+			cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+		//glview = GLViewImpl::createWithFullScreen("New Battle City",);
 #else
-		glview = GLViewImpl::create("HelloWorld");
+		glview = GLViewImpl::create("New Battle City");
 #endif
 		director->setOpenGLView(glview);
 	}

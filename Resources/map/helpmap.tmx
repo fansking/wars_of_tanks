@@ -39,7 +39,7 @@
   <object id="2" name="enemy0" x="2432" y="1828"/>
   <object id="3" name="pickupV0" x="1526" y="1948">
    <properties>
-    <property name="ToolType" value="4"/>
+    <property name="ToolType" value="6"/>
    </properties>
   </object>
   <object id="4" name="pickupV1" x="1530" y="2010">
@@ -49,7 +49,7 @@
   </object>
   <object id="5" name="pickupV2" x="1530" y="2070">
    <properties>
-    <property name="ToolType" value="4"/>
+    <property name="ToolType" value="7"/>
    </properties>
   </object>
   <object id="6" name="portal_1" x="332" y="2012"/>

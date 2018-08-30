@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" infinite="0" nextobjectid="14">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" infinite="0" nextobjectid="26">
  <tileset firstgid="1" name="bg4" tilewidth="60" tileheight="60" tilecount="252" columns="21">
   <image source="bg4.png" width="1280" height="720"/>
  </tileset>
@@ -50,10 +50,13 @@
   <object id="5" name="enemy2" x="124" y="326" width="33" height="33"/>
   <object id="6" name="enemy3" x="800.333" y="426" width="40" height="33"/>
   <object id="7" name="enemy4" x="150" y="149" width="50" height="48"/>
-  <object id="8" name="enemy5" x="155" y="524" width="46" height="44"/>
-  <object id="9" name="enemy6" x="1008" y="152" width="32" height="32"/>
+  <object id="8" name="enemy5" x="105.667" y="430.667" width="46" height="44"/>
+  <object id="9" name="enemy6" x="1058.67" y="370.667" width="32" height="32"/>
   <object id="10" name="enemy7" x="998" y="537" width="37" height="39"/>
   <object id="11" name="playerA" x="540" y="557" width="60" height="60"/>
   <object id="13" name="playerB" x="539" y="60" width="60" height="59"/>
+  <object id="20" x="513.333" y="-129.333" width="2.66667"/>
+  <object id="24" name="portal_1" x="169.333" y="568"/>
+  <object id="25" name="portal_2" x="1048" y="141.333"/>
  </objectgroup>
 </map>
